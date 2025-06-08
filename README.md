@@ -1,11 +1,11 @@
 # OraFixa 🗓️
 
 <p align="center">
-  O platformă minimalistă pentru managementul programărilor, construită pentru eficiență și fiabilitate.
+  A minimalist platform for appointment management, built for efficiency and reliability.
 </p>
 
 <p align="center">
-  <a href="[LINKUL-TAU-VERCEL-AICI]" target="_blank"><img src="https://img.shields.io/badge/Deployment-Vercel-black?style=flat-square&logo=vercel" alt="Deployment"></a>
+  <a href="[YOUR-VERCEL-DEPLOYMENT-LINK-HERE]" target="_blank"><img src="https://img.shields.io/badge/Deployment-Vercel-black?style=flat-square&logo=vercel" alt="Deployment"></a>
   <img src="https://img.shields.io/badge/Status-In_Development-blue?style=flat-square" alt="Status">
   <img src="https://img.shields.io/badge/License-MIT-777.svg?style=flat-square" alt="License">
 </p>
@@ -13,71 +13,72 @@
 <br>
 
 <p align="center">
-  <img src="https://link-catre-o-imagine-curata-sau-gif.png" alt="OraFixa Demo" width="90%">
+  <img src="[LINK-TO-A-CLEAN-IMAGE-OR-GIF-HERE]" alt="OraFixa Demo" width="90%">
 </p>
 
-## Despre Proiect
+## About The Project
 
-În lumea serviciilor personale, de la frizerii la cabinete private, "no-show"-urile și managementul ineficient al timpului reprezintă o pierdere semnificativă de venit și o sursă de frustrare.
+In the world of personal services, from barbershops to private practices, no-shows and inefficient time management represent a significant loss of revenue and a source of frustration.
 
-**OraFixa** abordează această problemă frontal, oferind o interfață curată, intuitivă și extrem de rapidă care face procesul de programare o plăcere, nu o corvoadă. Scopul este de a oferi predictibilitate profesioniștilor și simplitate clienților lor, eliminând complet haosul din calendar.
+**OraFixa** tackles this problem head-on by providing a clean, intuitive, and extremely fast interface that makes the booking process a pleasure, not a chore. The goal is to provide predictability for professionals and simplicity for their clients, completely eliminating calendar chaos.
 
-## Funcționalități Principale
+## Core Features
 
--   **Proces de Booking Simplificat:** Un flux de programare redus la pașii esențiali.
--   **Notificări Automate:** Confirmări și remindere prin SMS/Email pentru a reduce rata de neprezentare.
--   **Panou de Admin Intuitiv:** O interfață curată pentru ca profesionistul să-și vadă și să-și gestioneze programul dintr-o singură privire.
--   **Managementul Disponibilității:** Control total asupra programului de lucru, zilelor libere și pauzelor.
+-   **Simplified Booking Process:** A booking flow reduced to the essential steps.
+-   **Automated Notifications:** Confirmation and reminder SMS/Email to reduce the no-show rate.
+-   **Intuitive Admin Panel:** A clean interface for the professional to view and manage their schedule at a glance.
+-   **Availability Management:** Full control over working hours, days off, and breaks.
 
-## Stiva Tehnologică
+## Tech Stack
 
-Arhitectura a fost aleasă pentru performanță, o experiență de dezvoltare modernă și scalabilitate.
+The architecture was chosen for performance, a modern developer experience, and scalability.
 
--   **SvelteKit** <img src="https://img.shields.io/badge/SvelteKit-FF3E00?style=flat-square&logo=svelte&logoColor=white" alt="SvelteKit"> — Framework-ul principal, pentru o interfață reactivă și performanță la nivel de server.
+-   **SvelteKit** <img src="https://img.shields.io/badge/SvelteKit-FF3E00?style=flat-square&logo=svelte&logoColor=white" alt="SvelteKit"> — The core framework, for a reactive UI and server-side performance.
 
--   **Supabase** <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white" alt="Supabase"> — Suita de backend ce oferă bază de date Postgres, autentificare și API-uri automate.
+-   **Supabase** <img src="https://img.shields.io/badge/Supabase-3ECF8E?style=flat-square&logo=supabase&logoColor=white" alt="Supabase"> — The backend suite, providing a Postgres database, authentication, and auto-generated APIs.
 
--   **Tailwind CSS** <img src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind CSS"> — O abordare utility-first pentru un design consistent și customizabil.
+-   **Tailwind CSS** <img src="https://img.shields.io/badge/Tailwind_CSS-06B6D4?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind CSS"> — A utility-first approach for a consistent and customizable design.
 
--   **shadcn-svelte** <img src="https://img.shields.io/badge/shadcn/svelte-000000?style=flat-square" alt="shadcn-svelte"> — Componente UI accesibile, nelegate de un stil anume, pentru o estetică unică.
+-   **shadcn-svelte** <img src="https://img.shields.io/badge/shadcn/svelte-000000?style=flat-square" alt="shadcn-svelte"> — Accessible, unstyled UI components for a unique aesthetic.
 
--   **Vercel** <img src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white" alt="Vercel"> — Platforma de hosting pentru performanță globală și deploy continuu prin Edge Network.
+-   **Vercel** <img src="https://img.shields.io/badge/Vercel-000000?style=flat-square&logo=vercel&logoColor=white" alt="Vercel"> — The hosting platform for global performance and continuous deployment via Edge Network.
 
-## Statusul Proiectului
+## Project Status
 
-Momentan, proiectul se află în faza inițială de dezvoltare, concentrat pe implementarea fluxului de bază pentru programări și a structurii de securitate în Supabase.
+Currently, the project is in the initial development phase, focusing on implementing the core booking functionality and the security structure in Supabase.
 
-## Rulează Proiectul Local
+## Running Locally
 
 <details>
-<summary>Vezi instrucțiunile de instalare</summary>
+<summary>Click here for installation instructions</summary>
 
 <br>
 
-1.  **Clonează repository-ul:**
+1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/numele-tau/orafixa.git](https://github.com/numele-tau/orafixa.git)
+    git clone [https://github.com/your-username/orafixa.git](https://github.com/your-username/orafixa.git)
     cd orafixa
     ```
-2.  **Instalează dependențele:**
+2.  **Install dependencies:**
     ```bash
     npm install
     ```
-3.  **Configurează mediul:**
-    Creează un fișier `.env` pornind de la `.env.example` și adaugă cheile tale de la Supabase.
+3.  **Configure the environment:**
+    Create a `.env` file from the `env.example` template and add your Supabase keys.
     ```env
-    PUBLIC_SUPABASE_URL="url-ul-tau-supabase"
-    PUBLIC_SUPABASE_ANON_KEY="cheia-ta-anon-supabase"
+    PUBLIC_SUPABASE_URL="your-supabase-url"
+    PUBLIC_SUPABASE_ANON_KEY="your-supabase-anon-key"
     ```
-4.  **Pornește serverul:**
+4.  **Start the development server:**
     ```bash
     npm run dev
     ```
+The application will be available at `http://localhost:5173`.
 
 </details>
 
 ---
 
 <p align="center">
-  <small>Dezvoltat în România. 🇷🇴</small>
+  <small>Developed in Romania. 🇷🇴</small>
 </p>
