@@ -1,3 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;1,300&display=swap');
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+
+html {
+	scroll-behavior: smooth;
+}
+* {
+	font-family: 'Lato', sans-serif !important;
+}
