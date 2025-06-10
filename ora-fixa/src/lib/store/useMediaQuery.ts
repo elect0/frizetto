@@ -1,8 +1,6 @@
 import { readable } from 'svelte/store';
 
-// Funcția ta useMediaQuery
 function useMediaQuery(query: string) {
-	// Verificarea 'browser-only' este deja în funcție, dar o adăugăm și aici pentru siguranță.
 	if (typeof window === 'undefined') {
 		return readable(false);
 	}
@@ -16,6 +14,4 @@ function useMediaQuery(query: string) {
 	});
 }
 
-// Aici creăm store-ul pe care îl vom folosi în toată aplicația.
-// 768px este un breakpoint standard pentru tablete/mobil.
 export const isMobile = useMediaQuery('(max-width: 768px)');
