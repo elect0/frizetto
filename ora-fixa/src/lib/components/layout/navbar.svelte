@@ -35,7 +35,7 @@
 	}
 </script>
 
-<header class="fixed top-0 left-0 right-0 z-20 p-4 md:p-6">
+<header class="top-0 left-0 right-0 z-20 p-4 md:p-6">
 	<div class="container mx-auto flex justify-between items-center">
 		<a href="/" class="text-lg md:text-2xl font-bold uppercase tracking-wider text-white">
 			Barber

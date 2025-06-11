@@ -14,21 +14,6 @@
     </div>
 
     <div class="relative h-full flex flex-col z-10">
-      <!-- <header class="p-4 md:p-6">
-        <div class="container mx-auto flex justify-between items-center">
-          <div class="flex items-center space-x-10">
-            <a href="/" class="text-lg md:text-2xl font-bold uppercase tracking-wider text-white">Barber</a>
-            <nav class="hidden md:flex items-center space-x-6">
-              <a href="/despre" class="text-sm md:text-xl text-white/80 hover:text-white transition-colors">Despre Noi</a>
-              <a href="#preturi" class="text-sm md:text-xl text-white/80 hover:text-white transition-colors">Servicii & Tarife</a>
-              <a href="#testimoniale" class="text-sm md:text-xl text-white/80 hover:text-white transition-colors">Recenzii</a>
-            </nav>
-          </div>
-          <div class="hidden md:block">
-            <a href="/contact" class="text-sm md:text-xl text-white/80 hover:text-white transition-colors">Contact</a>
-          </div>
-        </div>
-      </header> -->
       <Navbar />
 
       <main class="flex-grow flex items-center">

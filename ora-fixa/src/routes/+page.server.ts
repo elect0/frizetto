@@ -1,7 +1,7 @@
-import { supabase } from '$lib/supabaseClient';
+// import { supabase } from '$lib/supabaseClient';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async ({ locals: { supabase } }) => {
 	console.log('Se incarca serviciile de pe server.');
 
 	const { data: services, error } = await supabase.from('services').select('*');
