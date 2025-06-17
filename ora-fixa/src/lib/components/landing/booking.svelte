@@ -2,7 +2,7 @@
 
 </script>
 
-<section class="py-20 md:py-28 bg-[#2c2c2c]">
+<section class="py-20 md:py-28 bg-[#181818]">
 
     <div class="container mx-auto px-4">
       <h2 class="px-4 md:px-0 text-5xl mb-12 text-white">Programeaza-te!</h2>

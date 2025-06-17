@@ -1,25 +1,18 @@
-// src/routes/(admin)/+layout.server.ts
 import { redirect } from '@sveltejs/kit';
 
 export const load = async ({ locals: { supabase } }) => {
 	const {
-		data: { session },
+		data: { user },
 		error
-	} = await supabase.auth.getSession();
+	} = await supabase.auth.getUser();
 
-	if (!session) {
+	if (!user) {
 		throw redirect(303, '/auth');
 	}
 
-	const { data: profile } = await supabase
-		.from('profiles')
-		.select('is_admin')
-		.eq('id', session.user.id)
-		.single();
+	const { data: profile } = await supabase.from('profiles').select('*').eq('id', user.id).single();
 
 	if (!profile || !profile.is_admin) {
-		throw redirect(303, '/'); // Sau către o pagină de "acces interzis"
+		throw redirect(303, '/');
 	}
-
-	return { session, profile };
 };

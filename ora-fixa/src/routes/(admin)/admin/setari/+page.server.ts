@@ -1,5 +1,4 @@
-// import type { PageServerLoad, Actions } from './$types';
-import type { ActionData } from './$types';
+import type { PageServerLoad, Actions } from './$types';
 import { fail, error as SvelteKitError } from '@sveltejs/kit';
 
 export const load: PageServerLoad = async ({ locals: { supabase } }) => {
