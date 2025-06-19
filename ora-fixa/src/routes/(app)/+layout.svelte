@@ -1,5 +1,4 @@
 <script lang="ts">
-	// import '../app.css';
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { session as sessionStore } from '$lib/store/session';
