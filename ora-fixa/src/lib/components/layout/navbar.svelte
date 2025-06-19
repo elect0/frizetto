@@ -1,5 +1,17 @@
 <script lang="ts">
-	import { session } from '$lib/stores';
+	import { session } from '$lib/store/session';
+
+	import { Button } from '$lib/components/ui/button';
+	import { Badge } from '$lib/components/ui/badge';
+	import { Avatar, AvatarFallback } from '$lib/components/ui/avatar';
+	import {
+		DropdownMenu,
+		DropdownMenuContent,
+		DropdownMenuItem,
+		DropdownMenuSeparator,
+		DropdownMenuTrigger
+	} from '$lib/components/ui/dropdown-menu';
+
 	import {
 		Scissors,
 		User,
@@ -18,9 +30,9 @@
 		icon: any;
 	}
 
-	$: isAuthenticated = $session !== null;
-	$: userInitials = $session?.user?.email?.charAt(0).toUpperCase() || 'U';
-	$: userFirstName = $session?.user?.email?.split('@')[0] || 'User';
+	$: isAuthenticated = $session !== null && $session !== undefined;
+	$: userInitials = $session?.user?.email?.charAt(0).toUpperCase() || '?';
+	$: userName = $session?.user?.email?.split('@')[0] || 'Oaspete';
 
 	let isMobileMenuOpen = false;
 
@@ -78,12 +90,12 @@
 						href="/inregistrare"
 						class="hidden rounded-xl bg-amber-600 px-6 py-2 font-semibold text-white shadow-lg shadow-amber-600/25 transition-all duration-300 hover:scale-105 hover:bg-amber-700 hover:shadow-amber-600/40 md:flex"
 					>
-						Creaza Cont</a
+						Creeaza Cont</a
 					>
 				{:else}
-					<div class="relative hidden md:block">
-						<a
-							href="/cont"
+					<!-- <div class="relative hidden md:block">
+						<button
+							on:click={toggleDropdown}
 							class="flex items-center space-x-3 rounded-xl px-4 py-2 transition-all duration-300 hover:scale-105 hover:bg-stone-100"
 						>
 							<div
@@ -94,9 +106,51 @@
 								</span>
 							</div>
 							<span class="text-sm font-semibold text-stone-700">
-								Salut, {userFirstName}
+								Salut, {userName}
 							</span>
-						</a>
+						</button>
+					</div> -->
+					<div class="hidden md:block">
+						<DropdownMenu>
+							<DropdownMenuTrigger>
+								{#snippet child({ props })}
+									<Button
+										variant="ghost"
+										{...props}
+										class="flex items-center space-x-3 px-4 py-2 transition-all duration-300 hover:scale-105 hover:bg-stone-100"
+									>
+										<Avatar class="h-10 w-10 border-2 border-amber-600 shadow-lg">
+											<AvatarFallback class="bg-amber-600 text-white">
+												{userInitials}
+											</AvatarFallback>
+										</Avatar>
+										<span class="text-sm font-semibold text-stone-700">Salut, {userName}</span>
+									</Button>
+								{/snippet}
+							</DropdownMenuTrigger>
+							<DropdownMenuContent
+								align="center"
+								class="ml-5 mt-2 w-56 border-2 border-stone-100 shadow-xl"
+							>
+								<DropdownMenuItem class="cursor-pointer py-3 hover:bg-amber-50">
+									<CalendarDays class="mr-3 h-5 w-5 text-amber-600" />
+									<span class="font-medium"> Programarile mele </span>
+								</DropdownMenuItem>
+								<DropdownMenuItem class="cursor-pointer py-3 hover:bg-amber-50">
+									<User class="mr-3 h-5 w-5 text-amber-600" />
+									<span class="font-medium"> Contul meu </span>
+								</DropdownMenuItem>
+								<DropdownMenuSeparator />
+								<DropdownMenuItem class="cursor-pointer py-3 text-red-600 hover:bg-red-50">
+									<form method="POST" action="/logout">
+										<button type="submit" class="flex flex-row items-center">
+											<LogOut class="mr-5 h-5 w-5 text-amber-600" />
+											<span class="font-medium"> Deconectare </span>
+										</button>
+									</form>
+								</DropdownMenuItem>
+							</DropdownMenuContent>
+						</DropdownMenu>
 					</div>
 				{/if}
 				<button
@@ -151,14 +205,12 @@
 									<div
 										class="mx-2 flex items-center rounded-xl border border-amber-200 bg-gradient-to-r from-amber-50 to-stone-50 px-4 py-3"
 									>
-										<div
-											class="mr-4 flex h-10 w-10 items-center justify-center rounded-full border-2 border-amber-600 bg-amber-600 shadow-lg"
-										>
-											<span class="text-sm font-bold text-white">{userInitials}</span>
-										</div>
-										<span class="font-bold text-stone-800">
-											Salut, {userFirstName}
-										</span>
+										<Avatar class="mr-4 h-10 w-10 border-2 border-amber-600 shadow-lg">
+											<AvatarFallback class="bg-amber-600 text-sm font-bold text-white">
+												{userInitials}
+											</AvatarFallback>
+										</Avatar>
+										<span class="font-bold text-stone-800">Salut, {userName}</span>
 									</div>
 									<a
 										href="/cont"
@@ -178,15 +230,16 @@
 										/>
 										Contul meu
 									</a>
-									<a
-										href="/logout"
-										class="group flex w-full items-center rounded-xl px-4 py-4 font-semibold text-stone-600 transition-all duration-300 hover:bg-amber-50 hover:text-amber-600"
-									>
-										<LogOut
-											class="mr-4 h-5 w-5 text-amber-600 transition-transform group-hover:scale-110"
-										/>
-										Deconectare
-									</a>
+									<form method="POST" action="/logout">
+										<button
+											class="group flex w-full items-center rounded-xl px-4 py-4 font-semibold text-stone-600 transition-all duration-300 hover:bg-amber-50 hover:text-amber-600"
+										>
+											<LogOut
+												class="mr-4 h-5 w-5 text-amber-600 transition-transform group-hover:scale-110"
+											/>
+											Deconectare
+										</button>
+									</form>
 								</div>
 							{/if}
 						</div>
