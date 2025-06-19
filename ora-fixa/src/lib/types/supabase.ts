@@ -1,0 +1,3 @@
+import type {Database} from '$lib/database.types'
+
+export type Service = Database['public']['Tables']['services']['Row']
