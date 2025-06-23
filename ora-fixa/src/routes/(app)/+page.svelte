@@ -6,6 +6,7 @@
 	import Testimonials from '$lib/components/landing/testimonials.svelte';
 	import Navbar from '$lib/components/layout/navbar.svelte';
 	export let data;
+	console.log(data.form);
 	const { services } = data;
 </script>
 
@@ -13,4 +14,10 @@
 <About />
 <Services {services} />
 <Testimonials />
-<Booking {services} />
+{#if data.form && data.services}
+	<Booking services={data.services} form={data.form} />
+{:else}
+	<div class="py-24 text-center">
+		<p class="animate-pulse">Se încarcă modulul de programare...</p>
+	</div>
+{/if}
