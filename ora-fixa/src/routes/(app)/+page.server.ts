@@ -1,4 +1,4 @@
-import { superValidate } from 'sveltekit-superforms/server';
+import { message, superValidate } from 'sveltekit-superforms/server';
 import type { Actions, PageServerLoad } from './$types';
 import { bookingSchema } from '$lib/schemas';
 import { zod } from 'sveltekit-superforms/adapters';
@@ -54,12 +54,12 @@ export const actions: Actions = {
 		const { error } = await supabase.from('appointments').insert(newAppointment);
 		if (error) {
 			console.error('Eroare la INSERT programare:', error);
-			return fail(500, {
-				message:
-					'A apărut o eroare la salvarea programării. Este posibil ca intervalul să fi fost ocupat. Te rugăm să încerci din nou.'
-			});
+			return message(form, 'Programarea ta nu a fost confirmată! Trebuie sa fii inregistrat.');
 		}
 
-		throw redirect(303, '/programarile-mele');
+		return message(
+			form,
+			'Programarea ta a fost confirmată cu succes! Ai primit detaliile pe email.'
+		);
 	}
 };

@@ -20,6 +20,9 @@
 
 	// 	return () => data.subscription.unsubscribe();
 	// });
+
+	import { Toaster } from '$lib/components/ui/sonner/index.js';
 </script>
 
 {@render children()}
+<Toaster theme="light" richColors position="top-right" />

@@ -23,6 +23,7 @@
 	import { superForm, type SuperValidated } from 'sveltekit-superforms/client';
 	import type { bookingSchema } from '$lib/schemas';
 	import type { z } from 'zod';
+	import { toast } from 'svelte-sonner';
 
 	let { services, form: initialForm } = $props<{
 		services: Service[];
@@ -32,7 +33,16 @@
 	// const services = data.services;
 
 	const { form, errors, enhance, submitting, message } = superForm(initialForm, {
-		id: 'booking-form'
+		id: 'booking-form',
+		onUpdated: ({ form: a }) => {
+			if (a.message) {
+				if (a.message.includes('succes')) {
+					toast.success(a.message);
+				} else {
+					toast.error('Eroare', { description: a.message });
+				}
+			}
+		}
 	});
 
 	// let selectedServiceId: string | '' = $state('');
@@ -339,7 +349,7 @@
 										<p class="text-xs text-stone-500">Inteleg ca pot anula telefonic.</p>
 									</div>
 								</div>
-								<Button type="submit" class="w-full text-white">Confirma</Button>
+								<Button type="submit" class="text-white">Confirma Programarea</Button>
 							{/if}
 						</form>
 					</div>
