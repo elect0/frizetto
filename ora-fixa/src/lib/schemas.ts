@@ -25,3 +25,8 @@ export const bookingSchema = z.object({
 		errorMap: () => ({ message: 'Trebuie sa confirmi angajamentul pentru a continua.' })
 	})
 });
+
+export const profileSchema = z.object({
+	fullName: z.string().nonempty('Te rugăm să completezi acest câmp.'),
+	phoneNumber: z.string().min(10, 'Numărul de telefon trebuie să conțină cel puțin 10 cifre.')
+});

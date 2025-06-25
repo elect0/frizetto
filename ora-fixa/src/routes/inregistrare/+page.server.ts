@@ -31,6 +31,9 @@ export const actions: Actions = {
 			return fail(500, { form, message: 'Could not create user. Please try again.' });
 		}
 
-		return message(form, 'Contul tau a fost creat cu succes! Ai primit detaliile pe email.');
+		return message(
+			form,
+			'Contul tau a fost creat cu succes! Emailul de confirmare a fost trimis! Confirmă-l și autentifică-te pentru a completa profilul.'
+		);
 	}
 };

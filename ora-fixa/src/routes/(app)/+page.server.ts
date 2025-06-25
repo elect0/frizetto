@@ -22,8 +22,6 @@ export const actions: Actions = {
 	default: async ({ request, locals: { supabase, safeGetSession } }) => {
 		const form = await superValidate(request, zod(bookingSchema));
 
-		console.log('PULA', form);
-
 		if (!form.valid) {
 			return fail(400, { form });
 		}
