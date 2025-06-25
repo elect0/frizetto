@@ -1,0 +1,108 @@
+<script lang="ts">
+	import { Badge } from '$lib/components/ui/badge';
+	import { MapPin, Clock, Phone, Instagram, Facebook } from 'lucide-svelte';
+
+	const contactInfo = {
+		address: {
+			street: 'Strada Principală nr. 45',
+			city: 'Băilești, Dolj'
+		},
+		schedule: {
+			weekdays: 'Luni - Vineri: 09:00 - 19:00',
+			saturday: 'Sâmbătă: 09:00 - 17:00',
+			sunday: 'Duminică: Închis'
+		},
+		phone: '0723.456.789',
+		whatsapp: true,
+		instagram: '#',
+		facebook: '#'
+	};
+</script>
+
+<section id="contact" class="bg-stone-900 py-24 text-white">
+	<div class="container mx-auto px-4 lg:px-6">
+		<div class="grid grid-cols-1 gap-1 lg:grid-cols-2">
+			<div class="space-y-8">
+				<Badge class="border-0 bg-amber-600 px-4 py-2 text-white">Locatie & Contact</Badge>
+				<div class="space-y-6">
+					<h2 class="text-4xl font-bold">Vino sa ne cunoastem</h2>
+					<p class="text-lg text-stone-300">
+						Te asteptam in salonul nostru din centrul Bailestiului pentru o experienta de grooming
+						de neuitat
+					</p>
+				</div>
+				<div class="space-y-6">
+					<div class="flex items-start gap-4">
+						<div
+							class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-amber-600"
+						>
+							<MapPin class="h-6 w-6 text-white" />
+						</div>
+						<div>
+							<div class="text-lg font-semibold">Adresa</div>
+							<div class="text-stone-300">{contactInfo.address.street}</div>
+							<div class="text-stone-300">
+								{contactInfo.address.city}
+							</div>
+						</div>
+					</div>
+					<div class="flex items-start gap-4">
+						<div
+							class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-amber-600"
+						>
+							<Clock class="h-6 w-6 text-white" />
+						</div>
+						<div>
+							<div class="text-lg font-semibold">Program</div>
+							<div class="text-stone-300">{contactInfo.schedule.weekdays}</div>
+							<div class="text-stone-300">{contactInfo.schedule.saturday}</div>
+							<div class="text-stone-300">{contactInfo.schedule.sunday}</div>
+						</div>
+					</div>
+					<div class="flex items-start gap-4">
+						<div
+							class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-amber-600"
+						>
+							<Phone class="h-6 w-6 text-white" />
+						</div>
+						<div>
+							<div class="text-lg font-semibold">Telefon</div>
+							<div class="text-stone-300">{contactInfo.phone}</div>
+							{#if contactInfo.whatsapp}
+								<div class="text-sm text-stone-400">Whatsapp disponibil</div>
+							{/if}
+						</div>
+					</div>
+				</div>
+				<div class="pt-6">
+					<div class="mb-4 text-lg font-semibold">Urmareste-ne</div>
+					<div class="flex gap-4">
+						<a
+							href={contactInfo.instagram || '#'}
+							class="flex h-12 w-12 items-center justify-center rounded-xl bg-stone-800 transition-colors hover:bg-amber-600"
+						>
+							<Instagram class="h-6 w-6" />
+						</a>
+						<a
+							href={contactInfo.facebook || '#'}
+							class="flex h-12 w-12 items-center justify-center rounded-xl bg-stone-800 transition-colors hover:bg-amber-600"
+						>
+							<Facebook class="h-6 w-6" />
+						</a>
+					</div>
+				</div>
+			</div>
+			<div class="relative">
+				<div
+					class="flex h-[500px] items-center justify-center rounded-2xl border border-stone-700 bg-stone-800"
+				>
+					<div class="text-center">
+						<MapPin class="mx-auto mb-4 h-16 w-16 text-amber-600" />
+						<div class="mb-2 text-xl font-semibold">Harta Interactiva</div>
+						<div class="text-stone-400">Google Maps va fi integrata aici</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

@@ -57,9 +57,6 @@ export const actions: Actions = {
 			return message(form, 'Programarea ta nu a fost confirmată! Trebuie sa fii inregistrat.');
 		}
 
-		return message(
-			form,
-			'Programarea ta a fost confirmată cu succes! Ai primit detaliile pe email.'
-		);
+		return { form };
 	}
 };

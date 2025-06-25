@@ -4,10 +4,13 @@ import { fail, redirect } from '@sveltejs/kit';
 import { zod } from 'sveltekit-superforms/adapters';
 
 import { superValidate } from 'sveltekit-superforms';
+import { message } from 'sveltekit-superforms';
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async (event) => {
+	const session = event.locals.session;
+
 	const form = await superValidate(zod(LoginSchema));
-	return { form };
+	return { form, session };
 };
 
 export const actions = {
@@ -29,6 +32,6 @@ export const actions = {
 			return fail(500, { form, message: 'Could not login in user. Please try again.' });
 		}
 
-		throw redirect(303, '/');
+		return message(form, 'Te-ai autentificat cu succes!');
 	}
 } satisfies Actions;

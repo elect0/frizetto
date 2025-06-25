@@ -15,7 +15,9 @@
 					/>
 				</div>
 
-				<div class="absolute -right-6 -top-6 rounded-2xl bg-amber-600 p-4 shadow-xl">
+				<div
+					class="absolute -right-4 -top-4 rounded-2xl bg-amber-600 p-4 shadow-xl md:-right-6 md:-top-6"
+				>
 					<Sparkles class="h-8 w-8 text-white" />
 				</div>
 			</div>

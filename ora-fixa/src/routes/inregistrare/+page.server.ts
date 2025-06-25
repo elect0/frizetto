@@ -1,18 +1,23 @@
 import { registerSchema } from '$lib/schemas';
-import type { Actions, PageServerLoad } from './$types';
+import type { Actions } from './$types';
+import type { PageServerLoad } from './$types';
 import { fail, redirect } from '@sveltejs/kit';
 import { zod } from 'sveltekit-superforms/adapters';
 
-import { superValidate } from 'sveltekit-superforms';
+import { message, superValidate } from 'sveltekit-superforms';
 
-export const load: PageServerLoad = async () => {
+export const load: PageServerLoad = async (event) => {
+	const session = event.locals.session;
+
 	const form = await superValidate(zod(registerSchema));
-	return { form };
+	return { form, session };
 };
 
 export const actions: Actions = {
 	default: async ({ request, locals: { supabase } }) => {
 		const form = await superValidate(request, zod(registerSchema));
+
+		console.log(form);
 		if (!form.valid) {
 			return fail(400, { form });
 		}
@@ -26,7 +31,6 @@ export const actions: Actions = {
 			return fail(500, { form, message: 'Could not create user. Please try again.' });
 		}
 
-		console.log('Account created');
-		return { form, message: 'Account created! Please check your email.' };
+		return message(form, 'Contul tau a fost creat cu succes! Ai primit detaliile pe email.');
 	}
 };
