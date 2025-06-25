@@ -2,12 +2,24 @@
 	import type { Service } from '$lib/types/supabase';
 	import { Badge } from '$lib/components/ui/badge';
 	import { Card, CardContent } from '$lib/components/ui/card';
+	import { onMount } from 'svelte';
+	import { gsap } from 'gsap';
 	export let services: Service[];
+
+	onMount(() => {
+		gsap.to('#pachet-complet', {
+			scale: 1.01,
+			duration: 1.5,
+			ease: 'power1.inOut',
+			repeat: -1,
+			yoyo: true
+		});
+	});
 </script>
 
 <section id="servicii" class="bg-stone-50 py-24">
 	<div class="container mx-auto px-4 lg:px-6">
-		<div class="mb-1 text-center">
+		<div class="mb-10 text-center">
 			<Badge class="mb-6 border-amber-200 bg-amber-600/10 px-4 py-2 text-amber-700">
 				Servicii & Tarife
 			</Badge>
@@ -23,7 +35,8 @@
 						<div class="space-y-6">
 							{#each services as service}
 								<div
-									class="flex items-center justify-between border-b border-stone-100 py-4 last:border-b-0"
+									id={service.name === 'Tuns Complet' ? 'pachet-complet' : ''}
+									class="flex items-center justify-between border-b border-stone-100 py-2 last:border-b-0"
 								>
 									<div class="flex-1">
 										<h3 class="text-lg font-semibold text-stone-900">{service.name}</h3>

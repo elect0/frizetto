@@ -1,12 +1,33 @@
 <script lang="ts">
 	import { Badge } from '$lib/components/ui/badge';
 	import { Sparkles } from 'lucide-svelte';
+	import { onMount } from 'svelte';
+	import { gsap } from 'gsap';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+
+	onMount(() => {
+		gsap.registerPlugin(ScrollTrigger);
+
+		gsap.from('#despre .about-element', {
+			y: 75,
+			opacity: 0,
+			duration: 0.8,
+			ease: 'power3.out',
+			stagger: 0.2,
+			// Aici este magia ScrollTrigger
+			scrollTrigger: {
+				trigger: '#despre', // Animația pornește când secțiunea #despre intră în ecran
+				start: 'top 80%', // Pornește când 80% din înălțimea ecranului a ajuns la partea de sus a secțiunii
+				toggleActions: 'play none none none' // Rulează animația o singură dată la intrare
+			}
+		});
+	});
 </script>
 
 <section id="despre" class="bg-white py-24">
 	<div class="container mx-auto px-4 lg:px-6">
 		<div class="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
-			<div class="relative order-2 lg:order-1">
+			<div class="about-element relative order-2 lg:order-1">
 				<div class="relative overflow-hidden rounded-3xl shadow-2xl">
 					<img
 						src="https://images.pexels.com/photos/7519013/pexels-photo-7519013.jpeg"
@@ -21,7 +42,7 @@
 					<Sparkles class="h-8 w-8 text-white" />
 				</div>
 			</div>
-			<div class="order-1 space-y-8 lg:order-2">
+			<div class="about-element order-1 space-y-8 lg:order-2">
 				<Badge class="border-stone-200 bg-stone-100 px-4 py-2 text-stone-700">Despre Artizan</Badge>
 				<div class="space-y-6">
 					<h2 class="text-4xl font-bold leading-tight text-stone-900 md:text-5xl">

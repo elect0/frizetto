@@ -2,6 +2,18 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { Badge } from '$lib/components/ui/badge/index.js';
 	import { Award, Calendar, ChevronRight, Star, Users } from 'lucide-svelte';
+	import { onMount } from 'svelte';
+	import { gsap } from 'gsap';
+	onMount(() => {
+		gsap.from('.hero-element', {
+			y: 50,
+			opacity: 0,
+			duration: 0.8,
+			ease: 'power3.out',
+			stagger: 0.2,
+			delay: 0.5
+		});
+	});
 </script>
 
 <section id="hero" class="relative flex min-h-screen items-center justify-center overflow-hidden">
@@ -11,14 +23,14 @@
 	></div>
 	<div class="container relative z-10 mx-auto px-4 pt-28 lg:px-6">
 		<div class="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
-			<div class="space-y-8 text-center lg:text-left">
+			<div class="hero-element space-y-8 text-center lg:text-left">
 				<Badge
 					class="border-amber-200 bg-amber-600/10 px-4 py-2 text-sm font-medium text-amber-700"
 				>
 					<Award class="mr-2 h-4 w-4" />
 					Maiestrie in arta frizeriei
 				</Badge>
-				<div class="space-y-6">
+				<div class="hero-element space-y-6">
 					<h1 class="text-6xl font-black leading-[0.9] tracking-tight text-stone-900 md:text-7xl">
 						STILUL{' '}
 						<span
@@ -35,7 +47,7 @@
 						<span class="text-800 font-semibold">Bailesti</span>
 					</p>
 				</div>
-				<div class="pt-4">
+				<div class="hero-element pt-4">
 					<a
 						href="#booking"
 						class="group inline-flex items-center justify-center rounded-2xl bg-amber-600 px-12 py-3 text-lg text-white shadow-xl shadow-amber-600/25 transition-all duration-300 hover:bg-amber-700 hover:shadow-2xl hover:shadow-amber-600/30"
@@ -45,7 +57,9 @@
 						<ChevronRight class="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
 					</a>
 				</div>
-				<div class="flex items-center justify-center gap-6 pt-4 text-stone-500 lg:justify-start">
+				<div
+					class="hero-element flex items-center justify-center gap-6 pt-4 text-stone-500 lg:justify-start"
+				>
 					<div class="flex items-center gap-2">
 						<Users class="h-5 w-5 text-amber-600" />
 						<span class="text-sm">500+ Clienti multumiti</span>
@@ -57,7 +71,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="relative">
+			<div class="hero-element relative">
 				<div
 					class="transform-rotate-3 absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-600/10 to-stone-600/10 blur-sm"
 				></div>

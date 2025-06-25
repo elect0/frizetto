@@ -22,7 +22,7 @@
 			if (result.type === 'success' && result.data?.form.message) {
 				toast.success('Felicitări!', { description: result.data.form.message });
 				setTimeout(() => {
-					goto('/cont/completeaza-profilul', { invalidateAll: true });
+					goto('/', { invalidateAll: true });
 				}, 1000);
 			} else if (result.type === 'failure') {
 				toast.error('A apărut o eroare', { description: 'pula' });
