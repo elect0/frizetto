@@ -10,10 +10,8 @@ export const load: PageServerLoad = async ({ locals: { supabase } }) => {
 	const { data: services, error } = await supabase.from('services').select('*');
 	if (error) {
 		console.error('Eroare la preluarea serviciilor:', error);
-		return { services: [] }; // Returnează un array gol în caz de eroare
+		return { services: [] };
 	}
-
-	console.log('✅ [SERVER LOG]: Formularul creat pe server este:', form);
 
 	return { form, services: services ?? [] };
 };
@@ -32,11 +30,16 @@ export const actions: Actions = {
 			return fail(401, { message: 'Trebuie sa fii autentificat pentru a face o programare.' });
 		}
 
-		// const formData = await request.formData();
-		// const serviceId = formData.get('serviceId') as string;
-		// const startTimeISO = formData.get('startTime') as string;
-		// const durationStr = formData.get('duration') as string;
-		// const hasAgreed = formData.get('hasAgreedToPolicy');
+		const { data: profile } = await supabase
+			.from('profiles')
+			.select('full_name, phone')
+			.eq('id', session.user?.id)
+			.single();
+		const isProfileIncomplete = !profile?.full_name || !profile?.phone;
+
+		if (isProfileIncomplete) {
+			throw redirect(303, '/cont/completeaza-profilul');
+		}
 
 		const startTime = new Date(form.data.startTime);
 		const endTime = new Date(startTime.getTime() + form.data.duration * 60 * 1000);
@@ -50,6 +53,7 @@ export const actions: Actions = {
 		};
 
 		const { error } = await supabase.from('appointments').insert(newAppointment);
+
 		if (error) {
 			console.error('Eroare la INSERT programare:', error);
 			return message(form, 'Programarea ta nu a fost confirmată! Trebuie sa fii inregistrat.');

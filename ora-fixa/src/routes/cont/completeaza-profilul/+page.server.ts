@@ -25,19 +25,19 @@ export const actions: Actions = {
 			return fail(400, { form });
 		}
 
-		const { data: updatedProfile, error } = await supabase
+		const { error, count } = await supabase
 			.from('profiles')
 			.update({
 				full_name: form.data.fullName,
 				phone: form.data.phoneNumber
 			})
-			.eq('id', session.user?.id)
-			.select();
+			.eq('id', session.user?.id);
+
 		if (error) {
 			return fail(400, { form });
 		}
 
-		console.log(updatedProfile);
+		console.log(count);
 
 		return message(form, 'Detaliile contului tau au fost modificate cu succes!');
 	}
