@@ -148,7 +148,7 @@
 				<Badge class="mb-6 border-0 bg-amber-600 px-4 py-2 text-white">Programare Online</Badge>
 				<h2 class="mb-6 text-4xl font-bold text-stone-900 md:text-5xl">Alege o data si o ora</h2>
 				<p class="text-xl text-stone-600">
-					Procesul de rezervare este simplu si rapid. In doar 3 pasi esti programat.
+					Procesul de rezervare este simplu si rapid. In doar 2 pasi esti programat.
 				</p>
 			</div>
 			<Accordion type="single" class="rounded-lg border-stone-200 bg-white shadow-2xl">

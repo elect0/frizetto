@@ -39,7 +39,7 @@
 							TĂU
 						</span>
 						<span class="mt-2 block text-4xl font-light text-stone-600 md:text-5xl"
-							>la ora fixă</span
+							>la Cip Barbershop</span
 						>
 					</h1>
 					<p class="max-w-xl text-xl leading-relaxed text-stone-600 md:text-2xl">

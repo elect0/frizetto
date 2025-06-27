@@ -62,7 +62,7 @@
 						href="#hero"
 						class="text-2xl font-black text-stone-900 transition-all duration-300 hover:scale-105 hover:text-amber-600"
 					>
-						OraFixa
+						Cip Barbershop
 					</a>
 					<span class="text-xs font-medium text-stone-500">Bailesti</span>
 				</div>
