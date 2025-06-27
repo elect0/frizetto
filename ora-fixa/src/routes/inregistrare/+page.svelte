@@ -25,7 +25,7 @@
 					goto('/', { invalidateAll: true });
 				}, 1000);
 			} else if (result.type === 'failure') {
-				toast.error('A apărut o eroare', { description: 'pula' });
+				toast.error('A apărut o eroare', { description: 'Completeaza formularu corect.' });
 			}
 		},
 		resetForm: true
@@ -38,11 +38,7 @@
 
 <div class="w-full lg:grid lg:min-h-screen lg:grid-cols-2">
 	<div class="bg-muted relative hidden lg:block">
-		<img
-			src="/barber-signup-bg.jpg"
-			alt="Interior barbershop"
-			class="h-screen w-full object-cover"
-		/>
+		<img src="/images/auth.jpg" alt="Interior barbershop" class="h-screen w-full object-cover" />
 		<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-black/10"></div>
 	</div>
 

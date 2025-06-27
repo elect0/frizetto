@@ -79,7 +79,7 @@
 					class="relative overflow-hidden rounded-3xl border-8 border-white shadow-2xl shadow-stone-900/20"
 				>
 					<img
-						src="https://images.pexels.com/photos/2035311/pexels-photo-2035311.jpeg"
+						src="/images/hero.jpg"
 						alt="Frizer profesionist la lucru"
 						class="h-[600px] w-full object-cover"
 					/>

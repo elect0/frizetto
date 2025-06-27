@@ -55,6 +55,6 @@ export const actions: Actions = {
 			return message(form, 'Programarea ta nu a fost confirmată! Trebuie sa fii inregistrat.');
 		}
 
-		return { form };
+		return message(form, 'Felicitari! Te-ai programat cu sucess!');
 	}
 };

@@ -1,11 +1,17 @@
 <script lang="ts">
-
+	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
+	import AppSidebar from '$lib/components/app-sidebar.svelte';
 </script>
+
 <div>
-    <h1 class="text-2xl font-bold p-4 bg-gray-200">
-        Panou de administrare
-    </h1>
-    <main class="p-4">
-        <slot />
-    </main>
+	<Sidebar.Provider
+		style="--sidebar-width: calc(var(--spacing) * 72); --header-height: calc(var(--spacing) * 12);"
+	>
+		<AppSidebar variant="inset" />
+		<Sidebar.Inset>
+			<main class="p-4">
+				<slot />
+			</main>
+		</Sidebar.Inset>
+	</Sidebar.Provider>
 </div>

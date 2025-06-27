@@ -24,7 +24,7 @@
 				}, 1000);
 			} else if (result.type === 'failure') {
 				toast.error('A apărut o eroare', {
-					description: 'Va rugam sa completati formular corect.'
+					description: 'Va rugam sa completati formularul corect.'
 				});
 			}
 		},
@@ -39,11 +39,7 @@
 <div class="w-full lg:grid lg:min-h-screen lg:grid-cols-2">
 	<div class="bg-muted relative hidden lg:block">
 		<!-- TO DO: Not render image on mobile -->
-		<img
-			src="/barber-signup-bg.jpg"
-			alt="Interior barbershop"
-			class="h-screen w-full object-cover"
-		/>
+		<img src="/images/auth.jpg" alt="Interior barbershop" class="h-screen w-full object-cover" />
 		<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-black/10"></div>
 	</div>
 
@@ -104,7 +100,10 @@
 				<Card.Footer>
 					<div class="w-full text-center text-sm">
 						Nu ai inca un cont?
-						<a href="/login" class="font-medium text-amber-700 underline hover:text-amber-800">
+						<a
+							href="/inregistrare"
+							class="font-medium text-amber-700 underline hover:text-amber-800"
+						>
 							Inregistreaza-te aici
 						</a>
 					</div>

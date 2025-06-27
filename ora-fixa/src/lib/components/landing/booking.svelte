@@ -39,7 +39,7 @@
 				if (a.message.includes('succes')) {
 					toast.success(a.message);
 				} else {
-					toast.error('Eroare', { description: a.message });
+					toast.success('Felicitari!', { description: a.message });
 				}
 			}
 		}

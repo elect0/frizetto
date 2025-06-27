@@ -1,3 +1,7 @@
+html {
+	scroll-behavior: smooth !important;
+}
+
 @import 'tailwindcss';
 
 @import 'tw-animate-css';
@@ -12,8 +16,8 @@
 	--card-foreground: oklch(0.147 0.004 49.25);
 	--popover: oklch(1 0 0);
 	--popover-foreground: oklch(0.147 0.004 49.25);
-	--primary: oklch(0.708 0.151 77.2);
-	--primary-foreground: oklch(0.29 0.05 70.8);
+	--primary: oklch(0.6638 0.213 55.7);
+	--primary-foreground: oklch(0.95 0 0);
 	--secondary: oklch(0.97 0.001 106.424);
 	--secondary-foreground: oklch(0.216 0.006 56.043);
 	--muted: oklch(0.97 0.001 106.424);

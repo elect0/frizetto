@@ -25,12 +25,12 @@
 	];
 
 	let pictures = [
-		{ url: 'https://images.pexels.com/photos/3998429/pexels-photo-3998429.jpeg' },
-		{ url: 'https://images.pexels.com/photos/3998429/pexels-photo-3998429.jpeg' },
-		{ url: 'https://images.pexels.com/photos/3998429/pexels-photo-3998429.jpeg' },
-		{ url: 'https://images.pexels.com/photos/3998429/pexels-photo-3998429.jpeg' },
-		{ url: 'https://images.pexels.com/photos/3998429/pexels-photo-3998429.jpeg' },
-		{ url: 'https://images.pexels.com/photos/3998429/pexels-photo-3998429.jpeg' }
+		{ url: '/images/taper.jpg' },
+		{ url: '/images/taper.jpg' },
+		{ url: '/images/taper.jpg' },
+		{ url: '/images/taper.jpg' },
+		{ url: '/images/taper.jpg' },
+		{ url: '/images/taper.jpg' }
 	];
 </script>
 

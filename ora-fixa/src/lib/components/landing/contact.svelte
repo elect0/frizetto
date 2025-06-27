@@ -93,15 +93,22 @@
 				</div>
 			</div>
 			<div class="relative">
-				<div
+				<!-- <div
 					class="flex h-[500px] items-center justify-center rounded-2xl border border-stone-700 bg-stone-800"
-				>
-					<div class="text-center">
-						<MapPin class="mx-auto mb-4 h-16 w-16 text-amber-600" />
-						<div class="mb-2 text-xl font-semibold">Harta Interactiva</div>
-						<div class="text-stone-400">Google Maps va fi integrata aici</div>
-					</div>
+				> -->
+				<div class="mt-4 flex items-center justify-center">
+					<iframe
+						title="locatie"
+						src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d236.60037069771994!2d23.34549730732371!3d44.02237110350622!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sro!2sro!4v1751006747416!5m2!1sro!2sro"
+						width="723"
+						class="rounded-2xl"
+						height="500"
+						style="border:0;"
+						loading="lazy"
+						referrerpolicy="no-referrer-when-downgrade"
+					></iframe>
 				</div>
+				<!-- </div> -->
 			</div>
 		</div>
 	</div>

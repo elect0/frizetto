@@ -19,24 +19,25 @@ export const actions: Actions = {
 
 		const form = await superValidate(request, zod(profileSchema));
 		console.log(form);
-		const {
-			data: { user }
-		} = await supabase.auth.getUser();
+		const session = await safeGetSession();
 
 		if (!form.valid) {
 			return fail(400, { form });
 		}
 
-		const { error } = await supabase
+		const { data: updatedProfile, error } = await supabase
 			.from('profiles')
 			.update({
 				full_name: form.data.fullName,
 				phone: form.data.phoneNumber
 			})
-			.eq('id', user?.id);
+			.eq('id', session.user?.id)
+			.select();
 		if (error) {
 			return fail(400, { form });
 		}
+
+		console.log(updatedProfile);
 
 		return message(form, 'Detaliile contului tau au fost modificate cu succes!');
 	}

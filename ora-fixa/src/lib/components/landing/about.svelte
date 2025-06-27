@@ -30,7 +30,7 @@
 			<div class="about-element relative order-2 lg:order-1">
 				<div class="relative overflow-hidden rounded-3xl shadow-2xl">
 					<img
-						src="https://images.pexels.com/photos/7519013/pexels-photo-7519013.jpeg"
+						src="/images/about.jpg"
 						alt="Portret frizer profesionist"
 						class="h-[500px] w-full object-cover"
 					/>

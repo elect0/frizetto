@@ -17,7 +17,6 @@ export const actions: Actions = {
 	default: async ({ request, locals: { supabase } }) => {
 		const form = await superValidate(request, zod(registerSchema));
 
-		console.log(form);
 		if (!form.valid) {
 			return fail(400, { form });
 		}
@@ -26,6 +25,7 @@ export const actions: Actions = {
 			email: form.data.email,
 			password: form.data.password
 		});
+		console.log(error);
 
 		if (error) {
 			return fail(500, { form, message: 'Could not create user. Please try again.' });
