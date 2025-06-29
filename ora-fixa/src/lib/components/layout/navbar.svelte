@@ -92,23 +92,6 @@
 						Creeaza Cont</a
 					>
 				{:else}
-					<!-- <div class="relative hidden md:block">
-						<button
-							on:click={toggleDropdown}
-							class="flex items-center space-x-3 rounded-xl px-4 py-2 transition-all duration-300 hover:scale-105 hover:bg-stone-100"
-						>
-							<div
-								class="flex h-10 w-10 items-center justify-center rounded-full border-2 border-amber-600 bg-amber-600 shadow-lg"
-							>
-								<span class="text-sm font-bold text-white">
-									{userInitials}
-								</span>
-							</div>
-							<span class="text-sm font-semibold text-stone-700">
-								Salut, {userName}
-							</span>
-						</button>
-					</div> -->
 					<div class="hidden md:block">
 						<DropdownMenu>
 							<DropdownMenuTrigger>
@@ -133,7 +116,7 @@
 							>
 								<DropdownMenuItem class="cursor-pointer py-3 hover:bg-amber-50">
 									<CalendarDays class="mr-3 h-5 w-5 text-amber-600" />
-									<span class="font-medium"> Programarile mele </span>
+									<a href="/cont/programari" class="text-medium">Programarile Mele</a>
 								</DropdownMenuItem>
 								<DropdownMenuItem class="cursor-pointer py-3 hover:bg-amber-50">
 									<User class="mr-3 h-5 w-5 text-amber-600" />

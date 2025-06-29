@@ -2,6 +2,7 @@
 	import { invalidate } from '$app/navigation';
 	import { onMount } from 'svelte';
 	import { session as sessionStore } from '$lib/store/session';
+	import AuthNavbar from '$lib/components/layout/auth-navbar.svelte';
 
 	let { data, children } = $props();
 	let { session, supabase } = $derived(data);
@@ -18,4 +19,9 @@
 	});
 </script>
 
+<svelte:head>
+	<title>Contul Meu - Cip Barbershop</title>
+</svelte:head>
+
+<AuthNavbar />
 {@render children()}

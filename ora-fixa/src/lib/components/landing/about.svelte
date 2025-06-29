@@ -14,11 +14,10 @@
 			duration: 0.8,
 			ease: 'power3.out',
 			stagger: 0.2,
-			// Aici este magia ScrollTrigger
 			scrollTrigger: {
-				trigger: '#despre', // Animația pornește când secțiunea #despre intră în ecran
-				start: 'top 80%', // Pornește când 80% din înălțimea ecranului a ajuns la partea de sus a secțiunii
-				toggleActions: 'play none none none' // Rulează animația o singură dată la intrare
+				trigger: '#despre',
+				start: 'top 80%',
+				toggleActions: 'play none none none'
 			}
 		});
 	});

@@ -49,7 +49,7 @@ export const actions: Actions = {
 			service_id: form.data.serviceId,
 			start_time: startTime.toISOString(),
 			end_time: endTime.toISOString(),
-			status: 'confirmed'
+			status: 'confirmata'
 		};
 
 		const { error } = await supabase.from('appointments').insert(newAppointment);
