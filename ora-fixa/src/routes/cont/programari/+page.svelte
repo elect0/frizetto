@@ -8,7 +8,7 @@
 
 	export let data: PageData;
 
-	$: ({ upcomingAppointments, pastAppointments } = data);
+	$: ({ upcomingAppointments, pastAppointments, favoriteServiceId } = data);
 
 	console.log(upcomingAppointments);
 	console.log(pastAppointments);
@@ -57,7 +57,7 @@
 					{#if upcomingAppointments.length > 0}
 						{#each upcomingAppointments as appointment (appointment.id)}
 							<div class="appointment-card">
-								<AppointmentCard {appointment} />
+								<AppointmentCard {appointment} {favoriteServiceId} />
 							</div>
 						{/each}
 					{:else}
@@ -68,7 +68,7 @@
 					{#if pastAppointments.length > 0}
 						{#each pastAppointments as appointment (appointment.id)}
 							<div class="appointment-card">
-								<AppointmentCard {appointment} />
+								<AppointmentCard {appointment} {favoriteServiceId} />
 							</div>
 						{/each}
 					{:else}

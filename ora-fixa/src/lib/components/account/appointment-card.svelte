@@ -2,7 +2,7 @@
 	import * as Card from '$lib/components/ui/card';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
 	import { Clock } from '@lucide/svelte';
-	import { Scissors, Calendar, X, DollarSign, Sparkles } from 'lucide-svelte';
+	import { Scissors, Calendar, X, DollarSign, Sparkles, Star } from 'lucide-svelte';
 	import Badge from '../ui/badge/badge.svelte';
 	import Separator from '../ui/separator/separator.svelte';
 	import Button from '../ui/button/button.svelte';
@@ -21,6 +21,8 @@
 		};
 	};
 
+	export let favoriteServiceId: number | null;
+
 	const startTime = new Date(appointment.start_time);
 
 	const formattedDate = new Intl.DateTimeFormat('ro-RO', {
@@ -37,6 +39,8 @@
 
 	const isUpcoming = startTime > new Date();
 
+	$: isFavorite = parseInt(appointment.services?.id, 10) === favoriteServiceId;
+
 	const statusStyles = {
 		confirmata: 'border-blue-200 bg-blue-100 text-blue-900',
 		finalizata: 'border-green-200 bg-green-100 text-green-900',
@@ -44,6 +48,8 @@
 		neprezentat: 'border-red-200 bg-red-100 text-red-900'
 	};
 	type StatusKey = keyof typeof statusStyles;
+
+	console.log(isUpcoming);
 
 	const format = (date: Date) =>
 		date.getFullYear() +
@@ -69,7 +75,25 @@
 					<Scissors class="h-7 w-7 text-white" />
 				</div>
 				<div class="space-y-1">
-					<h3 class="text-xl font-bold text-stone-900">{appointment.services.name}</h3>
+					<div class="flex items-center">
+						<h3 class="text-xl font-bold text-stone-900">{appointment.services.name}</h3>
+						{#if !isUpcoming || appointment.status !== 'confirmata'}
+							<form method="POST" action="?/setFavorite">
+								<input type="hidden" name="serviceId" value={appointment.services?.id} />
+								<Button
+									type="submit"
+									variant="ghost"
+									size="icon"
+									class="ml-2 mt-1 h-5 w-5 cursor-pointer"
+									aria-label="Setează ca favorit"
+								>
+									<Star
+										class={`h-6 w-6 transition-all duration-200 ${isFavorite ? 'fill-amber-500 text-amber-500' : 'text-stone-300 hover:text-amber-400'}`}
+									/>
+								</Button>
+							</form>
+						{/if}
+					</div>
 					<p class="font-medium text-slate-600">Serviciu Premium</p>
 					<div class="flex items-center text-sm text-stone-500">
 						<Clock class="mr-1 h-4 w-4" />
