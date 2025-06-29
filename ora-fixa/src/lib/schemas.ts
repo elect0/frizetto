@@ -23,7 +23,8 @@ export const bookingSchema = z.object({
 	time: z.string().min(1, { message: 'Te rugăm să alegi o oră.' }),
 	hasAgreedToPolicy: z.literal(true, {
 		errorMap: () => ({ message: 'Trebuie sa confirmi angajamentul pentru a continua.' })
-	})
+	}),
+	clientNotes: z.string().optional()
 });
 
 export const profileSchema = z.object({

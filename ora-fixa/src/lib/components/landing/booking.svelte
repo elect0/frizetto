@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import { Badge } from '$lib/components/ui/badge';
-	// import { Card, CardContent } from '$lib/components/ui/card';
 	import {
 		Accordion,
 		AccordionItem,
@@ -9,7 +8,6 @@
 		AccordionContent
 	} from '$lib/components/ui/accordion';
 	import { Checkbox } from '$lib/components/ui/checkbox';
-	// import type { PageData } from './$types';
 
 	import * as RadioGroup from '$lib/components/ui/radio-group';
 	import { Label } from '$lib/components/ui/label';
@@ -24,13 +22,12 @@
 	import type { bookingSchema } from '$lib/schemas';
 	import type { z } from 'zod';
 	import { toast } from 'svelte-sonner';
+	import Textarea from '../ui/textarea/textarea.svelte';
 
 	let { services, form: initialForm } = $props<{
 		services: Service[];
 		form: SuperValidated<z.infer<typeof bookingSchema>>;
 	}>();
-	// let data = $props();
-	// const services = data.services;
 
 	const { form, errors, enhance, submitting, message } = superForm(initialForm, {
 		id: 'booking-form',
@@ -45,13 +42,11 @@
 		}
 	});
 
-	// let selectedServiceId: string | '' = $state('');
 	let selectedService: Service | null = $derived(
 		$form.serviceId ? services.find((s: Service) => s.id.toString() === $form.serviceId) : null
 	);
-	// let hasAgreed = $state(false);
+
 	let selectedDate: DateValue | undefined = $state(undefined);
-	// let selectedTime: string | '' = $state('');
 
 	let availableSlots: Slot[] = $state([]);
 	let isLoading = $state(false);
@@ -61,14 +56,8 @@
 	}
 
 	$effect(() => {
-		console.log('🕵️ Efectul de FETCH a fost declanșat!', {
-			service: selectedService?.name,
-			date: selectedDate?.toString()
-		});
-
 		if (selectedDate && selectedService) {
 			fetchAvailableTimes(selectedDate);
-			console.log('FETCH');
 		}
 	});
 	async function fetchAvailableTimes(date: DateValue) {
@@ -99,12 +88,6 @@
 
 	function getISOStartTime() {
 		if (!selectedDate || !$form.time) return '';
-		// const date = selectedDate.toDate(getLocalTimeZone());
-		// const [hours, minutes] = $form.time.split(':').map(Number);
-
-		// date.setHours(hours, minutes, 0, 0);
-
-		// return date.toISOString();
 
 		const year = selectedDate.year;
 		const month = selectedDate.month - 1;
@@ -120,24 +103,12 @@
 		return finalDate.toISOString();
 	}
 
-	// 8. Sincronizăm câmpurile ascunse ale formularului
-	// $effect(() => {
-	// 	// Și log-ul final aici
-	// 	console.log('💾 Efectul de SINCRONIZARE FORMULAR a fost declanșat!', {
-	// 		startTime: getISOStartTime(),
-	// 		duration: selectedService?.duration_minutes
-	// 	});
-
-	// 	$form.duration = selectedService?.duration_minutes;
-	// 	$form.startTime = getISOStartTime();
-	// });
-
-	const df = new DateFormatter('en-US', {
+	const df = new DateFormatter('ro-RO', {
 		dateStyle: 'long'
 	});
+
 	const minDate = today(getLocalTimeZone());
 
-	// limita
 	const maxDate = minDate.add({ weeks: 2 });
 </script>
 
@@ -241,7 +212,7 @@
 													>
 												</p>
 											</div>
-											<div class="min-h-[8rem] rounded-lg bg-stone-50 p-4">
+											<div class="min-h-[8rem] rounded-lg border border-stone-200 bg-stone-50 p-4">
 												{#if isLoading}
 													<p class="animate-pulse text-center text-stone-500">
 														Se încarcă orele...
@@ -323,6 +294,21 @@
 											</div>
 										</div>
 									</div>
+								</div>
+								<div class="mt-4 space-y-2">
+									<Label for="clientNotes" class="font-semibold text-stone-800"
+										>Adaugă o notiță (opțional)</Label
+									>
+									<Textarea
+										id="clientNotes"
+										name="clientNotes"
+										placeholder="Exemplu: prefer tuns mai scurt pe laterale, ajung cu 5 minute întârziere..."
+										class="min-h-[80px] bg-stone-50"
+										bind:value={$form.clientNotes}
+									/>
+									{#if $errors.clientNotes}
+										<p class="text-sm text-red-600">{$errors.clientNotes}</p>
+									{/if}
 								</div>
 
 								<div class="mb-6 flex items-start space-x-3 pt-4">

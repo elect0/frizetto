@@ -49,6 +49,7 @@ export const actions: Actions = {
 			service_id: form.data.serviceId,
 			start_time: startTime.toISOString(),
 			end_time: endTime.toISOString(),
+			client_notes: form.data.clientNotes,
 			status: 'confirmata'
 		};
 

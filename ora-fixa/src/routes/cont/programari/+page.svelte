@@ -28,7 +28,7 @@
 	<title>Programările Mele - Cip Barbershop</title>
 </svelte:head>
 
-<div class="min-h-screen bg-gradient-to-br from-amber-50 to-stone-100 py-32">
+<div class="min-h-screen bg-stone-50 py-32">
 	<div class="container mx-auto px-4 lg:px-6">
 		<div class="mb-12 text-center">
 			<Badge class="mb-6 bg-amber-600 px-4 py-2 text-white">Programari & Istoric</Badge>
