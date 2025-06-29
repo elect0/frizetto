@@ -4,8 +4,14 @@ import { bookingSchema } from '$lib/schemas';
 import { zod } from 'sveltekit-superforms/adapters';
 import { fail, redirect } from '@sveltejs/kit';
 
-export const load: PageServerLoad = async ({ locals: { supabase } }) => {
-	const form = await superValidate(zod(bookingSchema));
+export const load: PageServerLoad = async ({ locals: { supabase }, url }) => {
+	const serviceIdParam = url.searchParams.get('serviceId');
+
+	const form = await superValidate(
+		serviceIdParam ? { serviceId: serviceIdParam } : undefined,
+		zod(bookingSchema)
+	);
+	console.log(form);
 
 	const { data: services, error } = await supabase.from('services').select('*');
 	if (error) {
@@ -46,7 +52,7 @@ export const actions: Actions = {
 
 		const newAppointment = {
 			user_id: session.user?.id,
-			service_id: form.data.serviceId,
+			service_id: parseInt(form.data.serviceId, 10),
 			start_time: startTime.toISOString(),
 			end_time: endTime.toISOString(),
 			client_notes: form.data.clientNotes,

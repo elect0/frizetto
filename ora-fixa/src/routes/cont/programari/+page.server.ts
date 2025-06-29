@@ -10,7 +10,7 @@ export const load: PageServerLoad = async ({ locals: { supabase, safeGetSession 
 
 	const { data: allAppointments, error: dbError } = await supabase
 		.from('appointments')
-		.select('*, services ( name, price, duration_minutes )')
+		.select('*, services ( id, name, price, duration_minutes )')
 		.eq('user_id', session.user?.id)
 		.order('start_time', { ascending: false });
 
@@ -76,5 +76,15 @@ export const actions: Actions = {
 		}
 
 		return { success: true };
+	},
+	rebook: async ({ request }) => {
+		const formData = await request.formData();
+		const serviceId = formData.get('serviceId') as string;
+
+		if (!serviceId) {
+			return fail(400, { message: 'ID-ul serviciului lipsește.' });
+		}
+
+		throw redirect(303, `/?serviceId=${serviceId}`);
 	}
 };

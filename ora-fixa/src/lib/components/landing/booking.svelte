@@ -50,6 +50,13 @@
 
 	let availableSlots: Slot[] = $state([]);
 	let isLoading = $state(false);
+	let activeAccordionStep = $state('item-1');
+
+	$effect(() => {
+		if (selectedService && !selectedDate) {
+			activeAccordionStep = 'item-2';
+		}
+	});
 
 	interface Slot {
 		available_slot: string;
@@ -122,7 +129,11 @@
 					Procesul de rezervare este simplu si rapid. In doar 2 pasi esti programat.
 				</p>
 			</div>
-			<Accordion type="single" class="rounded-lg border-stone-200 bg-white shadow-2xl">
+			<Accordion
+				type="single"
+				class="rounded-lg border-stone-200 bg-white shadow-2xl"
+				bind:value={activeAccordionStep}
+			>
 				<div class="p-12">
 					<div class="space-y-8">
 						<form method="POST" use:enhance>

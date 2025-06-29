@@ -2,7 +2,7 @@
 	import * as Card from '$lib/components/ui/card';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
 	import { Clock } from '@lucide/svelte';
-	import { Scissors, Calendar, X, DollarSign } from 'lucide-svelte';
+	import { Scissors, Calendar, X, DollarSign, Sparkles } from 'lucide-svelte';
 	import Badge from '../ui/badge/badge.svelte';
 	import Separator from '../ui/separator/separator.svelte';
 	import Button from '../ui/button/button.svelte';
@@ -14,6 +14,7 @@
 		status: string;
 		created_at: string;
 		services: {
+			id: string;
 			name: string;
 			duration_minutes: string;
 			price: number;
@@ -149,6 +150,16 @@
 						</AlertDialog.Footer>
 					</AlertDialog.Content>
 				</AlertDialog.Root>
+			{:else}
+				<div class="ml-auto">
+					<form method="POST" action="?/rebook">
+						<input type="hidden" name="serviceId" value={appointment.services?.id} />
+						<Button type="submit" class="cursor-pointer" size="lg">
+							<Sparkles />
+							Programează din nou
+						</Button>
+					</form>
+				</div>
 			{/if}
 		</div>
 	</Card.Content>
