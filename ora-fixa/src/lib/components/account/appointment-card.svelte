@@ -151,7 +151,7 @@
 						<Button
 							variant="destructive"
 							size="lg"
-							class="cursor-pointer bg-red-600 px-20 text-white hover:bg-red-700"
+							class="cursor-pointer bg-red-600 text-white hover:bg-red-700"
 						>
 							<X className="h-4 w-4 mr-2" />
 							Anuleaza Programarea
@@ -165,11 +165,11 @@
 								faci o nouă programare dacă te răzgândești.
 							</AlertDialog.Description>
 						</AlertDialog.Header>
-						<AlertDialog.Footer>
+						<AlertDialog.Footer class="mt-1 md:mt-0">
 							<AlertDialog.Cancel>Înapoi</AlertDialog.Cancel>
 							<form action="?/cancel" method="POST">
 								<input type="hidden" name="appointmentId" value={appointment.id} />
-								<Button type="submit" variant="destructive">Da, anulează</Button>
+								<Button type="submit" variant="destructive" class="w-full">Da, anulează</Button>
 							</form>
 						</AlertDialog.Footer>
 					</AlertDialog.Content>

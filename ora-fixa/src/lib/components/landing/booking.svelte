@@ -205,7 +205,7 @@
 								{#if selectedService}
 									<AccordionContent>
 										<div
-											class="border-border-stone-200 grid grid-cols-1 rounded-xl bg-white p-4 md:grid-cols-2"
+											class="border-border-stone-200 grid grid-cols-1 rounded-xl bg-white py-4 md:grid-cols-2"
 										>
 											<div class="flex flex-col items-center justify-center">
 												<Calendar
@@ -215,7 +215,7 @@
 													type="single"
 													disableDaysOutsideMonth={true}
 												/>
-												<p class="mt-4 text-center text-sm text-stone-600">
+												<p class="mb-2 mt-4 text-center text-sm text-stone-600 md:mb-0">
 													Dată selectată: <span class="font-medium"
 														>{selectedDate
 															? df.format(selectedDate.toDate(getLocalTimeZone()))
@@ -314,7 +314,7 @@
 										id="clientNotes"
 										name="clientNotes"
 										placeholder="Exemplu: prefer tuns mai scurt pe laterale, ajung cu 5 minute întârziere..."
-										class="min-h-[80px] bg-stone-50"
+										class="min-h-[80px] bg-stone-50 text-sm"
 										bind:value={$form.clientNotes}
 									/>
 									{#if $errors.clientNotes}
@@ -322,7 +322,7 @@
 									{/if}
 								</div>
 
-								<div class="mb-6 flex items-start space-x-3 pt-4">
+								<div class="mb-6 flex items-center space-x-3 pt-4">
 									<input type="hidden" name="serviceId" bind:value={$form.serviceId} />
 
 									<input type="hidden" name="startTime" value={getISOStartTime()} />
@@ -343,7 +343,7 @@
 										<Label for="terms" class="cursor-pointer text-sm font-medium text-stone-700">
 											Confirm angajamentul de a ma prezenta.
 										</Label>
-										<p class="text-xs text-stone-500">Inteleg ca pot anula telefonic.</p>
+										<p class="text-xs text-stone-500">Inteleg ca pot anula programarea.</p>
 									</div>
 								</div>
 								<Button type="submit" class="text-white">Confirma Programarea</Button>
