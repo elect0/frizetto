@@ -92,11 +92,11 @@
 						>
 							<DropdownMenuItem class="cursor-pointer py-3 hover:bg-amber-50">
 								<CalendarDays class="mr-3 h-5 w-5 text-amber-600" />
-								<span class="font-medium"> Programarile mele </span>
+								<a  href='/cont/programari' class="font-medium"> Programarile mele </a>
 							</DropdownMenuItem>
 							<DropdownMenuItem class="cursor-pointer py-3 hover:bg-amber-50">
 								<User class="mr-3 h-5 w-5 text-amber-600" />
-								<span class="font-medium"> Contul meu </span>
+								<a href='/cont' class="font-medium"> Contul meu </a>
 							</DropdownMenuItem>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem class="cursor-pointer py-3 text-red-600 hover:bg-red-50">

@@ -29,5 +29,27 @@ export const bookingSchema = z.object({
 
 export const profileSchema = z.object({
 	fullName: z.string().nonempty('Te rugăm să completezi acest câmp.'),
-	phoneNumber: z.string().min(10, 'Numărul de telefon trebuie să conțină cel puțin 10 cifre.')
+	phoneNumber: z.string().min(10, 'Numărul de telefon trebuie să conțină cel puțin 10 cifre.'),
 });
+
+
+export const accountSchema = z.object({
+	full_name: z.string().nonempty('Te rugăm să completezi acest câmp.'),
+	phone: z.string().min(10, 'Numărul de telefon trebuie să conțină cel puțin 10 cifre.'),
+	notes: z.string().nullable().optional()
+});
+
+export const passwordSchema = z.object({
+	newPassword: z.string().min(8, 'Noua parola trebuie sa aiba minim 8 caractere.'),
+	passwordConfirm: z.string()
+}).refine((data) => data.newPassword === data.passwordConfirm, {
+	message: 'Parolele noi nu se potrivesc',
+	path: ['passwordConfirm']
+})
+
+
+export const preferencesSchema = z.object({
+	notify_email_confirmation: z.boolean(),
+	notify_sms_reminder: z.boolean(),
+	marketing_opt_in: z.boolean()
+})

@@ -10,9 +10,6 @@
 
 	$: ({ upcomingAppointments, pastAppointments, favoriteServiceId } = data);
 
-	console.log(upcomingAppointments);
-	console.log(pastAppointments);
-
 	onMount(() => {
 		gsap.from('.appointment-card', {
 			duration: 0.5,

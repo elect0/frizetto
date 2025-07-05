@@ -99,7 +99,7 @@ export const actions: Actions = {
 			return fail(400, { message: 'ID-ul serviciului lipsește.' });
 		}
 
-		throw redirect(303, `/?serviceId=${serviceId}`);
+		throw redirect(303, `/?serviceId=${serviceId}#booking`);
 	},
 	setFavorite: async ({ request, locals: { supabase, safeGetSession } }) => {
 		const session = await safeGetSession();

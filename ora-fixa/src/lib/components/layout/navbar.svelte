@@ -38,6 +38,7 @@
 	const toggleMobileMenu = () => {
 		isMobileMenuOpen = !isMobileMenuOpen;
 	};
+
 	const navItems: NavItem[] = [
 		{ id: 'servicii', label: 'Servicii', icon: Scissors },
 		{ id: 'despre', label: 'Despre', icon: User },
@@ -120,7 +121,7 @@
 								</DropdownMenuItem>
 								<DropdownMenuItem class="cursor-pointer py-3 hover:bg-amber-50">
 									<User class="mr-3 h-5 w-5 text-amber-600" />
-									<span class="font-medium"> Contul meu </span>
+									<a href='/cont' class="font-medium"> Contul meu </a>
 								</DropdownMenuItem>
 								<DropdownMenuSeparator />
 								<DropdownMenuItem class="cursor-pointer py-3 text-red-600 hover:bg-red-50">
@@ -195,7 +196,7 @@
 										<span class="font-bold text-stone-800">Salut, {userName}</span>
 									</div>
 									<a
-										href="/cont"
+										href="/cont/programari"
 										class="duration_300 group flex w-full items-center rounded-xl px-4 py-4 font-semibold text-stone-700 transition-all hover:bg-amber-50 hover:text-amber-600"
 									>
 										<CalendarDays

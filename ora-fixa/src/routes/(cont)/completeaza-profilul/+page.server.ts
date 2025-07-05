@@ -4,9 +4,10 @@ import type { Actions, PageServerLoad } from './$types';
 import { zod } from 'sveltekit-superforms/adapters';
 import { profileSchema } from '$lib/schemas';
 
-export const load: PageServerLoad = async ({}) => {
+export const load: PageServerLoad = async ({locals: {safeGetSession}}) => {
+	const {session} = await safeGetSession()
 	const form = await superValidate(zod(profileSchema));
-	return { form };
+	return { form, session };
 };
 
 export const actions: Actions = {
