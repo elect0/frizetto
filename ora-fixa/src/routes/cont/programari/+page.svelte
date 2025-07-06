@@ -35,7 +35,7 @@
 			</p>
 		</div>
 		<div class="grid grid-cols-1 items-center gap-12">
-			<Tabs.Root activationMode="manual" value="programari">
+			<Tabs.Root activationMode="manual" value="programari-viitoare">
 				<div
 					class="mx-auto mb-3 w-full max-w-2xl rounded-lg bg-white p-4 shadow-lg transition-shadow hover:shadow-xl"
 				>

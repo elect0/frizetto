@@ -43,7 +43,7 @@ export const load: PageServerLoad = async ({ locals: { supabase, safeGetSession 
 	const profileForm = await superValidate(profile, zod(accountSchema), { id: 'profile' });
 	const passwordForm = await superValidate(zod(passwordSchema), { id: 'password' });
 	const preferencesForm = await superValidate(profile, zod(preferencesSchema), {
-		id: 'preferences-form'
+		id: 'preferences'
 	});
 
 	const loyaltyStats = {
@@ -59,7 +59,7 @@ export const load: PageServerLoad = async ({ locals: { supabase, safeGetSession 
 					: 'Argint'
 	};
 
-	console.log(profile.services)
+	console.log(profile.services);
 
 	return {
 		profileForm,
@@ -67,7 +67,7 @@ export const load: PageServerLoad = async ({ locals: { supabase, safeGetSession 
 		preferencesForm,
 		nextAppointment,
 		loyaltyStats,
-		favoriteService: profile.services,
+		favoriteService: profile.services
 	};
 };
 
@@ -101,11 +101,13 @@ export const actions: Actions = {
 		return message(form, 'Parola a fost schimbată cu succes!');
 	},
 	updatePreferences: async ({ request, locals: { supabase, safeGetSession } }) => {
-		const form = await superValidate(request, zod(preferencesSchema), { id: 'preferences-form' });
+		const form = await superValidate(request, zod(preferencesSchema), { id: 'preferences' });
 		if (!form.valid) return fail(400, { form });
 
 		const { session } = await safeGetSession();
 		if (!session) throw redirect(303, '/login');
+
+		console.log(form, 'FORMA FORMA FORMA')
 
 		const { error } = await supabase
 			.from('profiles')
@@ -118,5 +120,5 @@ export const actions: Actions = {
 
 		if (error) return message(form, 'A apărut o eroare.', { status: 500 });
 		return message(form, 'Preferințele au fost salvate!');
-	},
+	}
 };

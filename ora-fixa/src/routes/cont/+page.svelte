@@ -64,6 +64,8 @@
 		}
 	});
 
+	console.log(data);
+
 	const {
 		form: preferences,
 		enhance: preferencesEnhance,
@@ -99,7 +101,14 @@
 		})
 	);
 
+	const memberSince = $derived(
+		new Intl.DateTimeFormat('ro-RO', { year: 'numeric', month: 'long' }).format(
+			new Date(data.loyaltyStats.memberSince)
+		)
+	);
+
 	$effect(() => {
+		console.log(data.preferencesForm.data);
 		preferencesFormReset({
 			data: data.preferencesForm.data,
 			newState: data.preferencesForm.data,
@@ -155,7 +164,7 @@
 				</Card.Root>
 			{/if}
 			<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-				<Card.Root class="border-stone-200 bg-white shadow-lg transition-shadow">
+				<Card.Root class="border-stone-200 bg-white shadow-lg">
 					<Card.Header>
 						<Card.Title class="text-2xl">Urmatoarea Programare</Card.Title>
 						<Card.Description class="text-md"
@@ -196,7 +205,7 @@
 						</a>
 					</Card.Content>
 				</Card.Root>
-				<Card.Root class="border-stone-200 bg-white shadow-lg transition-shadow">
+				<Card.Root class="border-stone-200 bg-white shadow-lg">
 					<Card.Header>
 						<Card.Title class="text-2xl">Statutul tau de loialitate</Card.Title>
 						<Card.Description class="text-md"
@@ -291,8 +300,10 @@
 									<h3 class="mb-1 text-xl font-semibold text-stone-900 md:text-2xl">
 										{data.loyaltyStats.name}
 									</h3>
-									<p class="text-md mb-2 text-stone-600">Membru din Ianuarie 2025</p>
-									<Badge variant="outline" class="items-center bg-stone-100"><Star /> Vip</Badge>
+									<p class="text-md mb-2 text-stone-600">Membru din {memberSince}</p>
+									<Badge variant="outline" class="items-center bg-stone-100"
+										><Star /> {data.loyaltyStats.status}</Badge
+									>
 								</div>
 							</div>
 							<Separator class="mb-6" />
@@ -424,39 +435,47 @@
 						<div class="px-6">
 							<Separator />
 						</div>
-						<Card.Content class="space-y-6">
+						<Card.Content>
 							<form action="?/updatePreferences" method="POST" use:preferencesEnhance>
-								<div class="flex items-center justify-between">
-									<div class="5 space-y-0">
-										<Label>Oferte Promotionale</Label>
-										<p class="text-muted-foreground text-sm">
-											Recieve special deals and disscounts
-										</p>
+								<div class="space-y-6">
+									<div class="flex items-center justify-between">
+										<div class="5 space-y-0">
+											<Label>Oferte Promotionale</Label>
+											<p class="text-muted-foreground text-sm">
+												Recieve special deals and disscounts
+											</p>
+										</div>
+										<Switch name="marketing_opt_in" bind:checked={$preferences.marketing_opt_in} />
 									</div>
-									<Switch bind:checked={$preferences.marketing_opt_in} />
-								</div>
-								<div class="flex items-center justify-between">
-									<div class="5 space-y-0">
-										<Label>Reminder SMS</Label>
-										<p class="text-muted-foreground text-sm">
-											Recieve special deals and disscounts
-										</p>
+									<div class="flex items-center justify-between">
+										<div class="5 space-y-0">
+											<Label>Reminder SMS</Label>
+											<p class="text-muted-foreground text-sm">
+												Recieve special deals and disscounts
+											</p>
+										</div>
+										<Switch
+											name="notify_sms_reminder"
+											bind:checked={$preferences.notify_sms_reminder}
+										/>
 									</div>
-									<Switch bind:checked={$preferences.notify_sms_reminder} />
-								</div>
-								<div class="flex items-center justify-between">
-									<div class="5 space-y-0">
-										<Label>Notificari Email</Label>
-										<p class="text-muted-foreground text-sm">
-											Recieve special deals and disscounts
-										</p>
+									<div class="flex items-center justify-between">
+										<div class="5 space-y-0">
+											<Label>Notificari Email</Label>
+											<p class="text-muted-foreground text-sm">
+												Recieve special deals and disscounts
+											</p>
+										</div>
+										<Switch
+											name="notify_email_confirmation"
+											bind:checked={$preferences.notify_email_confirmation}
+										/>
 									</div>
-									<Switch bind:checked={$preferences.notify_email_confirmation} />
-								</div>
-								<div class="mt-1 flex w-full justify-end">
-									<Button type="submit" class="text max-w-xl cursor-pointer"
-										>Salveaza Modificarile</Button
-									>
+									<div class="mt-1 flex w-full justify-end">
+										<Button type="submit" class="text max-w-xl cursor-pointer"
+											>Salveaza Modificarile</Button
+										>
+									</div>
 								</div>
 							</form>
 						</Card.Content>
