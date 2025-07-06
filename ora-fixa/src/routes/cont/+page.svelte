@@ -23,24 +23,23 @@
 	import { superForm } from 'sveltekit-superforms/client';
 	import { toast } from 'svelte-sonner';
 	import { invalidateAll } from '$app/navigation';
-	import { accountSchema, passwordSchema } from '$lib/schemas';
+	import { accountSchema, passwordSchema, preferencesSchema } from '$lib/schemas';
 	import { zod } from 'sveltekit-superforms/adapters';
 
-	let {data} = $props()
-
-	let localProfileData = { ...data.profileForm.data };
+	let { data } = $props();
 
 	const {
 		form: profile,
 		errors: profileErrors,
 		enhance: profileEnhance,
-		reset: profileFormReset,
+		reset: profileFormReset
 	} = superForm(data.profileForm, {
 		id: 'profile',
 		validators: zod(accountSchema),
 		onResult: ({ result }) => {
 			if (result.type === 'success') {
-				toast.success('Profilul a fost actualizat cu succes!');
+				invalidateAll();
+				toast.success('Detaliile de profil au fost actualizate cu succes.');
 			} else {
 				toast.error('Eroare la actualizarea profilului. Te rugăm să încerci din nou.');
 			}
@@ -51,41 +50,70 @@
 		form: password,
 		errors: passwordErrors,
 		enhance: passwordEnhance,
-		reset: passwordFormReset,
-	} = superForm(data.passwordForm, { id: 'password', validators: zod(passwordSchema), onResult: ({result}) => {
-		if(result.type === 'success'){
-			toast.success('Parola a fost actualizată. Te poți loga cu noua parolă.')
-			passwordFormReset()
-		} else {
-			toast.error('Parola nu poate fi schimbată. Verifică datele și încearcă din nou.')
+		reset: passwordFormReset
+	} = superForm(data.passwordForm, {
+		id: 'password',
+		validators: zod(passwordSchema),
+		onResult: ({ result }) => {
+			if (result.type === 'success') {
+				toast.success('Parola a fost actualizată. Te poți loga cu noua parolă.');
+				passwordFormReset();
+			} else {
+				toast.error('Parola nu poate fi schimbată. Verifică datele și încearcă din nou.');
+			}
 		}
-	}});
+	});
 
 	const {
 		form: preferences,
-		errors: preferencesErrors,
-		enhance: preferencesEnhance
-	} = superForm(data.preferencesForm, { id: 'preferences' });
+		enhance: preferencesEnhance,
+		reset: preferencesFormReset
+	} = superForm(data.preferencesForm, {
+		id: 'preferences',
+		validators: zod(preferencesSchema),
+		onResult: ({ result }) => {
+			if (result.type === 'success') {
+				invalidateAll();
+				toast.success('Preferințele de notificare au fost actualizate cu succes.');
+			} else {
+				toast.error('Nu am putut actualiza setările de notificare. Încearcă din nou.');
+			}
+		}
+	});
 
-	const nextAppointmentDate = $derived(new Date(data.nextAppointment.start_time))
-	const fullAppointmentDate = $derived(nextAppointmentDate.toLocaleDateString('ro-RO', {
-		weekday: 'long',
-		day: 'numeric',
-		month: 'long',
-		year: 'numeric'
-	}))
+	const nextAppointmentDate = $derived(new Date(data.nextAppointment.start_time));
+	const fullAppointmentDate = $derived(
+		nextAppointmentDate.toLocaleDateString('ro-RO', {
+			weekday: 'long',
+			day: 'numeric',
+			month: 'long',
+			year: 'numeric'
+		})
+	);
 
-	const fullAppointmentHour = $derived(nextAppointmentDate.toLocaleTimeString('ro-RO', {
-		hour: '2-digit',
-		minute: '2-digit',
-		hour12: false
-	}))
+	const fullAppointmentHour = $derived(
+		nextAppointmentDate.toLocaleTimeString('ro-RO', {
+			hour: '2-digit',
+			minute: '2-digit',
+			hour12: false
+		})
+	);
 
-
-	console.log(data)
 	$effect(() => {
-		profileFormReset({data: data.profileForm.data, newState: data.profileForm.data, id: 'profile'})
-	})
+		preferencesFormReset({
+			data: data.preferencesForm.data,
+			newState: data.preferencesForm.data,
+			id: 'preferences'
+		});
+	});
+
+	$effect(() => {
+		profileFormReset({
+			data: data.profileForm.data,
+			newState: data.profileForm.data,
+			id: 'profile'
+		});
+	});
 </script>
 
 <svelte:head>
@@ -107,7 +135,7 @@
 					class=" border-amber-200 bg-amber-50 shadow-lg transition-shadow hover:shadow-xl"
 				>
 					<Card.Content class="p-6">
-						<div class="block md:flex items-center justify-between">
+						<div class="block items-center justify-between md:flex">
 							<div class="flex items-center gap-4">
 								<div class="rounded-lg bg-amber-100 p-2">
 									<Rocket class="h-6 w-6 text-amber-600" />
@@ -118,11 +146,10 @@
 										Serviciul tau favorite este {data.favoriteService.name}
 									</p>
 								</div>
-							</div><a href={`/?serviceId=${data.favoriteService.id}#booking`}>
-							
-								<Button class="cursor-pointer mt-4 md:mt-0">Programeaza-l Acum</Button>
-							
-				 			</a>
+							</div>
+							<a href={`/?serviceId=${data.favoriteService.id}#booking`}>
+								<Button class="mt-4 cursor-pointer md:mt-0">Programeaza-l Acum</Button>
+							</a>
 						</div>
 					</Card.Content>
 				</Card.Root>
@@ -342,28 +369,42 @@
 							<Separator />
 						</div>
 						<Card.Content>
-							<form method='POST' action='?/updatePassword' use:passwordEnhance>
+							<form method="POST" action="?/updatePassword" use:passwordEnhance>
 								<div class="mb-6 grid grid-cols-1 gap-6">
 									<div class="grid gap-2">
 										<Label class="mb-1" for="newPassword">Parolă nouă</Label>
-										<Input type="password" id="newPassword" name="newPassword" bind:value={$password.newPassword} placeholder="Alege o parolă nouă (minim 8 caractere)" aria-invalid={$passwordErrors.newPassword ? 'true' : undefined} />
+										<Input
+											type="password"
+											id="newPassword"
+											name="newPassword"
+											bind:value={$password.newPassword}
+											placeholder="Alege o parolă nouă (minim 8 caractere)"
+											aria-invalid={$passwordErrors.newPassword ? 'true' : undefined}
+										/>
 										{#if $passwordErrors.newPassword}
-										<p class="text-sm text-red-600">
-											{$passwordErrors.newPassword}
-										</p>
+											<p class="text-sm text-red-600">
+												{$passwordErrors.newPassword}
+											</p>
 										{/if}
 									</div>
 									<div class="grid gap-2">
 										<Label class="mb-1" for="passwordConfirm">Confirmă parola</Label>
-										<Input type="password" id="passwordConfirm" name="passwordConfirm" bind:value={$password.passwordConfirm} placeholder="Reintrodu parola pentru confirmare" aria-invalid={$passwordErrors.passwordConfirm ? 'true' : undefined} />
+										<Input
+											type="password"
+											id="passwordConfirm"
+											name="passwordConfirm"
+											bind:value={$password.passwordConfirm}
+											placeholder="Reintrodu parola pentru confirmare"
+											aria-invalid={$passwordErrors.passwordConfirm ? 'true' : undefined}
+										/>
 										{#if $passwordErrors.passwordConfirm}
-										<p class="text-sm text-red-600">
-											{$passwordErrors.passwordConfirm}
-										</p>
+											<p class="text-sm text-red-600">
+												{$passwordErrors.passwordConfirm}
+											</p>
 										{/if}
 									</div>
 								</div>
-								<Button type='submit' class="w-full cursor-pointer">Actualizează parola</Button>
+								<Button type="submit" class="w-full cursor-pointer">Actualizează parola</Button>
 							</form>
 						</Card.Content>
 					</Card.Root>
@@ -384,27 +425,40 @@
 							<Separator />
 						</div>
 						<Card.Content class="space-y-6">
-							<div class="flex items-center justify-between">
-								<div class="5 space-y-0">
-									<Label>Oferte Promotionale</Label>
-									<p class="text-muted-foreground text-sm">Recieve special deals and disscounts</p>
+							<form action="?/updatePreferences" method="POST" use:preferencesEnhance>
+								<div class="flex items-center justify-between">
+									<div class="5 space-y-0">
+										<Label>Oferte Promotionale</Label>
+										<p class="text-muted-foreground text-sm">
+											Recieve special deals and disscounts
+										</p>
+									</div>
+									<Switch bind:checked={$preferences.marketing_opt_in} />
 								</div>
-								<Switch bind:checked={$preferences.marketing_opt_in} />
-							</div>
-							<div class="flex items-center justify-between">
-								<div class="5 space-y-0">
-									<Label>Reminder SMS</Label>
-									<p class="text-muted-foreground text-sm">Recieve special deals and disscounts</p>
+								<div class="flex items-center justify-between">
+									<div class="5 space-y-0">
+										<Label>Reminder SMS</Label>
+										<p class="text-muted-foreground text-sm">
+											Recieve special deals and disscounts
+										</p>
+									</div>
+									<Switch bind:checked={$preferences.notify_sms_reminder} />
 								</div>
-								<Switch bind:checked={$preferences.notify_sms_reminder} />
-							</div>
-							<div class="flex items-center justify-between">
-								<div class="5 space-y-0">
-									<Label>Notificari Email</Label>
-									<p class="text-muted-foreground text-sm">Recieve special deals and disscounts</p>
+								<div class="flex items-center justify-between">
+									<div class="5 space-y-0">
+										<Label>Notificari Email</Label>
+										<p class="text-muted-foreground text-sm">
+											Recieve special deals and disscounts
+										</p>
+									</div>
+									<Switch bind:checked={$preferences.notify_email_confirmation} />
 								</div>
-								<Switch bind:checked={$preferences.notify_email_confirmation} />
-							</div>
+								<div class="mt-1 flex w-full justify-end">
+									<Button type="submit" class="text max-w-xl cursor-pointer"
+										>Salveaza Modificarile</Button
+									>
+								</div>
+							</form>
 						</Card.Content>
 					</Card.Root>
 				</Tabs.Content>
