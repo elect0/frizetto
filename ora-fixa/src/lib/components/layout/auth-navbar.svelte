@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { session } from '$lib/store/session';
-
 	import { Button } from '$lib/components/ui/button';
 	import { Avatar, AvatarFallback } from '$lib/components/ui/avatar';
 	import {
@@ -10,6 +8,9 @@
 		DropdownMenuSeparator,
 		DropdownMenuTrigger
 	} from '$lib/components/ui/dropdown-menu';
+	import { page } from '$app/state';
+	let session = $derived(page.data.session);
+	let user = $derived(page.data);
 
 	import {
 		Scissors,
@@ -29,11 +30,11 @@
 		icon: any;
 	}
 
-	$: isAuthenticated = $session !== null && $session !== undefined;
-	$: userInitials = $session?.user?.email?.charAt(0).toUpperCase() || '?';
-	$: userName = $session?.user?.email?.split('@')[0] || 'Oaspete';
+	let isAuthenticated = $derived(!!session);
+	let userInitials = $derived(user.user?.user_metadata.full_name.charAt(0).toUpperCase() || '?');
+	let userName = $derived(user.user?.user_metadata.full_name.split(' ')[0] || 'Oaspete');
 
-	let isMobileMenuOpen = false;
+	let isMobileMenuOpen = $state(false);
 
 	const toggleMobileMenu = () => {
 		isMobileMenuOpen = !isMobileMenuOpen;
@@ -90,14 +91,18 @@
 							align="center"
 							class="ml-5 mt-2 w-56 border-2 border-stone-100 shadow-xl"
 						>
-							<DropdownMenuItem class="cursor-pointer py-3 hover:bg-amber-50">
-								<CalendarDays class="mr-3 h-5 w-5 text-amber-600" />
-								<a  href='/cont/programari' class="font-medium"> Programarile mele </a>
-							</DropdownMenuItem>
-							<DropdownMenuItem class="cursor-pointer py-3 hover:bg-amber-50">
-								<User class="mr-3 h-5 w-5 text-amber-600" />
-								<a href='/cont' class="font-medium"> Contul meu </a>
-							</DropdownMenuItem>
+							<a href="/cont/programari">
+								<DropdownMenuItem class="cursor-pointer py-3 hover:bg-amber-50">
+									<CalendarDays class="mr-3 h-5 w-5 text-amber-600" />
+									<span class="font-medium"> Programarile mele </span>
+								</DropdownMenuItem>
+							</a>
+							<a href="/cont">
+								<DropdownMenuItem class="cursor-pointer py-3 hover:bg-amber-50">
+									<User class="mr-3 h-5 w-5 text-amber-600" />
+									<span class="font-medium"> Contul meu </span>
+								</DropdownMenuItem>
+							</a>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem class="cursor-pointer py-3 text-red-600 hover:bg-red-50">
 								<form method="POST" action="/logout">
@@ -111,7 +116,7 @@
 					</DropdownMenu>
 				</div>
 				<button
-					on:click={toggleMobileMenu}
+					onclick={toggleMobileMenu}
 					class="rounded-xl p-3 text-stone-700 transition-all duration-300 hover:scale-105 hover:bg-stone-100 md:hidden"
 				>
 					{#if isMobileMenuOpen}
