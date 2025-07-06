@@ -1,4 +1,5 @@
 <script lang="ts">
+	// let {data} = $props()
 	import Badge from '$lib/components/ui/badge/badge.svelte';
 	import Label from '$lib/components/ui/label/label.svelte';
 	import Input from '$lib/components/ui/input/input.svelte';
@@ -25,21 +26,21 @@
 	import { accountSchema, passwordSchema } from '$lib/schemas';
 	import { zod } from 'sveltekit-superforms/adapters';
 
-	export let data: PageData;
+	let {data} = $props()
 
 	let localProfileData = { ...data.profileForm.data };
 
 	const {
 		form: profile,
 		errors: profileErrors,
-		enhance: profileEnhance
+		enhance: profileEnhance,
+		reset: profileFormReset,
 	} = superForm(data.profileForm, {
 		id: 'profile',
 		validators: zod(accountSchema),
 		onResult: ({ result }) => {
 			if (result.type === 'success') {
 				toast.success('Profilul a fost actualizat cu succes!');
-				invalidateAll();
 			} else {
 				toast.error('Eroare la actualizarea profilului. Te rugăm să încerci din nou.');
 			}
@@ -66,27 +67,25 @@
 		enhance: preferencesEnhance
 	} = superForm(data.preferencesForm, { id: 'preferences' });
 
-	const nextAppointmentDate = new Date(data.nextAppointment.start_time);
-	const fullAppointmentDate = nextAppointmentDate.toLocaleDateString('ro-RO', {
+	const nextAppointmentDate = $derived(new Date(data.nextAppointment.start_time))
+	const fullAppointmentDate = $derived(nextAppointmentDate.toLocaleDateString('ro-RO', {
 		weekday: 'long',
 		day: 'numeric',
 		month: 'long',
 		year: 'numeric'
-	});
+	}))
 
-	const fullAppointmentHour = nextAppointmentDate.toLocaleTimeString('ro-RO', {
+	const fullAppointmentHour = $derived(nextAppointmentDate.toLocaleTimeString('ro-RO', {
 		hour: '2-digit',
 		minute: '2-digit',
 		hour12: false
-	});
+	}))
 
-	$: if (data.profileForm.data) {
-		localProfileData = { ...data.profileForm.data };
-	}
 
-	$: if (localProfileData) {
-		$profile = localProfileData;
-	}
+	console.log(data)
+	$effect(() => {
+		profileFormReset({data: data.profileForm.data, newState: data.profileForm.data, id: 'profile'})
+	})
 </script>
 
 <svelte:head>
@@ -279,7 +278,7 @@
 											id="full_name"
 											name="full_name"
 											placeholder="Cinca Eduard"
-											bind:value={localProfileData.full_name}
+											bind:value={$profile.full_name}
 											aria-invalid={$profileErrors.full_name ? 'true' : undefined}
 										/>
 										{#if $profileErrors.full_name}
@@ -295,7 +294,7 @@
 											id="phone"
 											name="phone"
 											placeholder="0743400883"
-											bind:value={localProfileData.phone}
+											bind:value={$profile.phone}
 											aria-invalid={$profileErrors.phone ? 'true' : undefined}
 										/>
 										{#if $profileErrors.phone}
@@ -311,7 +310,7 @@
 											id="notes"
 											name="notes"
 											placeholder="Ex: Prefer tuns mai scurt pe lateral"
-											bind:value={localProfileData.notes}
+											bind:value={$profile.notes}
 											aria-invalid={$profileErrors.notes ? 'true' : undefined}
 										/>
 										{#if $profileErrors.notes}
