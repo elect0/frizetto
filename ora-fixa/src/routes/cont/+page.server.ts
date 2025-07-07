@@ -34,7 +34,6 @@ export const load: PageServerLoad = async ({ locals: { supabase, safeGetSession 
 		{ data: nextAppointment, error: appointmentError }
 	] = await Promise.all([profilePromise, statsPromise, nextAppointmentPromise]);
 
-	console.log(stats);
 
 	if (profileError || statsError || appointmentError) {
 		throw error(500, 'Nu am putut incarca profilul tau.');
@@ -58,8 +57,6 @@ export const load: PageServerLoad = async ({ locals: { supabase, safeGetSession 
 					? 'Aur'
 					: 'Argint'
 	};
-
-	console.log(profile.services);
 
 	return {
 		profileForm,
@@ -106,8 +103,6 @@ export const actions: Actions = {
 
 		const { session } = await safeGetSession();
 		if (!session) throw redirect(303, '/login');
-
-		console.log(form, 'FORMA FORMA FORMA')
 
 		const { error } = await supabase
 			.from('profiles')

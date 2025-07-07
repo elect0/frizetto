@@ -64,6 +64,7 @@
 		}
 	});
 
+
 	const {
 		form: preferences,
 		enhance: preferencesEnhance,
@@ -254,7 +255,7 @@
 					</Card.Content>
 					<Card.Footer class="flex justify-end">
 						<p class="text-sm text-stone-800">
-							Apreciem fiecare vizita, {data.loyaltyStats.name.split(' ')[0]}. Esti un client de
+							Apreciem fiecare vizita, {data.loyaltyStats.name.split(' ')[1]}. Esti un client de
 							top.
 						</p>
 					</Card.Footer>

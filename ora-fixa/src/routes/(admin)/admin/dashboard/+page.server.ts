@@ -4,13 +4,11 @@ import type { PageServerLoad } from './$types';
 export const load: PageServerLoad = async ({ locals: { supabase, session }, url }) => {
 	const dateParam = url.searchParams.get('date');
 	const targetDay = dateParam ? new Date(dateParam + 'T12:00:00.000Z') : new Date();
-	targetDay.setUTCHours(0, 0, 0, 0); // Asigurăm că este exact miezul nopții UTC.
+	targetDay.setUTCHours(0, 0, 0, 0);
 
-	// 3. Creăm data pentru a doua zi la miezul nopții UTC.
 	const nextDay = new Date(targetDay);
 	nextDay.setUTCDate(targetDay.getUTCDate() + 1);
 
-	// 4. Convertim aceste date în string-uri ISO standard, pe care orice sistem le înțelege.
 	const startOfDayISO = targetDay.toISOString();
 	const endOfDayISO = nextDay.toISOString();
 
@@ -72,16 +70,7 @@ export const load: PageServerLoad = async ({ locals: { supabase, session }, url 
 	const newClientsCount = newClientsResult.count || 0;
 	const noShowCount = noShowResult.count || 0;
 
-	console.log({
-		appointments: appointments,
-		currentDate: targetDay.toISOString().split('T')[0],
-		kpis: {
-			revenue: totalRevenue,
-			newClients: newClientsCount,
-			noShows: noShowCount
-		},
-		session
-	});
+	console.log(appointments, 'PROGRAMARI PROGRAMARI')
 
 	return {
 		appointments: appointments || [],

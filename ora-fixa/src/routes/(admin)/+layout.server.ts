@@ -1,18 +1,10 @@
-import { redirect } from '@sveltejs/kit';
+import { error } from '@sveltejs/kit';
+import type { LayoutServerLoad } from './$types';
 
-export const load = async ({ locals: { supabase } }) => {
-	const {
-		data: { user },
-		error
-	} = await supabase.auth.getUser();
+export const load: LayoutServerLoad = async ({ locals }) => {
+	const { session, user } = locals;
 
-	if (!user) {
-		throw redirect(303, '/auth');
-	}
-
-	const { data: profile } = await supabase.from('profiles').select('*').eq('id', user.id).single();
-
-	if (!profile || !profile.is_admin) {
-		throw redirect(303, '/');
+	if (user?.role !== 'admin') {
+		error(403, { message: 'Acces interzis. Autentificare necesară.' });
 	}
 };

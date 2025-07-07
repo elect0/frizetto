@@ -1,5 +1,4 @@
 <script lang="ts">
-	
 	import { Button } from '$lib/components/ui/button';
 	import { Avatar, AvatarFallback } from '$lib/components/ui/avatar';
 	import {
@@ -9,7 +8,7 @@
 		DropdownMenuSeparator,
 		DropdownMenuTrigger
 	} from '$lib/components/ui/dropdown-menu';
-	
+
 	import {
 		Scissors,
 		User,
@@ -22,7 +21,7 @@
 		LogOut
 	} from 'lucide-svelte';
 	import { page } from '$app/state';
-	
+
 	interface NavItem {
 		id: string;
 		label: string;
@@ -31,7 +30,7 @@
 
 	let session = $derived(page.data.session);
 	let user = $derived(page.data);
-	
+
 	let isAuthenticated = $derived(!!session);
 	let userInitials = $derived(user.user?.user_metadata.full_name.charAt(0).toUpperCase() || '?');
 	let userName = $derived(user.user?.user_metadata.full_name.split(' ')[0] || 'Oaspete');

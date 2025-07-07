@@ -11,14 +11,8 @@ export const load: PageServerLoad = async ({}) => {
 
 export const actions: Actions = {
 	default: async ({ request, locals: { supabase, safeGetSession } }) => {
-		const formData = await request.clone().formData();
-		const dataAsObject = Object.fromEntries(formData);
-
-		console.log('🕵️‍♂️ [SERVER] Am primit acest pachet de date brut:', dataAsObject);
-		// ==========================================================
-
 		const form = await superValidate(request, zod(profileSchema));
-		console.log(form);
+
 		const session = await safeGetSession();
 
 		if (!form.valid) {

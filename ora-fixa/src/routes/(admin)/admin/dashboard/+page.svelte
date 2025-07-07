@@ -1,10 +1,13 @@
 <script lang="ts">
-	import data from './data.js';
 	import SiteHeader from '$lib/components/site-header.svelte';
 	import SectionCards from '$lib/components/section-cards.svelte';
 	import ChartAreaInteractive from '$lib/components/chart-area-interactive.svelte';
 	import DataTable from '$lib/components/data-table.svelte';
 	import CardAppointment from '$lib/components/dashboard/card-appointment.svelte';
+	let {data} = $props()
+	let appointments = $derived(data.appointments)
+	console.log(appointments)
+
 </script>
 
 <SiteHeader />
@@ -15,13 +18,8 @@
 			<div class="px-4 lg:px-6">
 				<ChartAreaInteractive />
 			</div>
-			<div class="grid grid-cols-1 gap-1 md:grid-cols-2">
-				<DataTable {data} />
-				<div class="grid gap-3 px-4 py-4 lg:px-6">
-					<div>
-						<CardAppointment />
-					</div>
-				</div>
+			<div class="px-4 lg:px-6">
+				<DataTable {appointments} />
 			</div>
 		</div>
 	</div>

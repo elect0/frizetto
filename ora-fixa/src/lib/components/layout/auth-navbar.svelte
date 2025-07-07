@@ -30,7 +30,6 @@
 		icon: any;
 	}
 
-	let isAuthenticated = $derived(!!session);
 	let userInitials = $derived(user.user?.user_metadata.full_name.charAt(0).toUpperCase() || '?');
 	let userName = $derived(user.user?.user_metadata.full_name.split(' ')[0] || 'Oaspete');
 
