@@ -14,12 +14,13 @@
 		Clock,
 		DollarSign,
 		Rocket,
+		Edit,
 		Scissors,
 		CalendarDays,
+		CalendarPlus,
 		Wallet,
 		Check
 	} from '@lucide/svelte';
-	import type { PageData } from './$types';
 	import { superForm } from 'sveltekit-superforms/client';
 	import { toast } from 'svelte-sonner';
 	import { invalidateAll } from '$app/navigation';
@@ -64,7 +65,6 @@
 		}
 	});
 
-
 	const {
 		form: preferences,
 		enhance: preferencesEnhance,
@@ -82,7 +82,7 @@
 		}
 	});
 
-	const nextAppointmentDate = $derived(new Date(data.nextAppointment.start_time));
+	const nextAppointmentDate = $derived(new Date(data.nextAppointment?.start_time));
 	const fullAppointmentDate = $derived(
 		nextAppointmentDate.toLocaleDateString('ro-RO', {
 			weekday: 'long',
@@ -131,8 +131,8 @@
 <div class="min-h-screen bg-stone-50 py-32">
 	<div class="container mx-auto max-w-6xl px-4 lg:px-6">
 		<div class="mb-6">
-			<h2 class="mb-5 text-4xl font-bold text-stone-900 md:text-5xl">Setările Contului</h2>
-			<p class="max-w-2xl text-xl text-stone-600">
+			<h2 class="mb-5 text-3xl font-bold text-stone-900 md:text-5xl">Setările Contului</h2>
+			<p class="max-w-2xl text-lg text-stone-600">
 				Aici îți poți actualiza detaliile personale, schimba parola și personaliza preferințele de
 				comunicare.
 			</p>
@@ -156,54 +156,79 @@
 								</div>
 							</div>
 							<a href={`/?serviceId=${data.favoriteService.id}#booking`}>
-								<Button class="mt-4 cursor-pointer md:mt-0">Programeaza-l Acum</Button>
+								<Button class="mt-4 cursor-pointer md:mt-0">
+									<CalendarDays class="h-5 w-5" />
+									Programeaza-l Acum</Button>
 							</a>
 						</div>
 					</Card.Content>
 				</Card.Root>
 			{/if}
 			<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
-				<Card.Root class="border-stone-200 bg-white shadow-lg">
-					<Card.Header>
-						<Card.Title class="text-2xl">Urmatoarea Programare</Card.Title>
-						<Card.Description class="text-md"
-							>Vezi detaliile și confirmă următoarea ta programare.</Card.Description
-						>
-					</Card.Header>
-					<Card.Content>
-						<h2 class="text-2xl font-bold">{data.nextAppointment.services.name}</h2>
-						<div class="mb-4 flex items-center space-x-3">
-							<div class="mt-1 flex items-center text-sm text-stone-600">
-								<Clock class="mr-1 h-4 w-4" />
-								{data.nextAppointment.services.duration_minutes} minute
-							</div>
-							<div class="mt-1 flex items-center text-sm text-stone-600">
-								<Wallet class="mr-1 h-4 w-4" />
-								{data.nextAppointment.services.price} lei
-							</div>
-						</div>
-						<Card.Root class="mb-4 border-stone-200 bg-stone-50 shadow-none">
-							<Card.Content>
-								<div class="flex items-center">
-									<div
-										class="mr-4 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-amber-100 text-amber-700"
-									>
-										<CalendarDays class="h-5 w-5" />
-									</div>
-									<div>
-										<p class="text-sm text-stone-500">Data si ziua:</p>
-										<p class="font-semibold text-stone-800">
-											{fullAppointmentDate} • {fullAppointmentHour}
-										</p>
-									</div>
+				{#if nextAppointmentDate.toString() !== 'Invalid Date'}
+					<Card.Root class="border-stone-200 bg-white shadow-lg">
+						<Card.Header>
+							<Card.Title class="text-2xl">Urmatoarea Programare</Card.Title>
+							<Card.Description class="text-md"
+								>Vezi detaliile și confirmă următoarea ta programare.</Card.Description
+							>
+						</Card.Header>
+						<Card.Content>
+							<h2 class="text-2xl font-bold">{data.nextAppointment.services.name}</h2>
+							<div class="mb-4 flex items-center space-x-3">
+								<div class="mt-1 flex items-center text-sm text-stone-600">
+									<Clock class="mr-1 h-4 w-4" />
+									{data.nextAppointment.services.duration_minutes} minute
 								</div>
-							</Card.Content>
-						</Card.Root>
-						<a href="/cont/programari">
-							<Button variant="default" class="cursor-pointer">Modifica Programarea</Button>
-						</a>
-					</Card.Content>
-				</Card.Root>
+								<div class="mt-1 flex items-center text-sm text-stone-600">
+									<Wallet class="mr-1 h-4 w-4" />
+									{data.nextAppointment.services.price} lei
+								</div>
+							</div>
+							<Card.Root class="mb-4 border-stone-200 bg-stone-50 shadow-none">
+								<Card.Content>
+									<div class="flex items-center">
+										<div
+											class="mr-4 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-amber-100 text-amber-700"
+										>
+											<CalendarDays class="h-5 w-5" />
+										</div>
+										<div>
+											<p class="text-sm text-stone-500">Data si ziua:</p>
+											<p class="font-semibold text-stone-800">
+												{fullAppointmentDate} • {fullAppointmentHour}
+											</p>
+										</div>
+									</div>
+								</Card.Content>
+							</Card.Root>
+							<a href="/cont/programari">
+								<Button variant="default" class="cursor-pointer">
+									<Edit class='h-5 w-5' />
+									Modifica Programarea</Button>
+							</a>
+						</Card.Content>
+					</Card.Root>
+				{:else}
+					<Card.Root class='border-stone-200 bg-white shadow-lg'>
+						<Card.Content class="flex flex-col items-center justify-center p-10 text-center">
+							<div class="mb-4 rounded-full bg-stone-100 p-4">
+								<CalendarPlus class="h-12 w-12 text-stone-500" />
+							</div>
+							<h3 class="text-xl font-semibold text-stone-800">Calendarul tău este liber!</h3>
+							<p class="mt-2 max-w-xs text-stone-600">
+								Nu ai nicio programare viitoare. Momentul perfect pentru a-ți rezerva următorul
+								look.
+							</p>
+							<a href="/#booking" class="mt-6">
+								<Button size="lg" class='cursor-pointer'>
+									<CalendarPlus class="h-5 w-5" />
+									Programează-te Acum
+								</Button>
+							</a>
+						</Card.Content>
+					</Card.Root>
+				{/if}
 				<Card.Root class="border-stone-200 bg-white shadow-lg">
 					<Card.Header>
 						<Card.Title class="text-2xl">Statutul tau de loialitate</Card.Title>
@@ -255,7 +280,7 @@
 					</Card.Content>
 					<Card.Footer class="flex justify-end">
 						<p class="text-sm text-stone-800">
-							Apreciem fiecare vizita, {data.loyaltyStats.name.split(' ')[1]}. Esti un client de
+							Apreciem fiecare vizita, {data.loyaltyStats.name.split(' ')[0]}. Esti un client de
 							top.
 						</p>
 					</Card.Footer>

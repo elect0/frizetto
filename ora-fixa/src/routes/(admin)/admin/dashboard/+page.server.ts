@@ -3,83 +3,59 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals: { supabase, session }, url }) => {
 	const dateParam = url.searchParams.get('date');
-	const targetDay = dateParam ? new Date(dateParam + 'T12:00:00.000Z') : new Date();
-	targetDay.setUTCHours(0, 0, 0, 0);
+	const targetDate = dateParam || new Date().toISOString().split('T')[0]
 
-	const nextDay = new Date(targetDay);
-	nextDay.setUTCDate(targetDay.getUTCDate() + 1);
+	const startOfDay = new Date(targetDate + 'T00:00:00.000Z')
+	const endOfDay = new Date(targetDate + 'T23:59:59.999Z')
 
-	const startOfDayISO = targetDay.toISOString();
-	const endOfDayISO = nextDay.toISOString();
-
-	const { data: appointments, error: appointmentsError } = await supabase
+	const appointmentsPromise = supabase
 		.from('appointments')
 		.select(
 			`id,
         start_time,
         end_time,
         status,
+		client_notes,
         profiles ( id, full_name, phone, notes ),
         services ( name, duration_minutes, price )`
 		)
-		.gte('start_time', startOfDayISO)
-		.lt('start_time', endOfDayISO)
+		.gte('start_time', startOfDay.toISOString())
+		.lt('start_time', endOfDay.toISOString())
 		.order('start_time', { ascending: true });
 
-	if (appointmentsError) {
-		console.error('Eroare la preluarea programărilor:', appointmentsError);
-		throw error(500, 'A apărut o eroare la încărcarea programului.');
+	const statsPromise = supabase.rpc('get_dashboard_stats', {p_date: targetDate})
+
+	const weeklyRevenuePromise = supabase.rpc('get_weekly_revenue')
+
+	const [appointmentsResult, statsResult, weeklyRevenueResult] = await Promise.all([appointmentsPromise, statsPromise, weeklyRevenuePromise])
+
+	if(appointmentsResult.error || statsResult.error || weeklyRevenueResult.error){
+		console.error('Eroare la încărcarea datelor:', appointmentsResult.error || statsResult.error || weeklyRevenueResult.error);
+		throw error(500, 'A apărut o eroare la server.');
 	}
-
-	const now = new Date();
-	const firstDayOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
-	const lastDayOfMonth = new Date(
-		now.getFullYear(),
-		now.getMonth() + 1,
-		0,
-		23,
-		59,
-		59
-	).toISOString();
-
-	const totalRevenuePromise = supabase
-		.from('appointments')
-		.select('services(price)')
-		.eq('status', 'finalizata')
-		.gte('start_time', firstDayOfMonth)
-		.lte('start_time', lastDayOfMonth);
-	const newClientsPromise = supabase
-		.from('profiles')
-		.select('*', { count: 'exact', head: true })
-		.gte('created_at', firstDayOfMonth)
-		.lte('created_at', lastDayOfMonth);
-	const noShowPromise = supabase
-		.from('appointments')
-		.select('*', { count: 'exact', head: true })
-		.eq('status', 'neprezentat')
-		.gte('start_time', firstDayOfMonth)
-		.lte('start_time', lastDayOfMonth);
-	const [revenueResult, newClientsResult, noShowResult] = await Promise.all([
-		totalRevenuePromise,
-		newClientsPromise,
-		noShowPromise
-	]);
-
-	const totalRevenue =
-		revenueResult.data?.reduce((sum, item) => sum + (item.services?.price || 0), 0) || 0;
-	const newClientsCount = newClientsResult.count || 0;
-	const noShowCount = noShowResult.count || 0;
-
-	console.log(appointments, 'PROGRAMARI PROGRAMARI')
+	
+	const kpisData = statsResult.data[0]
+	console.log(weeklyRevenueResult)
 
 	return {
-		appointments: appointments || [],
-		currentDate: targetDay.toISOString().split('T')[0],
+		appointments: appointmentsResult.data || [],
+		currentDate: targetDate,
 		kpis: {
-			revenue: totalRevenue,
-			newClients: newClientsCount,
-			noShows: noShowCount
+			revenue: {
+				count: kpisData?.total_revenue || 0,
+				percentage: kpisData?.revenue_change_pct
+			},
+			newClients: {
+				count: kpisData?.new_clients_count || 0,
+				percentage: kpisData?.new_clients_change_pct
+			}
+			,
+			noShows: {
+				count: kpisData?.noshow_count || 0,
+				percentage: kpisData?.noshow_change_pct
+			}
 		},
+		weeklyRevenue: weeklyRevenueResult.data || [],
 		session
 	};
 };

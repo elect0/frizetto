@@ -1,6 +1,9 @@
 <script lang="ts">
 	import Badge from '$lib/components/ui/badge/badge.svelte';
 	import * as Tabs from '$lib/components/ui/tabs';
+	import * as Card from '$lib/components/ui/card/index.js';
+	import { Button } from '$lib/components/ui/button/index.js';
+	import { CalendarPlus } from 'lucide-svelte';
 	import AppointmentCard from '$lib/components/account/appointment-card.svelte';
 	import type { PageData } from './$types';
 	import { onMount } from 'svelte';
@@ -37,7 +40,7 @@
 		<div class="grid grid-cols-1 items-center gap-12">
 			<Tabs.Root activationMode="manual" value="programari-viitoare">
 				<div
-					class="mx-auto mb-3 w-full max-w-2xl rounded-lg bg-white p-4 shadow-lg transition-shadow hover:shadow-xl"
+					class="mx-auto mb-3 w-full max-w-2xl rounded-lg bg-white p-4 shadow-lg"
 				>
 					<Tabs.List class="w-full gap-1.5 bg-transparent">
 						<Tabs.Trigger
@@ -58,7 +61,28 @@
 							</div>
 						{/each}
 					{:else}
-						<p class="text-center">Nu ai nicio programarea viitoare.</p>
+						<div class="flex justify-center">
+							<Card.Root
+								class="max-w-2xl w-full border-2 border-dashed border-stone-200 bg-transparent shadow-none"
+							>
+								<Card.Content class="flex flex-col items-center justify-center p-10 text-center">
+									<div class="mb-4 rounded-full bg-stone-100 p-4">
+										<CalendarPlus class="h-12 w-12 text-stone-500" />
+									</div>
+									<h3 class="text-xl font-semibold text-stone-800">Calendarul tău este liber!</h3>
+									<p class="mt-2 max-w-xs text-stone-600">
+										Nu ai nicio programare actuală. Momentul perfect pentru a-ți rezerva următorul
+										look.
+									</p>
+									<a href="/#booking" class="mt-6">
+										<Button size="lg" class='cursor-pointer'>
+										<CalendarPlus  class='w-5 h-5'/>
+											Programează-te Acum
+										</Button>
+									</a>
+								</Card.Content>
+							</Card.Root>
+						</div>
 					{/if}
 				</Tabs.Content>
 				<Tabs.Content value="istoric" class="space-y-3">

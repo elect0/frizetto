@@ -47,15 +47,16 @@
 						<span class="text-800 font-semibold">Bailesti</span>
 					</p>
 				</div>
-				<div class="hero-element pt-4">
+				<div class="hero-element pt-2 md:pt-4">
 					<a
-						href="#booking"
-						class="group inline-flex items-center justify-center rounded-2xl bg-amber-600 px-12 py-3 text-lg text-white shadow-xl shadow-amber-600/25 transition-all duration-300 hover:bg-amber-700 hover:shadow-2xl hover:shadow-amber-600/30"
-					>
-						<Calendar class="mr-3 h-6 w-6" />
-						Programează-te Acum
-						<ChevronRight class="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
-					</a>
+					href="#booking"
+					class="group inline-flex items-center justify-center rounded-2xl bg-amber-600 px-6 sm:px-10 md:px-12 py-3 text-base sm:text-lg text-white shadow-xl shadow-amber-600/25 transition-all duration-300 hover:bg-amber-700 hover:shadow-2xl hover:shadow-amber-600/30 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+				  >
+					<Calendar class="mr-2 sm:mr-3 h-5 sm:h-6 w-5 sm:w-6" />
+					<span>Programează-te Acum</span>
+					<ChevronRight class="ml-2 h-4 sm:h-5 w-4 sm:w-5 transition-transform group-hover:translate-x-1" />
+				  </a>
+				  
 				</div>
 				<div
 					class="hero-element flex items-center justify-center gap-6 pt-4 text-stone-500 lg:justify-start"
