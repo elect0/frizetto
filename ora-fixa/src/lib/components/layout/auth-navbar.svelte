@@ -30,8 +30,8 @@
 		icon: any;
 	}
 
-	let userInitials = $derived(user.user?.user_metadata.full_name.charAt(0).toUpperCase() || '?');
-	let userName = $derived(user.user?.user_metadata.full_name.split(' ')[0] || 'Oaspete');
+	let userInitials = $derived.by(() => {return user.user.user_metadata.full_name ? user.user?.user_metadata.full_name.charAt(0).toUpperCase() : '?'})
+	let userName = $derived.by(() => {return user.user.user_metadata.full_name ? user.user?.user_metadata.full_name.split(' ')[0] : 'Oaspete'});
 
 	let isMobileMenuOpen = $state(false);
 

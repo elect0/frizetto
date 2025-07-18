@@ -7,10 +7,12 @@
 
 	let { weeklyRevenue } = $props<{ weeklyRevenue: { date: Date; lei: number }[] }>();
 
-	const chartData: { date: Date; lei: number }[] = weeklyRevenue.map((day: {date: Date, lei: number}) => ({
-		date: new Date(day.date),
-		lei: day.lei
-	}));
+	const chartData: { date: Date; lei: number }[] = weeklyRevenue.map(
+		(day: { date: Date; lei: number }) => ({
+			date: new Date(day.date),
+			lei: day.lei
+		})
+	);
 
 	const filteredData = $derived.by(() => {
 		const sevenDaysAgo = new Date();
@@ -34,10 +36,7 @@
 		</Card.Description>
 	</Card.Header>
 	<Card.Content class="px-2 pt-4 sm:px-6 sm:pt-6">
-		<Chart.Container
-			config={chartConfig}
-			class="aspect-auto h-[250px] w-full"
-		>
+		<Chart.Container config={chartConfig} class="aspect-auto h-[250px] w-full">
 			<AreaChart
 				legend
 				data={filteredData}
@@ -56,7 +55,7 @@
 						curve: curveNatural,
 						'fill-opacity': 0.4,
 						line: { class: 'stroke-1' },
-						motion: 'tween',
+						motion: 'tween'
 					},
 					xAxis: {
 						ticks: 7,

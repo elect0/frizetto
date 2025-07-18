@@ -2,8 +2,13 @@ import { error } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = async ({ locals: { supabase, session }, url }) => {
-	const dateParam = url.searchParams.get('date');
-	const targetDate = dateParam || new Date().toISOString().split('T')[0]
+	const dateParam = url.searchParams.get('date')
+	const targetDate =
+	dateParam && !isNaN(Date.parse(dateParam))
+	  ? new Date(dateParam).toISOString().split('T')[0]
+	  : new Date().toISOString().split('T')[0];
+	  	console.log(targetDate, 'PULA')
+		// REVIEW LATER
 
 	const startOfDay = new Date(targetDate + 'T00:00:00.000Z')
 	const endOfDay = new Date(targetDate + 'T23:59:59.999Z')
