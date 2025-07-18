@@ -1,17 +1,19 @@
-import { error } from '@sveltejs/kit';
-import type { PageServerLoad } from './$types';
+import { error, fail } from '@sveltejs/kit';
+import type { PageServerLoad, Actions } from './$types';
+import { superValidate } from 'sveltekit-superforms';
+import { zod } from 'sveltekit-superforms/adapters';
+import { idSchema } from '$lib/schemas';
 
 export const load: PageServerLoad = async ({ locals: { supabase, session }, url }) => {
-	const dateParam = url.searchParams.get('date')
+	const dateParam = url.searchParams.get('date');
 	const targetDate =
-	dateParam && !isNaN(Date.parse(dateParam))
-	  ? new Date(dateParam).toISOString().split('T')[0]
-	  : new Date().toISOString().split('T')[0];
-	  	console.log(targetDate, 'PULA')
-		// REVIEW LATER
+		dateParam && !isNaN(Date.parse(dateParam))
+			? new Date(dateParam).toISOString().split('T')[0]
+			: new Date().toISOString().split('T')[0];
+	// REVIEW LATER
 
-	const startOfDay = new Date(targetDate + 'T00:00:00.000Z')
-	const endOfDay = new Date(targetDate + 'T23:59:59.999Z')
+	const startOfDay = new Date(targetDate + 'T00:00:00.000Z');
+	const endOfDay = new Date(targetDate + 'T23:59:59.999Z');
 
 	const appointmentsPromise = supabase
 		.from('appointments')
@@ -28,19 +30,26 @@ export const load: PageServerLoad = async ({ locals: { supabase, session }, url 
 		.lt('start_time', endOfDay.toISOString())
 		.order('start_time', { ascending: true });
 
-	const statsPromise = supabase.rpc('get_dashboard_stats', {p_date: targetDate})
+	const statsPromise = supabase.rpc('get_dashboard_stats', { p_date: targetDate });
 
-	const weeklyRevenuePromise = supabase.rpc('get_weekly_revenue')
+	const weeklyRevenuePromise = supabase.rpc('get_weekly_revenue');
 
-	const [appointmentsResult, statsResult, weeklyRevenueResult] = await Promise.all([appointmentsPromise, statsPromise, weeklyRevenuePromise])
+	const [appointmentsResult, statsResult, weeklyRevenueResult] = await Promise.all([
+		appointmentsPromise,
+		statsPromise,
+		weeklyRevenuePromise
+	]);
 
-	if(appointmentsResult.error || statsResult.error || weeklyRevenueResult.error){
-		console.error('Eroare la încărcarea datelor:', appointmentsResult.error || statsResult.error || weeklyRevenueResult.error);
+	if (appointmentsResult.error || statsResult.error || weeklyRevenueResult.error) {
+		console.error(
+			'Eroare la încărcarea datelor:',
+			appointmentsResult.error || statsResult.error || weeklyRevenueResult.error
+		);
 		throw error(500, 'A apărut o eroare la server.');
 	}
-	
-	const kpisData = statsResult.data[0]
-	console.log(weeklyRevenueResult)
+
+	const kpisData = statsResult.data[0];
+	console.log(weeklyRevenueResult);
 
 	return {
 		appointments: appointmentsResult.data || [],
@@ -53,8 +62,7 @@ export const load: PageServerLoad = async ({ locals: { supabase, session }, url 
 			newClients: {
 				count: kpisData?.new_clients_count || 0,
 				percentage: kpisData?.new_clients_change_pct
-			}
-			,
+			},
 			noShows: {
 				count: kpisData?.noshow_count || 0,
 				percentage: kpisData?.noshow_change_pct
@@ -63,4 +71,62 @@ export const load: PageServerLoad = async ({ locals: { supabase, session }, url 
 		weeklyRevenue: weeklyRevenueResult.data || [],
 		session
 	};
+};
+
+export const actions: Actions = {
+	markAsComplete: async ({ request, locals: { supabase } }) => {
+		const form = await superValidate(request, zod(idSchema));
+
+		console.log(form.data.appointmentId)
+
+		if (!form.valid) {
+			return fail(400, { form });
+		}
+
+		const {data, error } = await supabase
+			.from('appointments')
+			.update({ status: 'finalizata' })
+			.eq('id', form.data.appointmentId);
+
+			console.log(data)
+
+
+		return { success: true };
+	},
+	markAsNoShow: async ({ request, locals: { supabase } }) => {
+		const form = await superValidate(request, zod(idSchema));
+
+		if (!form.valid) {
+			return fail(400, { form });
+		}
+
+		const { error } = await supabase
+			.from('appointments')
+			.update({ status: 'neprezentat' })
+			.eq('id', form.data.appointmentId);
+
+		if (error) {
+			return fail(500, { message: 'A apărut o eroare.' });
+		}
+
+		return { success: true };
+	},
+	cancelAppointment: async ({ request, locals: { supabase } }) => {
+		const form = await superValidate(request, zod(idSchema));
+
+		if (!form.valid) {
+			return fail(400, { form });
+		}
+
+		const { error } = await supabase
+			.from('appointments')
+			.update({ status: 'anulata' })
+			.eq('id', form.data.appointmentId);
+
+		if (error) {
+			return fail(500, { message: 'A apărut o eroare.' });
+		}
+
+		return { success: true };
+	}
 };

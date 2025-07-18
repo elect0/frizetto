@@ -7,12 +7,12 @@
 
 	let { weeklyRevenue } = $props<{ weeklyRevenue: { date: Date; lei: number }[] }>();
 
-	const chartData: { date: Date; lei: number }[] = weeklyRevenue.map(
+	const chartData: { date: Date; lei: number }[] = $derived.by(() => { return weeklyRevenue.map(
 		(day: { date: Date; lei: number }) => ({
 			date: new Date(day.date),
 			lei: day.lei
 		})
-	);
+	)})
 
 	const filteredData = $derived.by(() => {
 		const sevenDaysAgo = new Date();

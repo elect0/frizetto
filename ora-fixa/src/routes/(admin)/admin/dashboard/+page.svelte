@@ -8,8 +8,9 @@
 	let appointments = $derived(data.appointments)
 	let kpis = $derived(data.kpis)
 	let weeklyRevenue = $derived(data.weeklyRevenue)
-
-	console.log(appointments)
+	$effect(() => {
+		console.log(weeklyRevenue)
+	})
 </script>
 
 <SiteHeader />

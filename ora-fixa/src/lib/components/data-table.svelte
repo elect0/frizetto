@@ -2,16 +2,23 @@
 	import { createRawSnippet } from 'svelte';
 	import { renderSnippet } from '$lib/components/ui/data-table/index.js';
 
-	export type Appointment = {
-		id: number;
-		start_time: string;
-		client_notes: string;
-		profiles: {
-			full_name: string;
-		};
-		status: 'confirmata' | 'anulata' | 'finalizata' | 'neprezentat';
-		services: { name: string; price: number };
-	};
+	import { z } from 'zod';
+
+	export const AppointmentSchema = z.object({
+		id: z.number(),
+		start_time: z.string(),
+		client_notes: z.string(),
+		profiles: z.object({
+			full_name: z.string()
+		}),
+		status: z.enum(['confirmata', 'anulata', 'finalizata', 'neprezentat']),
+		services: z.object({
+			name: z.string(),
+			price: z.number()
+		})
+	});
+
+	export type Appointment = z.infer<typeof AppointmentSchema>;
 
 	export const columns: ColumnDef<Appointment>[] = [
 		{
@@ -85,6 +92,8 @@
 			}
 		}
 	];
+
+	let isDialogOpen = $state(false);
 </script>
 
 <script lang="ts">
@@ -101,6 +110,7 @@
 	import { createSvelteTable, FlexRender } from '$lib/components/ui/data-table/index.js';
 	import * as Table from '$lib/components/ui/table/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
+	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import {
 		CircleCheck,
 		CalendarCheck,
@@ -111,9 +121,12 @@
 		ChevronRight,
 		UserPlus
 	} from '@lucide/svelte';
-	import { Button } from '$lib/components/ui/button/index.js';
+	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
 	import { goto } from '$app/navigation';
 	import { Input } from '$lib/components/ui/input/index.js';
+	import { enhance } from '$app/forms';
+	import { invalidateAll } from '$app/navigation';
+	import { toast } from 'svelte-sonner';
 
 	let { appointments, date: currentDateString }: { appointments: Appointment[]; date: string } =
 		$props();
@@ -180,7 +193,7 @@
 				<ChevronRight />
 			</Button>
 			<Button variant="outline" size="sm" class="cursor-pointer" onclick={() => navigateToDay(+1)}>
-				<UserPlus class='w-5 h-5' /> Adaugă programare walk-in.
+				<UserPlus class="h-5 w-5" /> Adaugă programare walk-in.
 			</Button>
 		</div>
 	</div>
@@ -262,11 +275,90 @@
 			{/snippet}
 		</DropdownMenu.Trigger>
 		<DropdownMenu.Content align="end" class="w-32">
-			<DropdownMenu.Item>Marchează ca Finalizată</DropdownMenu.Item>
-			<DropdownMenu.Item>Marchează ca Neprezentat</DropdownMenu.Item>
+			<DropdownMenu.Item>
+				<form
+					action="?/markAsComplete"
+					method="POST"
+					use:enhance={() => {
+						return async ({ result }) => {
+							if (result.type === 'success') {
+								toast.success('Programarea a fost marcată ca finalizată cu succes.');
+								await invalidateAll();
+							} else {
+								toast.error('Eroare:', {
+									description: 'programarea nu a putut fi marcată ca finalizată.'
+								});
+							}
+						};
+					}}
+				>
+					<input type="hidden" name="appointmentId" value={row.original.id} />
+					<button type="submit" class="all-unset">Marchează ca Finalizată</button>
+				</form>
+			</DropdownMenu.Item>
+			<DropdownMenu.Item>
+				<form
+					action="?/markAsNoShow"
+					method="POST"
+					use:enhance={() => {
+						return async ({ result }) => {
+							if (result.type === 'success') {
+								toast.success('Programarea a fost marcată ca neprezentată.');
+								await invalidateAll();
+							} else {
+								toast.error('Eroare:', {
+									description: 'programarea nu a putut fi marcată ca neprezentată.'
+								});
+							}
+						};
+					}}
+				>
+					<input type="hidden" name="appointmentId" value={row.original.id} />
+					<button type="submit" class="all-unset">Marchează ca Neprezentat</button>
+				</form></DropdownMenu.Item
+			>
 			<DropdownMenu.Item>Vezi Profilul Clientului</DropdownMenu.Item>
 			<DropdownMenu.Separator />
-			<DropdownMenu.Item variant="destructive">Anulează Programarea</DropdownMenu.Item>
+			<Dialog.Root bind:open={isDialogOpen}>
+				<Dialog.Trigger class="hover:bg-accent rounded-md p-2 text-start text-sm text-red-500"
+					>Anulează Programarea</Dialog.Trigger
+				>
+				<Dialog.Content>
+					<Dialog.Header>
+						<Dialog.Title>Anulează programarea</Dialog.Title>
+						<Dialog.Description>
+							Ești sigur că vrei să anulezi această programare? Această acțiune este permanentă și
+							nu poate fi reversată.
+						</Dialog.Description>
+					</Dialog.Header>
+					<Dialog.Footer>
+						<form
+							action="?/cancelAppointment"
+							method="POST"
+							use:enhance={() => {
+								return async ({ result }) => {
+									if (result.type === 'success') {
+										toast.success('Programarea a fost marcată ca neprezentată.');
+										await invalidateAll();
+										setTimeout(() => {
+											isDialogOpen = false;
+										}, 500);
+									} else {
+										toast.error('Eroare:', {
+											description: 'programarea nu a putut fi marcată ca neprezentată.'
+										});
+									}
+								};
+							}}
+						>
+							<input type="hidden" name="appointmentId" value={row.original.id} />
+							<Button type="submit" variant="destructive" class="cursor-pointer"
+								>Confirmă anularea</Button
+							>
+						</form>
+					</Dialog.Footer>
+				</Dialog.Content>
+			</Dialog.Root>
 		</DropdownMenu.Content>
 	</DropdownMenu.Root>
 {/snippet}

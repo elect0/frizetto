@@ -53,3 +53,7 @@ export const preferencesSchema = z.object({
 	notify_sms_reminder: z.boolean(),
 	marketing_opt_in: z.boolean()
 })
+
+export const idSchema = z.object({
+	appointmentId: z.coerce.number().positive('ID-ul programării este invalid.')
+})

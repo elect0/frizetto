@@ -124,6 +124,10 @@ html {
 	}
 }
 
+.all-unset {
+	all: unset;
+}
+
 /* * {
 	border: 1px solid red !important;
 } */
