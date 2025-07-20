@@ -34,10 +34,17 @@ export const load: PageServerLoad = async ({ locals: { supabase, session }, url 
 
 	const weeklyRevenuePromise = supabase.rpc('get_weekly_revenue');
 
-	const [appointmentsResult, statsResult, weeklyRevenueResult] = await Promise.all([
+	const profilesPromise = supabase.from('profiles').select('*').order('full_name', {ascending: true})
+
+	const servicesPromise = supabase.from('services').select('*')
+
+
+	const [appointmentsResult, statsResult, weeklyRevenueResult, profilesResult, servicesResult] = await Promise.all([
 		appointmentsPromise,
 		statsPromise,
-		weeklyRevenuePromise
+		weeklyRevenuePromise,
+		profilesPromise,
+		servicesPromise
 	]);
 
 	if (appointmentsResult.error || statsResult.error || weeklyRevenueResult.error) {
@@ -69,6 +76,8 @@ export const load: PageServerLoad = async ({ locals: { supabase, session }, url 
 			}
 		},
 		weeklyRevenue: weeklyRevenueResult.data || [],
+		clients: profilesResult.data || [],
+		services: servicesResult.data || [],
 		session
 	};
 };

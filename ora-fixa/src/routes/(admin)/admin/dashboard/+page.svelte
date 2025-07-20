@@ -22,7 +22,7 @@
 				<ChartAreaInteractive {weeklyRevenue}/>
 			</div>
 			<div class="px-4 lg:px-6">
-				<DataTable appointments={data.appointments} date={data.currentDate}/>
+				<DataTable services={data.services} clients={data.clients} appointments={data.appointments} date={data.currentDate}/>
 			</div>
 		</div>
 	</div>

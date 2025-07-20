@@ -40,6 +40,7 @@
 		"eslint": "^9.18.0",
 		"eslint-config-prettier": "^10.0.1",
 		"eslint-plugin-svelte": "^3.0.0",
+		"formsnap": "^2.0.1",
 		"globals": "^16.0.0",
 		"layerchart": "^2.0.0-next.23",
 		"mode-watcher": "^1.0.8",

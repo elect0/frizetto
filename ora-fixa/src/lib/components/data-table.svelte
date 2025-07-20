@@ -106,6 +106,7 @@
 		getPaginationRowModel,
 		getFilteredRowModel
 	} from '@tanstack/table-core';
+	import type { Profile, Service } from '$lib/types/supabase';
 	import { Badge } from '$lib/components/ui/badge/index.js';
 	import { createSvelteTable, FlexRender } from '$lib/components/ui/data-table/index.js';
 	import * as Table from '$lib/components/ui/table/index.js';
@@ -127,11 +128,22 @@
 	import { enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
 	import { toast } from 'svelte-sonner';
+	import ClientCombobox from './client-combobox.svelte';
+	import {type DateValue} from "@internationalized/date";
 
-	let { appointments, date: currentDateString }: { appointments: Appointment[]; date: string } =
-		$props();
+	let {
+		appointments,
+		clients,
+		services,
+		date: currentDateString
+	}: { appointments: Appointment[]; date: string; clients: Profile[], services: Service[] } = $props();
 	let pagination = $state<PaginationState>({ pageIndex: 0, pageSize: 18 });
 	let columnFilters = $state<ColumnFiltersState>([]);
+
+	let clientValue = $state('');
+	let serviceValue = $state('')
+	let dateValue = $state<DateValue | undefined>()
+	
 
 	const table = createSvelteTable({
 		get data() {
@@ -168,21 +180,22 @@
 		goto(`/admin/dashboard?date=${newDateString}`);
 	}
 
+
 	function goToToday() {
 		goto('/admin/dashboard');
 	}
 </script>
 
 <div>
-	<div class="flex items-center justify-between py-4">
+	<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between py-4">
 		<Input
 			placeholder="Filtrează nume"
 			value={(table.getColumn('fullName')?.getFilterValue() as string) ?? ''}
 			onchange={(e) => table.getColumn('fullName')?.setFilterValue(e.currentTarget.value)}
 			oninput={(e) => table.getColumn('fullName')?.setFilterValue(e.currentTarget.value)}
-			class="max-w-sm"
+			class="w-full sm:max-w-sm text-sm"
 		/>
-		<div class="flex items-center space-x-2">
+		<div class="flex flex-wrap sm:flex-nowrap items-center space-x-2 mt-2 sm:mt-0">
 			<Button variant="outline" size="sm" class="cursor-pointer" onclick={() => navigateToDay(-1)}>
 				<ChevronLeft />
 			</Button>
@@ -192,11 +205,26 @@
 			<Button variant="outline" size="sm" class="cursor-pointer" onclick={() => navigateToDay(+1)}>
 				<ChevronRight />
 			</Button>
-			<Button variant="outline" size="sm" class="cursor-pointer" onclick={() => navigateToDay(+1)}>
-				<UserPlus class="h-5 w-5" /> Adaugă programare walk-in.
-			</Button>
+			<Dialog.Root>
+				<Dialog.Trigger class={`${buttonVariants({ variant: 'outline' })} w-full sm:w-auto mt-2 sm:mt-0`}>
+					<div class="flex items-center justify-center sm:justify-start">
+						<UserPlus class="mr-2 h-5 w-5" /> Adaugă programare walk-in.
+					</div>
+				</Dialog.Trigger>
+				<Dialog.Content>
+					<Dialog.Header>
+						<Dialog.Title>Adaugă Programare Nouă</Dialog.Title>
+						<Dialog.Description>
+							Completează detaliile pentru a adăuga o nouă programare în calendar. 
+							Asigură-te că toate informațiile sunt corecte înainte de a salva.
+						</Dialog.Description>
+					</Dialog.Header>
+					<ClientCombobox {dateValue} {clients} {clientValue} {serviceValue} {services} />
+				</Dialog.Content>
+			</Dialog.Root>
 		</div>
 	</div>
+	
 	<div class="rounded-md border">
 		<Table.Root>
 			<Table.Header>

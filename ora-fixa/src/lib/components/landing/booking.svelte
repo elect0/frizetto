@@ -209,6 +209,7 @@
 										>
 											<div class="flex flex-col items-center justify-center">
 												<Calendar
+													locale="ro"
 													bind:value={selectedDate}
 													minValue={minDate}
 													maxValue={maxDate}

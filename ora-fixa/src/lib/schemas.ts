@@ -57,3 +57,10 @@ export const preferencesSchema = z.object({
 export const idSchema = z.object({
 	appointmentId: z.coerce.number().positive('ID-ul programării este invalid.')
 })
+
+export const walkInSchema = z.object({
+	clientId: z.string().uuid(),
+	serviceId: z.coerce.number().positive('Te rugăm să alegi un serviciu.'),
+	date: z.string().min(1, 'Te rugăm să alegi o dată.'),
+	time: z.string().min(1, 'Te rugăm să alegi o oră.')
+})
