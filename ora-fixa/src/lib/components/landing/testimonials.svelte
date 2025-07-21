@@ -25,12 +25,12 @@
 	];
 
 	let pictures = [
-		{ url: '/images/taper.jpg' },
-		{ url: '/images/taper.jpg' },
-		{ url: '/images/taper.jpg' },
-		{ url: '/images/taper.jpg' },
-		{ url: '/images/taper.jpg' },
-		{ url: '/images/taper.jpg' }
+		{ url: '/images/taper.webp' },
+		{ url: '/images/taper.webp' },
+		{ url: '/images/taper.webp' },
+		{ url: '/images/taper.webp' },
+		{ url: '/images/taper.webp' },
+		{ url: '/images/taper.webp' }
 	];
 </script>
 
@@ -49,6 +49,7 @@
 			{#each pictures as picture, i}
 				<div class="group relative overflow-hidden rounded-2xl shadow-lg">
 					<img
+						loading="lazy"
 						src={picture.url}
 						alt={`Tuns Realizat ${i + 1}`}
 						class="h-[250px] w-full object-cover transition-transform duration-500 group-hover:scale-110"

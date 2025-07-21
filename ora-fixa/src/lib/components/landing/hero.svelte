@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/button/index.js';
 	import { Badge } from '$lib/components/ui/badge/index.js';
 	import { Award, Calendar, ChevronRight, Star, Users } from 'lucide-svelte';
 	import { onMount } from 'svelte';
 	import { gsap } from 'gsap';
+
 	onMount(() => {
 		gsap.from('.hero-element', {
 			y: 50,
@@ -49,14 +49,15 @@
 				</div>
 				<div class="hero-element pt-2 md:pt-4">
 					<a
-					href="#booking"
-					class="group inline-flex items-center justify-center rounded-2xl bg-amber-600 px-6 sm:px-10 md:px-12 py-3 text-base sm:text-lg text-white shadow-xl shadow-amber-600/25 transition-all duration-300 hover:bg-amber-700 hover:shadow-2xl hover:shadow-amber-600/30 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
-				  >
-					<Calendar class="mr-2 sm:mr-3 h-5 sm:h-6 w-5 sm:w-6" />
-					<span>Programează-te Acum</span>
-					<ChevronRight class="ml-2 h-4 sm:h-5 w-4 sm:w-5 transition-transform group-hover:translate-x-1" />
-				  </a>
-				  
+						href="#booking"
+						class="group inline-flex items-center justify-center rounded-2xl bg-amber-600 px-6 py-3 text-base text-white shadow-xl shadow-amber-600/25 transition-all duration-300 hover:bg-amber-700 hover:shadow-2xl hover:shadow-amber-600/30 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 sm:px-10 sm:text-lg md:px-12"
+					>
+						<Calendar class="mr-2 h-5 w-5 sm:mr-3 sm:h-6 sm:w-6" />
+						<span>Programează-te Acum</span>
+						<ChevronRight
+							class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 sm:h-5 sm:w-5"
+						/>
+					</a>
 				</div>
 				<div
 					class="hero-element flex items-center justify-center gap-6 pt-4 text-stone-500 lg:justify-start"
@@ -80,9 +81,12 @@
 					class="relative overflow-hidden rounded-3xl border-8 border-white shadow-2xl shadow-stone-900/20"
 				>
 					<img
-						src="/images/hero.jpg"
+						src="/images/hero.webp"
 						alt="Frizer profesionist la lucru"
-						class="h-[600px] w-full object-cover"
+						class="h-[500px] w-full object-cover"
+						width="450"
+						height="600"
+						fetchpriority="high"
 					/>
 				</div>
 				<div

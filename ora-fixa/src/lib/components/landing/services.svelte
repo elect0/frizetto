@@ -62,7 +62,8 @@
 			<div class="relative">
 				<div class="overflow-hidden rounded-3xl shadow-2xl">
 					<img
-						src="/images/services.jpg"
+						loading="lazy"
+						src="/images/services.webp"
 						alt="Unelte profesionale de frizerie"
 						class="h-[500px] w-full object-cover"
 					/>

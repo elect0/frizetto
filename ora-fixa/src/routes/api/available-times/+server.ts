@@ -1,12 +1,13 @@
 import type { RequestHandler } from './$types';
 import { json, error as SvelteKitError } from '@sveltejs/kit';
 
-export const GET: RequestHandler = async ({ url, locals: { supabase } }) => {
+export const GET: RequestHandler = async ({ url, locals: { supabase }, setHeaders }) => {
 	const date = url.searchParams.get('date');
 	const durationParam = url.searchParams.get('duration');
 
 	if (!date || !durationParam) {
-		throw SvelteKitError(400, 'Parametrii "date" și "duration" sunt obligatorii.');	}
+		throw SvelteKitError(400, 'Parametrii "date" și "duration" sunt obligatorii.');
+	}
 
 	const duration = parseInt(durationParam);
 	if (isNaN(duration) || duration <= 0) {
@@ -24,6 +25,9 @@ export const GET: RequestHandler = async ({ url, locals: { supabase } }) => {
 	}
 
 	const slots = data as { available_slot: string }[];
+	setHeaders({
+		'Cache-Control': 'public, s-maxage=30, max-age=0'
+	});
 
 	return json({ slots });
 };
