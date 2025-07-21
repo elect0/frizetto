@@ -4,7 +4,45 @@
 	import { Card, CardContent } from '$lib/components/ui/card';
 	import { onMount } from 'svelte';
 	import { gsap } from 'gsap';
-	export let services: Service[];
+
+	const services: Service[] = [
+		{
+			id: 2,
+			created_at: '2025-06-25T14:29:01.418113+00:00',
+			name: 'Tuns Zero',
+			description:
+				'O tunsoare curată, minimalistă, cu părul tuns aproape de piele, pentru un aspect ultra-simplu și impecabil. Ideal pentru cei care preferă întreținerea ușoară și un look îndrăzneț.',
+			price: 35,
+			duration_minutes: 60
+		},
+		{
+			id: 1,
+			created_at: '2025-06-09T09:29:53.133475+00:00',
+			name: 'Tuns modern',
+			description:
+				'Un look fresh, actual și adaptat stilului tău personal. Stilistul nostru îți va contura părul astfel încât să te simți încrezător și să fii mereu în trend.\r\n\r\n',
+			price: 40,
+			duration_minutes: 60
+		},
+		{
+			id: 3,
+			created_at: '2025-06-25T14:29:53.681067+00:00',
+			name: 'Tuns Barba',
+			description:
+				'Modelare precisă și îngrijire profesională a bărbii, pentru un contur perfect și un aspect bine definit. Fie că vrei o barbă completă sau o linie clară, te ajutăm să arăți impecabil.',
+			price: 30,
+			duration_minutes: 45
+		},
+		{
+			id: 4,
+			created_at: '2025-06-25T14:30:46.405504+00:00',
+			name: 'Tuns Complet',
+			description:
+				'Pachet complet de stil: tunsoare modernă plus modelarea bărbii pentru un look armonios, actual și bine definit. Tot ce ai nevoie pentru un aspect fresh și îngrijit, realizat de profesioniști.',
+			price: 50,
+			duration_minutes: 60
+		}
+	];
 
 	onMount(() => {
 		gsap.to('#pachet-complet', {

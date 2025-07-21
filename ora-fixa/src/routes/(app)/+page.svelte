@@ -12,12 +12,14 @@
 
 <Hero />
 <About />
-<Services services={data.services} />
+<Services />
 <Testimonials />
-{#if data.form && data.services}
-	<Booking services={data.services} form={data.form} />
-{:else}
+{#await data.streamed.services}
 	<SkeletonBooking />
-{/if}
+{:then services}
+	{#if data.form}
+		<Booking {services} form={data.form} />
+	{/if}
+{/await}
 <Faq />
 <Contact />
