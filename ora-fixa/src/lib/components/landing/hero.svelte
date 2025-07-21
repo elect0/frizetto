@@ -83,7 +83,10 @@
 					<img
 						src="/images/hero.webp"
 						alt="Frizer profesionist la lucru"
-						class="h-[600px] w-full object-cover"
+						class="h-[500px] w-full object-cover"
+						width="450"
+						height="600"
+						fetchpriority="high"
 					/>
 				</div>
 				<div

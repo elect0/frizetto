@@ -17,9 +17,9 @@
 {#if data.form && data.services}
 	<Booking services={data.services} form={data.form} />
 {:else}
-	<div class="py-24 text-center">
+	<section id="booking" class="py-24 text-center">
 		<p class="animate-pulse">Se încarcă modulul de programare...</p>
-	</div>
+	</section>
 {/if}
 <Faq />
 <Contact />
