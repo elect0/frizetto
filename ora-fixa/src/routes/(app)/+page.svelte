@@ -5,21 +5,19 @@
 	import Faq from '$lib/components/landing/faq.svelte';
 	import Hero from '$lib/components/landing/hero.svelte';
 	import Services from '$lib/components/landing/services.svelte';
+	import SkeletonBooking from '$lib/components/landing/skeleton-booking.svelte';
 	import Testimonials from '$lib/components/landing/testimonials.svelte';
-	export let data;
-	const { services } = data;
+	let { data } = $props();
 </script>
 
 <Hero />
 <About />
-<Services {services} />
+<Services services={data.services} />
 <Testimonials />
 {#if data.form && data.services}
 	<Booking services={data.services} form={data.form} />
 {:else}
-	<section id="booking" class="py-24 text-center">
-		<p class="animate-pulse">Se încarcă modulul de programare...</p>
-	</section>
+	<SkeletonBooking />
 {/if}
 <Faq />
 <Contact />
