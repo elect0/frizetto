@@ -11,15 +11,9 @@ export const load: PageServerLoad = async ({ locals: { supabase }, url }) => {
 		serviceIdParam ? { serviceId: serviceIdParam } : undefined,
 		zod(bookingSchema)
 	);
-	console.log(form);
 
-	const { data: services, error } = await supabase.from('services').select('*');
-	if (error) {
-		console.error('Eroare la preluarea serviciilor:', error);
-		return { services: [] };
-	}
-
-	return { form, services: services ?? [] };
+	const servicePromise = supabase.from('services').select('*');
+	return { form, streamed: { services: servicePromise.then(({ data }) => data ?? []) } };
 };
 
 export const actions: Actions = {
