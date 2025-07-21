@@ -29,7 +29,7 @@
 			<div class="about-element relative order-2 lg:order-1">
 				<div class="relative overflow-hidden rounded-3xl shadow-2xl">
 					<img
-						src="/images/about.jpg"
+						src="/images/about.webp"
 						alt="Portret frizer profesionist"
 						class="h-[500px] w-full object-cover"
 					/>

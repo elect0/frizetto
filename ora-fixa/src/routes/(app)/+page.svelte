@@ -6,9 +6,7 @@
 	import Hero from '$lib/components/landing/hero.svelte';
 	import Services from '$lib/components/landing/services.svelte';
 	import Testimonials from '$lib/components/landing/testimonials.svelte';
-	import Navbar from '$lib/components/layout/navbar.svelte';
 	export let data;
-	console.log(data.form);
 	const { services } = data;
 </script>
 

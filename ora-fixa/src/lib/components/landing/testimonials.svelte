@@ -25,12 +25,12 @@
 	];
 
 	let pictures = [
-		{ url: '/images/taper.jpg' },
-		{ url: '/images/taper.jpg' },
-		{ url: '/images/taper.jpg' },
-		{ url: '/images/taper.jpg' },
-		{ url: '/images/taper.jpg' },
-		{ url: '/images/taper.jpg' }
+		{ url: '/images/taper.webp' },
+		{ url: '/images/taper.webp' },
+		{ url: '/images/taper.webp' },
+		{ url: '/images/taper.webp' },
+		{ url: '/images/taper.webp' },
+		{ url: '/images/taper.webp' }
 	];
 </script>
 

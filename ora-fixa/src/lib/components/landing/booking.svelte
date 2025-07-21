@@ -29,7 +29,7 @@
 		form: SuperValidated<z.infer<typeof bookingSchema>>;
 	}>();
 
-	const { form, errors, enhance, submitting, message } = superForm(initialForm, {
+	const { form, errors, enhance } = superForm(initialForm, {
 		id: 'booking-form',
 		onUpdated: ({ form: a }) => {
 			if (a.message) {
@@ -67,6 +67,7 @@
 			fetchAvailableTimes(selectedDate);
 		}
 	});
+
 	async function fetchAvailableTimes(date: DateValue) {
 		if (!selectedService) return;
 		const duration = selectedService.duration_minutes;
