@@ -9,7 +9,7 @@
 	let kpis = $derived(data.kpis)
 	let weeklyRevenue = $derived(data.weeklyRevenue)
 	$effect(() => {
-		console.log(weeklyRevenue)
+		console.log(data.form)
 	})
 </script>
 
@@ -22,7 +22,7 @@
 				<ChartAreaInteractive {weeklyRevenue}/>
 			</div>
 			<div class="px-4 lg:px-6">
-				<DataTable services={data.services} clients={data.clients} appointments={data.appointments} date={data.currentDate}/>
+				<DataTable form={data.form} services={data.services} clients={data.clients} appointments={data.appointments} date={data.currentDate}/>
 			</div>
 		</div>
 	</div>

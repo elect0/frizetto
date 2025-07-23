@@ -127,23 +127,31 @@
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
+	import { type SuperValidated } from 'sveltekit-superforms/client';
+	import { walkInSchema } from '$lib/schemas';
 	import { toast } from 'svelte-sonner';
 	import ClientCombobox from './client-combobox.svelte';
-	import {type DateValue} from "@internationalized/date";
+	import { type DateValue } from '@internationalized/date';
 
 	let {
 		appointments,
 		clients,
 		services,
-		date: currentDateString
-	}: { appointments: Appointment[]; date: string; clients: Profile[], services: Service[] } = $props();
+		date: currentDateString,
+		form: walkInForm
+	}: {
+		appointments: Appointment[];
+		date: string;
+		clients: Profile[];
+		services: Service[];
+		form: SuperValidated<z.infer<typeof walkInSchema>>;
+	} = $props();
 	let pagination = $state<PaginationState>({ pageIndex: 0, pageSize: 18 });
 	let columnFilters = $state<ColumnFiltersState>([]);
 
 	let clientValue = $state('');
-	let serviceValue = $state('')
-	let dateValue = $state<DateValue | undefined>()
-	
+	let serviceValue = $state('');
+	let dateValue = $state<DateValue | undefined>();
 
 	const table = createSvelteTable({
 		get data() {
@@ -177,25 +185,28 @@
 
 		const newDateString = date.toISOString().split('T')[0];
 
-		goto(`/admin/dashboard?date=${newDateString}`);
+		goto(`/admin/dashboard?date=${newDateString}`, {
+			noScroll: true
+		});
 	}
 
-
 	function goToToday() {
-		goto('/admin/dashboard');
+		goto('/admin/dashboard', {
+			noScroll: true
+		});
 	}
 </script>
 
 <div>
-	<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between py-4">
+	<div class="flex flex-col py-4 sm:flex-row sm:items-center sm:justify-between">
 		<Input
 			placeholder="Filtrează nume"
 			value={(table.getColumn('fullName')?.getFilterValue() as string) ?? ''}
 			onchange={(e) => table.getColumn('fullName')?.setFilterValue(e.currentTarget.value)}
 			oninput={(e) => table.getColumn('fullName')?.setFilterValue(e.currentTarget.value)}
-			class="w-full sm:max-w-sm text-sm"
+			class="w-full text-sm sm:max-w-sm"
 		/>
-		<div class="flex flex-wrap sm:flex-nowrap items-center space-x-2 mt-2 sm:mt-0">
+		<div class="mt-2 flex flex-wrap items-center space-x-2 sm:mt-0 sm:flex-nowrap">
 			<Button variant="outline" size="sm" class="cursor-pointer" onclick={() => navigateToDay(-1)}>
 				<ChevronLeft />
 			</Button>
@@ -206,7 +217,9 @@
 				<ChevronRight />
 			</Button>
 			<Dialog.Root>
-				<Dialog.Trigger class={`${buttonVariants({ variant: 'outline' })} w-full sm:w-auto mt-2 sm:mt-0`}>
+				<Dialog.Trigger
+					class={`${buttonVariants({ variant: 'outline' })} mt-2 w-full sm:mt-0 sm:w-auto`}
+				>
 					<div class="flex items-center justify-center sm:justify-start">
 						<UserPlus class="mr-2 h-5 w-5" /> Adaugă programare walk-in.
 					</div>
@@ -215,16 +228,23 @@
 					<Dialog.Header>
 						<Dialog.Title>Adaugă Programare Nouă</Dialog.Title>
 						<Dialog.Description>
-							Completează detaliile pentru a adăuga o nouă programare în calendar. 
-							Asigură-te că toate informațiile sunt corecte înainte de a salva.
+							Completează detaliile pentru a adăuga o nouă programare în calendar. Asigură-te că
+							toate informațiile sunt corecte înainte de a salva.
 						</Dialog.Description>
 					</Dialog.Header>
-					<ClientCombobox {dateValue} {clients} {clientValue} {serviceValue} {services} />
+					<ClientCombobox
+						{walkInForm}
+						{dateValue}
+						{clients}
+						{clientValue}
+						{serviceValue}
+						{services}
+					/>
 				</Dialog.Content>
 			</Dialog.Root>
 		</div>
 	</div>
-	
+
 	<div class="rounded-md border">
 		<Table.Root>
 			<Table.Header>
@@ -336,7 +356,7 @@
 							} else {
 								toast.error('Eroare:', {
 									description: 'programarea nu a putut fi marcată ca neprezentată.'
-								});
+								}); 
 							}
 						};
 					}}

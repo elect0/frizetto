@@ -11,7 +11,7 @@
 	import { goto } from '$app/navigation';
 	import { Loader2 } from 'lucide-svelte';
 
-	export let data: PageData;
+	let {data} = $props()
 
 	const { form, errors, submitting, message, enhance } = superForm(data.form, {
 		validators: zod(profileSchema),
