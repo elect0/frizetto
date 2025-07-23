@@ -12,6 +12,11 @@
 	import { Calendar } from '$lib/components/ui/calendar/index.js';
 	import { Textarea } from '$lib/components/ui/textarea/index.js';
 	import { DateFormatter, type DateValue, getLocalTimeZone } from '@internationalized/date';
+	import { superForm, type SuperValidated } from 'sveltekit-superforms/client';
+	import { walkInSchema } from '$lib/schemas';
+	import { z } from 'zod';
+	import { zod } from 'sveltekit-superforms/adapters';
+	import { toast } from 'svelte-sonner';
 
 	type Props = {
 		clients: Profile[];
@@ -19,6 +24,7 @@
 		services: Service[];
 		serviceValue: string | undefined;
 		dateValue: DateValue | undefined;
+		walkInForm: SuperValidated<z.infer<typeof walkInSchema>>;
 	};
 
 	let {
@@ -26,30 +32,78 @@
 		clients,
 		serviceValue = $bindable(),
 		services,
-		dateValue = $bindable()
+		dateValue = $bindable(),
+		walkInForm
 	}: Props = $props();
 
 	console.log(clients);
 
+	const { form, errors, enhance } = superForm(walkInForm, {
+		validators: zod(walkInSchema),
+		invalidateAll: true,
+		resetForm: true,
+		onChange(event) {
+			if (event.paths[0] === 'date' || event.paths[0] === 'serviceId') {
+				if (dateValue && $form.date && $form.serviceId) {
+					fetchAvailableTimes(dateValue);
+				}
+			}
+		},
+		onResult: ({ result }) => {
+			if (result.type === 'success') {
+				toast.success('Programarea a fost adăugată cu succes!');
+				dateValue = undefined;
+			} else {
+				console.log(form);
+				toast.error('A apărut o eroare la adăugarea programării. Te rugăm să încerci din nou!');
+			}
+		}
+	});
+
 	let open = $state(false);
 	let triggerRef = $state<HTMLButtonElement>(null!);
 	let contentRef = $state<HTMLElement | null>(null);
-
-	let selectedTime = $state<string | undefined>('');
 
 	let availableSlots = $state<{ available_slot: string }[]>([]);
 
 	let isLoading = $state(false);
 
 	const selectedClientValue = $derived(
-		clientValue
-			? clients.find((client) => client.id.toString() === clientValue)?.full_name
+		$form.clientId
+			? clients.find((client) => client.id.toString() === $form.clientId)?.full_name
 			: 'Selectează un client...'
 	);
 
 	const serviceTriggerContent = $derived(
-		services.find((f) => f.id.toString() === serviceValue)?.name ?? 'Alege un serviciu.'
+		services.find((s) => s.id.toString() === $form.serviceId)?.name ?? 'Alege un serviciu.'
 	);
+	let duration = $derived.by(() =>
+		services.find((s) => s.id.toString() === $form.serviceId)?.duration_minutes.toString()
+	);
+
+	async function fetchAvailableTimes(date: DateValue) {
+		isLoading = true;
+		if (!$form.serviceId) return;
+
+		const service = services.find((s) => s.id.toString() === $form.serviceId);
+		if (!service) return;
+		availableSlots = [];
+		const dateString = date.toString();
+		const duration = service.duration_minutes;
+
+		try {
+			const response = await fetch(`/api/available-times?date=${dateString}&duration=${duration}`);
+			if (response.ok) {
+				const data = await response.json();
+				availableSlots = data.slots || [];
+			}
+		} catch (error) {
+			console.error('A apărut o eroare în funcția fetch:', error);
+			availableSlots = [];
+		} finally {
+			isLoading = false;
+		}
+	}
 
 	function closeAndFocusTrigger() {
 		open = false;
@@ -61,40 +115,9 @@
 	const df = new DateFormatter('ro-RO', {
 		dateStyle: 'long'
 	});
-
-	async function fetchAvailableTimes(date: DateValue, serviceId: string) {
-		isLoading = true;
-		if (!serviceId) return;
-
-		const service = services.find((s) => s.id.toString() === serviceId);
-		if (!service) return;
-		availableSlots = [];
-		const dateString = date.toString();
-		const duration = service.duration_minutes;
-
-		try {
-			const response = await fetch(`/api/available-times?date=${dateString}&duration=${duration}`);
-			if (response.ok) {
-				const data = await response.json();
-				console.log(data.slots, 'pula');
-				availableSlots = data.slots || [];
-			}
-		} catch (error) {
-			console.error('A apărut o eroare în funcția fetch:', error);
-			availableSlots = [];
-		} finally {
-			isLoading = false;
-		}
-	}
-
-	$effect(() => {
-		if (serviceValue && dateValue) {
-			fetchAvailableTimes(dateValue, serviceValue);
-		}
-	});
 </script>
 
-<form action="" method="POST" class="space-y-4">
+<form action="?/addWalkInAppointment" method="POST" use:enhance class="space-y-4">
 	<Popover.Root bind:open>
 		<Label class="mb-2">Alege un client</Label>
 		<Popover.Trigger
@@ -115,7 +138,7 @@
 							<Command.Item
 								value={client.id}
 								onSelect={() => {
-									clientValue = client.id;
+									$form.clientId = client.id;
 									closeAndFocusTrigger();
 								}}
 							>
@@ -130,10 +153,10 @@
 			</Command.Root>
 		</Popover.Content>
 	</Popover.Root>
-	{#if clientValue}
+	{#if $form.clientId}
 		<div class="space-y-4">
 			<Label class="mb-2">Serviciu</Label>
-			<Select.Root type="single" name="serviceId" bind:value={serviceValue}>
+			<Select.Root type="single" name="serviceId" bind:value={$form.serviceId}>
 				<Select.Trigger class="justify-cet w-full">
 					{serviceTriggerContent}
 				</Select.Trigger>
@@ -145,7 +168,7 @@
 					{/each}
 				</Select.Content>
 			</Select.Root>
-			<div class="grid grid-cols-2 gap-4">
+			<div class="grid md:grid-cols-2 gap-4">
 				<div>
 					<Label class="mb-2">Data</Label>
 					<Popover.Root>
@@ -162,15 +185,24 @@
 							{dateValue ? df.format(dateValue.toDate(getLocalTimeZone())) : 'Alege o data'}
 						</Popover.Trigger>
 						<Popover.Content bind:ref={contentRef} class="w-auto p-0">
-							<Calendar locale={'ro'} type="single" bind:value={dateValue} />
+							<Calendar
+								locale={'ro'}
+								type="single"
+								onValueChange={() => {
+									if (dateValue) {
+										$form.date = dateValue.toDate(getLocalTimeZone()).toISOString();
+									}
+								}}
+								bind:value={dateValue}
+							/>
 						</Popover.Content>
 					</Popover.Root>
 				</div>
 				<div>
 					<Label class="mb-2">Ora</Label>
-					<Select.Root type="single" name="time" bind:value={selectedTime}>
+					<Select.Root type="single" name="time" bind:value={$form.time}>
 						<Select.Trigger disabled={isLoading} class="w-full">
-							{isLoading ? 'Se încarcă...' : !selectedTime ? 'Alege o oră' : selectedTime}
+							{isLoading ? 'Se încarcă...' : !$form.time ? 'Alege o oră' : $form.time}
 						</Select.Trigger>
 						<Select.Content>
 							{#if availableSlots.length > 0}
@@ -187,17 +219,23 @@
 				</div>
 			</div>
 			<div>
-				<Label for='clientNotes' class='mb-2'>Adaugă o notiță (opțional)</Label>
+				<Label for="clientNotes" class="mb-2">Adaugă o notiță (opțional)</Label>
 				<Textarea
 					id="clientNotes"
 					name="clientNotes"
-					class='text-sm'
+					bind:value={$form.clientNotes}
+					class="text-sm"
 					placeholder="Exemplu: prefer tuns mai scurt pe laterale, ajung cu 5 minute întârziere..."
 				/>
 			</div>
 		</div>
 		<div class="flex justify-end">
-			<Button class="mt-1 cursor-pointer"><Save class="h-5 w-5" /> Salvează Programarea</Button>
+			<input type="hidden" name="duration" bind:value={duration} />
+			<input type="hidden" name="clientId" bind:value={$form.clientId} />
+			<input type="hidden" name="date" bind:value={$form.date} />
+			<Button type="submit" class="mt-1 cursor-pointer"
+				><Save class="h-5 w-5" /> Salvează Programarea</Button
+			>
 		</div>
 	{/if}
 </form>

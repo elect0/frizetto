@@ -21,11 +21,12 @@ export const bookingSchema = z.object({
 	startTime: z.string().datetime(),
 	duration: z.coerce.number().positive(),
 	time: z.string().min(1, { message: 'Te rugăm să alegi o oră.' }),
-	hasAgreedToPolicy: z.literal(true, {
-		errorMap: () => ({ message: 'Trebuie sa confirmi angajamentul pentru a continua.' })
-	}),
+	hasAgreedToPolicy: z.boolean(),
 	clientNotes: z.string().optional()
-});
+}).refine((data) => !data.hasAgreedToPolicy, {
+	message: 'Trebuie sa confirmi angajamentul pentru a continua.',
+	path: ['hasAgreedToPolicy']
+})
 
 export const profileSchema = z.object({
 	fullName: z.string().nonempty('Te rugăm să completezi acest câmp.'),
@@ -60,7 +61,9 @@ export const idSchema = z.object({
 
 export const walkInSchema = z.object({
 	clientId: z.string().uuid(),
-	serviceId: z.coerce.number().positive('Te rugăm să alegi un serviciu.'),
-	date: z.string().min(1, 'Te rugăm să alegi o dată.'),
-	time: z.string().min(1, 'Te rugăm să alegi o oră.')
+	serviceId: z.string().min(1, { message: 'Te rugăm să alegi un serviciu.' }),
+	duration: z.coerce.number(),
+	date: z.string(),
+	time: z.string().min(1, { message: 'Te rugăm să alegi o oră.' }),
+	clientNotes: z.string().optional()
 })

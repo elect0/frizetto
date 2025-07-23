@@ -13,7 +13,7 @@
 		<Card.Header>
 			<Card.Description>Incasari Totale</Card.Description>
 			<Card.Title class="@[250px]/card:text-3xl text-2xl font-semibold tabular-nums">
-				{kpis.revenue.count}
+				{kpis.revenue.count} (lunar)
 			</Card.Title>
 			<Card.Action>
 				<Badge variant="outline">
@@ -35,7 +35,7 @@
 					<TrendingUpIcon class="size-4" />
 				{/if}
 			</div>
-			<div class="text-muted-foreground">Lorem ipsum dolor sit.</div>
+			<div class="text-muted-foreground">Afișează suma totală încasată în luna curentă.</div>
 		</Card.Footer>
 	</Card.Root>
 	<Card.Root class="@container/card">
@@ -64,7 +64,7 @@
 					<TrendingUpIcon class="size-4" />
 				{/if}
 			</div>
-			<div class="text-muted-foreground">Lorem, ipsum dolor sit.</div>
+			<div class="text-muted-foreground">Numărul utilizatorilor care s-au înregistrat în această lună.</div>
 		</Card.Footer>
 	</Card.Root>
 	<Card.Root class="@container/card">
@@ -93,7 +93,7 @@
 					<TrendingDownIcon class="size-4" />
 				{/if}
 			</div>
-			<div class="text-muted-foreground">Lorem ipsum dolor sit.</div>
+			<div class="text-muted-foreground">Procentul rezervărilor neconfirmate sau neprezentate.</div>
 		</Card.Footer>
 	</Card.Root>
 </div>
