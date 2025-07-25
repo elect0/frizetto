@@ -14,7 +14,15 @@ export const load: PageServerLoad = async ({ locals: { supabase, session }, url 
 
 	const { data, error: appointmentsError } = await supabase
 		.from('appointments')
-		.select('*')
+		.select(
+			`id,
+				start_time,
+				end_time,
+				status,
+				client_notes,
+				profiles ( id, full_name, phone, notes ),
+				services ( name, duration_minutes, price )`
+		)
 		.gte('start_time', startTime.toISOString())
 		.lte('end_time', endTime.toISOString())
 		.order('start_time', { ascending: true })
@@ -24,6 +32,8 @@ export const load: PageServerLoad = async ({ locals: { supabase, session }, url 
 		console.error('Eroare la încărcarea datelor:', appointmentsError);
 		throw error(500, 'A apărut o eroare la server.');
 	}
+
+	console.log(page)
 
 	return {
 		appointments: data ?? [],
