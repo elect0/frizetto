@@ -1,26 +1,15 @@
 <script lang="ts">
-	import CameraIcon from '@tabler/icons-svelte/icons/camera';
-	import ChartBarIcon from '@tabler/icons-svelte/icons/chart-bar';
+
 	import DashboardIcon from '@tabler/icons-svelte/icons/dashboard';
-	import DatabaseIcon from '@tabler/icons-svelte/icons/database';
-	import FileAiIcon from '@tabler/icons-svelte/icons/file-ai';
-	import FileDescriptionIcon from '@tabler/icons-svelte/icons/file-description';
-	import FileWordIcon from '@tabler/icons-svelte/icons/file-word';
-	import FolderIcon from '@tabler/icons-svelte/icons/folder';
-	import HelpIcon from '@tabler/icons-svelte/icons/help';
 	import InnerShadowTopIcon from '@tabler/icons-svelte/icons/inner-shadow-top';
-	import ListDetailsIcon from '@tabler/icons-svelte/icons/list-details';
-	import ReportIcon from '@tabler/icons-svelte/icons/report';
-	import SearchIcon from '@tabler/icons-svelte/icons/search';
-	import SettingsIcon from '@tabler/icons-svelte/icons/settings';
 	import UsersIcon from '@tabler/icons-svelte/icons/users';
+	import IconCalendarCheck from '@tabler/icons-svelte/icons/calendar-check';
+	import { IconClock, IconMessage, IconScissors } from '@tabler/icons-svelte';
 	import NavDocuments from './nav-documents.svelte';
 	import NavMain from './nav-main.svelte';
-	import NavSecondary from './nav-secondary.svelte';
 	import NavUser from './nav-user.svelte';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import type { ComponentProps } from 'svelte';
-	import { Calendar, CalendarCheck2, Clock, MessageSquare, Scissors, Users } from 'lucide-svelte';
 
 	const data = {
 		user: {
@@ -35,101 +24,31 @@
 				icon: DashboardIcon
 			},
 			{
-				title: 'Calendar',
-				url: '/admin/calendar',
-				icon: Calendar
-			},
-			{
 				title: 'Programari',
 				url: '/admin/programari',
-				icon: CalendarCheck2
+				icon: IconCalendarCheck
 			},
 			{
 				title: 'Clienti',
 				url: '/admin/clienti',
-				icon: Users
+				icon: UsersIcon
 			},
 			{
 				title: 'Servicii',
 				url: '/admin/servicii',
-				icon: Scissors
-			}
-		],
-		navClouds: [
-			{
-				title: 'Capture',
-				icon: CameraIcon,
-				isActive: true,
-				url: '#',
-				items: [
-					{
-						title: 'Active Proposals',
-						url: '#'
-					},
-					{
-						title: 'Archived',
-						url: '#'
-					}
-				]
-			},
-			{
-				title: 'Proposal',
-				icon: FileDescriptionIcon,
-				url: '#',
-				items: [
-					{
-						title: 'Active Proposals',
-						url: '#'
-					},
-					{
-						title: 'Archived',
-						url: '#'
-					}
-				]
-			},
-			{
-				title: 'Prompts',
-				icon: FileAiIcon,
-				url: '#',
-				items: [
-					{
-						title: 'Active Proposals',
-						url: '#'
-					},
-					{
-						title: 'Archived',
-						url: '#'
-					}
-				]
-			}
-		],
-		navSecondary: [
-			{
-				title: 'Settings',
-				url: '#',
-				icon: SettingsIcon
-			},
-			{
-				title: 'Get Help',
-				url: '#',
-				icon: HelpIcon
-			},
-			{
-				title: 'Search',
-				url: '#',
-				icon: SearchIcon
+				icon: IconScissors
 			}
 		],
 		documents: [
 			{
 				name: 'Program de lucru',
 				url: '/admin/program',
-				icon: Clock
+				icon: IconClock
 			},
 			{
 				name: 'Notificari',
 				url: '/admin/notificari',
-				icon: MessageSquare
+				icon: IconMessage
 			}
 		]
 	};

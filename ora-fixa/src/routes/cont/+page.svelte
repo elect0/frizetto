@@ -1,5 +1,4 @@
 <script lang="ts">
-	// let {data} = $props()
 	import Badge from '$lib/components/ui/badge/badge.svelte';
 	import Label from '$lib/components/ui/label/label.svelte';
 	import Input from '$lib/components/ui/input/input.svelte';
@@ -107,7 +106,6 @@
 	);
 
 	$effect(() => {
-		console.log(data.preferencesForm.data);
 		preferencesFormReset({
 			data: data.preferencesForm.data,
 			newState: data.preferencesForm.data,

@@ -23,7 +23,7 @@ export const bookingSchema = z.object({
 	time: z.string().min(1, { message: 'Te rugăm să alegi o oră.' }),
 	hasAgreedToPolicy: z.boolean(),
 	clientNotes: z.string().optional()
-}).refine((data) => !data.hasAgreedToPolicy, {
+}).refine((data) => data.hasAgreedToPolicy === true, {
 	message: 'Trebuie sa confirmi angajamentul pentru a continua.',
 	path: ['hasAgreedToPolicy']
 })
