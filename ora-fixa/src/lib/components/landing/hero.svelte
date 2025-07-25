@@ -3,6 +3,7 @@
 	import { Award, Calendar, ChevronRight, Star, Users } from 'lucide-svelte';
 	import { onMount } from 'svelte';
 	import { gsap } from 'gsap';
+	import { smoothscroll } from '$lib/hooks/smooth-scrolling';
 
 	onMount(() => {
 		gsap.from('.hero-element', {
@@ -50,6 +51,7 @@
 				<div class="hero-element pt-2 md:pt-4">
 					<a
 						href="#booking"
+						use:smoothscroll={{offset: 50}}
 						class="group inline-flex items-center justify-center rounded-2xl bg-amber-600 px-6 py-3 text-base text-white shadow-xl shadow-amber-600/25 transition-all duration-300 hover:bg-amber-700 hover:shadow-2xl hover:shadow-amber-600/30 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 sm:px-10 sm:text-lg md:px-12"
 					>
 						<Calendar class="mr-2 h-5 w-5 sm:mr-3 sm:h-6 sm:w-6" />

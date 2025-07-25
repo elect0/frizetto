@@ -1,6 +1,7 @@
 <script lang="ts">
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import AppSidebar from '$lib/components/app-sidebar.svelte';
+	import SiteHeader from '$lib/components/site-header.svelte';
 </script>
 
 <div>
@@ -10,6 +11,7 @@
 		<AppSidebar variant="inset" />
 		<Sidebar.Inset>
 			<main class="p-4">
+				<SiteHeader />
 				<slot />
 			</main>
 		</Sidebar.Inset>

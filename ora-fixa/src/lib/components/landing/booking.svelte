@@ -115,7 +115,7 @@
 		dateStyle: 'long'
 	});
 
-	const minDate = today(getLocalTimeZone());
+	const minDate = today(getLocalTimeZone()).add({days: 1})
 
 	const maxDate = minDate.add({ weeks: 2 });
 </script>

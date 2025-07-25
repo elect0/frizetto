@@ -3,12 +3,12 @@
 	import FolderIcon from '@tabler/icons-svelte/icons/folder';
 	import Share3Icon from '@tabler/icons-svelte/icons/share-3';
 	import TrashIcon from '@tabler/icons-svelte/icons/trash';
-	import type { Icon } from '@lucide/svelte';
+	import type { Icon } from "@tabler/icons-svelte";
 
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 
-	let { items }: { items: { name: string; url: string; icon: Icon }[] } = $props();
+	let { items }: { items: { name: string; url: string; icon?: Icon }[] } = $props();
 
 	const sidebar = Sidebar.useSidebar();
 </script>
