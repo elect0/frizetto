@@ -46,7 +46,9 @@ const supabase: Handle = async ({ event, resolve }) => {
 
 const authGuard: Handle = async ({event, resolve}) => {
 	const {session, user} = await event.locals.safeGetSession()
-
+	const {data} = await event.locals.supabase.from('profiles').select('is_admin').eq('id', user?.id).single()
+	
+	event.locals.isAdmin = data?.is_admin
 	event.locals.session = session
 	event.locals.user = user
 	

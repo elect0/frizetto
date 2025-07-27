@@ -67,3 +67,17 @@ export const walkInSchema = z.object({
 	time: z.string().min(1, { message: 'Te rugăm să alegi o oră.' }),
 	clientNotes: z.string().optional()
 })
+
+export const updateAppointmentSchema = z.object({
+	appointmentId: z.string(),
+	serviceId: z.string(),
+	duration: z.coerce.number(),
+	date: z.string().min(1, 'Data este obligatorie.'),
+	time: z.string().min(1, 'Ora este obligatorie.'),
+    status: z.string().min(1, 'Statusul este obligatoriu.')
+})
+
+export const updateStatusSchema = z.object({
+    appointmentId: z.string(),
+    status: z.string()
+})

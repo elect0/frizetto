@@ -13,6 +13,7 @@
 		}),
 		status: z.enum(['confirmata', 'anulata', 'finalizata', 'neprezentat']),
 		services: z.object({
+			id: z.number(),
 			name: z.string(),
 			price: z.number()
 		})
@@ -106,41 +107,29 @@
 		getPaginationRowModel,
 		getFilteredRowModel
 	} from '@tanstack/table-core';
-	import type { Profile, Service } from '$lib/types/supabase';
 	import { Badge } from '$lib/components/ui/badge/index.js';
 	import { createSvelteTable, FlexRender } from '$lib/components/ui/data-table/index.js';
 	import * as Table from '$lib/components/ui/table/index.js';
-    import * as Select from '$lib/components/ui/select/index.js'
+	import * as Select from '$lib/components/ui/select/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
-	import {
-		CircleCheck,
-		CalendarCheck,
-		XCircle,
-		UserX,
-		EllipsisVertical,
-		ChevronLeft,
-		ChevronRight,
-		UserPlus
-	} from '@lucide/svelte';
-	import { Button, buttonVariants } from '$lib/components/ui/button/index.js';
+	import { CircleCheck, CalendarCheck, XCircle, UserX, EllipsisVertical } from '@lucide/svelte';
+	import { Button } from '$lib/components/ui/button/index.js';
 	import { goto } from '$app/navigation';
 	import { Input } from '$lib/components/ui/input/index.js';
 	import { enhance } from '$app/forms';
 	import { invalidateAll } from '$app/navigation';
-	import { type SuperValidated } from 'sveltekit-superforms/client';
-	import { walkInSchema } from '$lib/schemas';
 	import { toast } from 'svelte-sonner';
-	import ClientCombobox from './client-combobox.svelte';
-	import { type DateValue } from '@internationalized/date';
-    import {page} from '$app/state'
+	import { page } from '$app/state';
+	import UpdateAppointmentModal from './update-appointment-modal.svelte';
+	import UpdateStatusModal from './update-status-modal.svelte';
 
 	let {
 		appointments,
-        currentPage,
+		currentPage
 	}: {
 		appointments: Appointment[];
-        currentPage: number;
+		currentPage: number;
 	} = $props();
 	let pagination = $state<PaginationState>({ pageIndex: 0, pageSize: 60 });
 	let columnFilters = $state<ColumnFiltersState>([]);
@@ -157,13 +146,13 @@
 				columnFilters = updater;
 			}
 		},
-        onPaginationChange: (updater) => {
-            if (typeof updater === 'function') {
-                pagination = updater(pagination);
-            } else {
-                pagination = updater;
-            }
-        },
+		onPaginationChange: (updater) => {
+			if (typeof updater === 'function') {
+				pagination = updater(pagination);
+			} else {
+				pagination = updater;
+			}
+		},
 		state: {
 			get pagination() {
 				return pagination;
@@ -177,58 +166,64 @@
 		getCoreRowModel: getCoreRowModel()
 	});
 
-    const statuses = [
-        {value: '', label: "Toate"},
-        { value: 'confirmata', label: 'Confirmată' },
-        { value: 'anulata', label: 'Anulată' },
-        { value: 'finalizata', label: 'Finalizată' },
-        { value: 'neprezentat', label: 'Neprezentat' },
-    ]
+	const statuses = [
+		{ value: '', label: 'Toate' },
+		{ value: 'confirmata', label: 'Confirmată' },
+		{ value: 'anulata', label: 'Anulată' },
+		{ value: 'finalizata', label: 'Finalizată' },
+		{ value: 'neprezentat', label: 'Neprezentat' }
+	];
 
-    const months = [
-        {value: '1', label: 'Ianuarie'},
-        {value: '2', label: 'Februarie'},
-        {value: '3', label: 'Martie'},
-        {value: '4', label: 'Aprilie'},
-        {value: '5', label: 'Mai'},
-        {value: '6', label: 'Iunie'},
-        {value: '7', label: 'Iulie'},
-        {value: '8', label: 'August'},
-        {value: '9', label: 'Septembrie'},
-        {value: '10', label: 'Octombrie'},
-        {value: '11', label: 'Noiembrie'},
-        {value: '12', label: 'Decembrie'}
-    ]
-    
-    let selectedStatus = $state("")
-    let selectedMonth = $state((new Date().getMonth() + 1).toString())
+	const months = [
+		{ value: '1', label: 'Ianuarie' },
+		{ value: '2', label: 'Februarie' },
+		{ value: '3', label: 'Martie' },
+		{ value: '4', label: 'Aprilie' },
+		{ value: '5', label: 'Mai' },
+		{ value: '6', label: 'Iunie' },
+		{ value: '7', label: 'Iulie' },
+		{ value: '8', label: 'August' },
+		{ value: '9', label: 'Septembrie' },
+		{ value: '10', label: 'Octombrie' },
+		{ value: '11', label: 'Noiembrie' },
+		{ value: '12', label: 'Decembrie' }
+	];
 
-    const statusTriggerContent = $derived(statuses.find(s => s.value === selectedStatus)?.label ?? 'Selecteaza un status.')
-    const monthTriggerContent = $derived(months.find(m => m.value === selectedMonth)?.label ?? 'Selecteaza o luna.')
+	let selectedStatus = $state('');
+	let selectedMonth = $state((new Date().getMonth() + 1).toString());
 
+	const statusTriggerContent = $derived(
+		statuses.find((s) => s.value === selectedStatus)?.label ?? 'Selecteaza un status.'
+	);
+	const monthTriggerContent = $derived(
+		months.find((m) => m.value === selectedMonth)?.label ?? 'Selecteaza o luna.'
+	);
 
-    function navigateToMonth(month: string){
-        goto(`/admin/programari?month=${month}`, {
-            noScroll: true
-        })
-    }
+	function navigateToMonth(month: string) {
+		goto(`/admin/programari?month=${month}`, {
+			noScroll: true
+		});
+	}
 
-    const id = $derived(page.params.id)
+	const id = $derived(page.params.id);
 
-    function navigateToPage(pageNumber: number){
-        console.log()
-        const url = page.url.search && !page.url.searchParams.get('page') ? `${page.url.search.split('&')[0]}&page=${pageNumber}` : `?page=${pageNumber}`
-        goto(url, {
-            noScroll: true,
-            replaceState: true,
-            keepFocus: true,
-        })
-    }
+	function navigateToPage(pageNumber: number) {
+		const params = new URLSearchParams(page.url.searchParams);
+		params.set('page', pageNumber.toString());
+		console.log(params.toString(), page.url.pathname);
+		const url = `${page.url.pathname}?${params.toString()}`;
 
-    $effect(() => {
-        console.log(page)
-        console.log(id)
-    })
+		goto(url, {
+			noScroll: true,
+			replaceState: true,
+			keepFocus: true
+		});
+	}
+
+	$effect(() => {
+		console.log(page);
+		console.log(id);
+	});
 </script>
 
 <div>
@@ -240,38 +235,42 @@
 			oninput={(e) => table.getColumn('fullName')?.setFilterValue(e.currentTarget.value)}
 			class="w-full text-sm sm:max-w-sm"
 		/>
-        <div class="mt-2 flex flex-wrap items-center space-x-2 sm:mt-0 sm:flex-nowrap">
-        <Select.Root type='single' bind:value={selectedStatus} onValueChange={() => table.getColumn('status')?.setFilterValue(selectedStatus)}>
-            <Select.Trigger>
-                Filtru Status: {statusTriggerContent}
-            </Select.Trigger>
-            <Select.Content>
-                <Select.Label>Status-uri</Select.Label>
-                {#each statuses as status (status.value)}
-                    <Select.Item
-                        value={status.value}
-                        label={status.label}>
-                        {status.label}
-            </Select.Item>
-            {/each}
-            </Select.Content>
-        </Select.Root>
-        <Select.Root type='single' bind:value={selectedMonth} onValueChange={() => navigateToMonth(selectedMonth)}>
-            <Select.Trigger>
-                Date din Luna: {monthTriggerContent}
-            </Select.Trigger>
-            <Select.Content>
-                <Select.Label>Alege o luna</Select.Label>
-            {#each months as month (month.value)}
-                <Select.Item
-                    value={month.value}
-                    label={month.label}>
-                    {month.label}
-                </Select.Item>
-            {/each}
-            </Select.Content>
-        </Select.Root>
-    </div>
+		<div class="mt-3 flex flex-wrap items-center sm:mt-0 sm:flex-nowrap md:space-x-2">
+			<Select.Root
+				type="single"
+				bind:value={selectedStatus}
+				onValueChange={() => table.getColumn('status')?.setFilterValue(selectedStatus)}
+			>
+				<Select.Trigger class="w-full">
+					Filtru Status: {statusTriggerContent}
+				</Select.Trigger>
+				<Select.Content>
+					<Select.Label>Status-uri</Select.Label>
+					{#each statuses as status (status.value)}
+						<Select.Item value={status.value} label={status.label}>
+							{status.label}
+						</Select.Item>
+					{/each}
+				</Select.Content>
+			</Select.Root>
+			<Select.Root
+				type="single"
+				bind:value={selectedMonth}
+				onValueChange={() => navigateToMonth(selectedMonth)}
+			>
+				<Select.Trigger class="mt-3 w-full md:mt-0">
+					Date din Luna: {monthTriggerContent}
+				</Select.Trigger>
+				<Select.Content>
+					<Select.Label>Alege o luna</Select.Label>
+					{#each months as month (month.value)}
+						<Select.Item value={month.value} label={month.label}>
+							{month.label}
+						</Select.Item>
+					{/each}
+				</Select.Content>
+			</Select.Root>
+		</div>
 	</div>
 
 	<div class="rounded-md border">
@@ -311,16 +310,21 @@
 			</Table.Body>
 		</Table.Root>
 	</div>
-	<div class="flex w-full justify-between items-center">
+	<div class="flex w-full items-center justify-between p-3">
 		<span class="mt-4 text-end text-sm text-stone-500"
 			>{table.getFilteredRowModel().rows.length} din {table.getState().pagination.pageSize} programări.
-			<!-- <div>Data tabelului: {currentDateString}.</div> -->
 		</span>
-        <div>
-            <Button variant='outline' size='sm' onclick={() => navigateToPage(currentPage - 1)} disabled={currentPage === 1 ? true : false}>Previous</Button>
-            <Button variant='outline' size='sm' onclick={() => navigateToPage(currentPage + 1)}>Next</Button>
-
-        </div>
+		<div class="space-x-1">
+			<Button
+				variant="outline"
+				size="sm"
+				onclick={() => navigateToPage(currentPage - 1)}
+				disabled={currentPage === 1 ? true : false}>Înapoi</Button
+			>
+			<Button variant="outline" size="sm" onclick={() => navigateToPage(currentPage + 1)}
+				>Înainte</Button
+			>
+		</div>
 	</div>
 </div>
 
@@ -357,90 +361,16 @@
 			{/snippet}
 		</DropdownMenu.Trigger>
 		<DropdownMenu.Content align="end" class="w-32">
-			<DropdownMenu.Item>
-				<form
-					action="?/markAsComplete"
-					method="POST"
-					use:enhance={() => {
-						return async ({ result }) => {
-							if (result.type === 'success') {
-								toast.success('Programarea a fost marcată ca finalizată cu succes.');
-								await invalidateAll();
-							} else {
-								toast.error('Eroare:', {
-									description: 'programarea nu a putut fi marcată ca finalizată.'
-								});
-							}
-						};
-					}}
-				>
-					<input type="hidden" name="appointmentId" value={row.original.id} />
-					<button type="submit" class="all-unset">Marchează ca Finalizată</button>
-				</form>
-			</DropdownMenu.Item>
-			<DropdownMenu.Item>
-				<form
-					action="?/markAsNoShow"
-					method="POST"
-					use:enhance={() => {
-						return async ({ result }) => {
-							if (result.type === 'success') {
-								toast.success('Programarea a fost marcată ca neprezentată.');
-								await invalidateAll();
-							} else {
-								toast.error('Eroare:', {
-									description: 'programarea nu a putut fi marcată ca neprezentată.'
-								}); 
-							}
-						};
-					}}
-				>
-					<input type="hidden" name="appointmentId" value={row.original.id} />
-					<button type="submit" class="all-unset">Marchează ca Neprezentat</button>
-				</form></DropdownMenu.Item
-			>
+			<div>
+				<UpdateAppointmentModal {row} />
+			</div>
+			<div>
+				<UpdateStatusModal
+					appointmentId={row.original.id.toString()}
+					status={row.original.status}
+				/>
+			</div>
 			<DropdownMenu.Item>Vezi Profilul Clientului</DropdownMenu.Item>
-			<DropdownMenu.Separator />
-			<Dialog.Root bind:open={isDialogOpen}>
-				<Dialog.Trigger class="hover:bg-accent rounded-md p-2 text-start text-sm text-red-500"
-					>Anulează Programarea</Dialog.Trigger
-				>
-				<Dialog.Content>
-					<Dialog.Header>
-						<Dialog.Title>Anulează programarea</Dialog.Title>
-						<Dialog.Description>
-							Ești sigur că vrei să anulezi această programare? Această acțiune este permanentă și
-							nu poate fi reversată.
-						</Dialog.Description>
-					</Dialog.Header>
-					<Dialog.Footer>
-						<form
-							action="?/cancelAppointment"
-							method="POST"
-							use:enhance={() => {
-								return async ({ result }) => {
-									if (result.type === 'success') {
-										toast.success('Programarea a fost marcată ca neprezentată.');
-										await invalidateAll();
-										setTimeout(() => {
-											isDialogOpen = false;
-										}, 500);
-									} else {
-										toast.error('Eroare:', {
-											description: 'programarea nu a putut fi marcată ca neprezentată.'
-										});
-									}
-								};
-							}}
-						>
-							<input type="hidden" name="appointmentId" value={row.original.id} />
-							<Button type="submit" variant="destructive" class="cursor-pointer"
-								>Confirmă anularea</Button
-							>
-						</form>
-					</Dialog.Footer>
-				</Dialog.Content>
-			</Dialog.Root>
 		</DropdownMenu.Content>
 	</DropdownMenu.Root>
 {/snippet}
