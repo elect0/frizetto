@@ -10,7 +10,6 @@ export const load: PageServerLoad = async ({ locals: { supabase, session }, url 
 		dateParam && !isNaN(Date.parse(dateParam))
 			? new Date(dateParam).toISOString().split('T')[0]
 			: new Date().toISOString().split('T')[0];
-	// REVIEW LATER
 
 	const form = await superValidate(zod(walkInSchema));
 
@@ -143,7 +142,7 @@ export const actions: Actions = {
 
 		return { success: true };
 	},
-	addWalkInAppointment: async ({ request, locals: { supabase, session } }) => {
+	addWalkInAppointment: async ({ request, locals: { supabase, session, isAdmin} }) => {
 		const form = await superValidate(request, zod(walkInSchema));
 		if (!form.valid) {
 			console.log(form);
@@ -153,13 +152,7 @@ export const actions: Actions = {
 		const startTime = new Date(`${form.data.date.split('T')[0]}T${form.data.time}:00.000Z`);
 		const endTime = new Date(startTime.getTime() + form.data.duration * 60 * 1000);
 
-		const { data: profile } = await supabase
-			.from('profiles')
-			.select('is_admin')
-			.eq('id', session?.user.id)
-			.single();
-
-		if (!profile.is_admin) {
+		if (!isAdmin) {
 			return fail(401, { message: 'Neautorizat.' });
 		}
 

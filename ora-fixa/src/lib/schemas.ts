@@ -81,3 +81,10 @@ export const updateStatusSchema = z.object({
     appointmentId: z.string(),
     status: z.string()
 })
+
+export const scheduleOverrideSchema = z.object({
+	date: z.string(),
+	startTime: z.string(),
+	endTime: z.string(),
+	isActive: z.boolean()
+})
