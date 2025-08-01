@@ -311,9 +311,14 @@
 		</Table.Root>
 	</div>
 	<div class="flex w-full items-center justify-between p-3">
-		<span class="mt-4 text-end text-sm text-stone-500"
+		<div class='flex-col flex'>
+			<span class="mt-4 text-end text-sm text-stone-500"
 			>{table.getFilteredRowModel().rows.length} din {table.getState().pagination.pageSize} programări.
 		</span>
+		<span class='text-sm text-stone-500'>
+			Pagina {currentPage}.
+		</span>
+	</div>
 		<div class="space-x-1">
 			<Button
 				variant="outline"

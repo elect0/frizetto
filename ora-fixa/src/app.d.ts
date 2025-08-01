@@ -9,11 +9,10 @@ declare global {
 			safeGetSession: () => Promise<{ session: Session | null; user: User | null }>;
 			session: Session | null;
 			user: User | null;
-			isAdmin: boolean | false;
+			isAdmin: Boolean | null;
 		}
 		interface PageData {
 			session: Session | null;
-			isAdmin: boolean | false;
 		}
 	}
 }
