@@ -19,7 +19,7 @@ export const registerSchema = z
 export const bookingSchema = z
 	.object({
 		serviceId: z.string().min(1, { message: 'Te rugăm să alegi un serviciu.' }),
-		startTime: z.string().datetime(),
+		date: z.string().min(1, { message: 'Te rugăm să alegi o zi.' }),
 		duration: z.coerce.number().positive(),
 		time: z.string().min(1, { message: 'Te rugăm să alegi o oră.' }),
 		hasAgreedToPolicy: z.boolean(),
