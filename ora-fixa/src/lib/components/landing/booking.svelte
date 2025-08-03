@@ -19,10 +19,12 @@
 	import type { Service } from '$lib/types/supabase';
 	import { CalendarDays, Clock, Scissors } from 'lucide-svelte';
 	import { superForm, type SuperValidated } from 'sveltekit-superforms/client';
-	import type { bookingSchema } from '$lib/schemas';
+	import { bookingSchema } from '$lib/schemas';
 	import type { z } from 'zod';
 	import { toast } from 'svelte-sonner';
 	import Textarea from '../ui/textarea/textarea.svelte';
+	import { zod } from 'sveltekit-superforms/adapters';
+	import SuperDebug from 'sveltekit-superforms';
 
 	let { services, form: initialForm } = $props<{
 		services: Service[];
@@ -30,14 +32,23 @@
 	}>();
 
 	const { form, errors, enhance } = superForm(initialForm, {
+		validators: zod(bookingSchema),
+		resetForm: true,
 		id: 'booking-form',
-		onUpdated: ({ form: a }) => {
-			if (a.message) {
-				if (a.message.includes('succes')) {
-					toast.success(a.message);
-				} else {
-					toast.success('Felicitari!', { description: a.message });
+		onChange(event) {
+			if (event.paths[0] === 'date' || event.paths[0] === 'serviceId') {
+				if (selectedDate && $form.date && $form.serviceId) {
+					fetchAvailableTimes(selectedDate);
 				}
+			}
+		},
+		onResult: ({ result }) => {
+			if (result.type === 'success') {
+				toast.success('Programarea a fost adăugată cu succes!');
+				selectedDate = undefined;
+			} else {
+				console.log(form);
+				toast.error('A apărut o eroare la adăugarea programării. Te rugăm să încerci din nou!');
 			}
 		}
 	});
@@ -61,12 +72,6 @@
 	interface Slot {
 		available_slot: string;
 	}
-
-	$effect(() => {
-		if (selectedDate && selectedService) {
-			fetchAvailableTimes(selectedDate);
-		}
-	});
 
 	async function fetchAvailableTimes(date: DateValue) {
 		if (!selectedService) return;
@@ -94,28 +99,11 @@
 		}
 	}
 
-	function getISOStartTime() {
-		if (!selectedDate || !$form.time) return '';
-
-		const year = selectedDate.year;
-		const month = selectedDate.month - 1;
-		const day = selectedDate.day;
-		const [hours, minutes] = $form.time.split(':').map(Number);
-
-		const utcTimestamp = Date.UTC(year, month, day, hours, minutes);
-		console.log(utcTimestamp);
-		const finalDate = new Date(utcTimestamp);
-		console.log(finalDate);
-		console.log(finalDate.toISOString());
-
-		return finalDate.toISOString();
-	}
-
 	const df = new DateFormatter('ro-RO', {
 		dateStyle: 'long'
 	});
 
-	const minDate = today(getLocalTimeZone()).add({days: 1})
+	const minDate = today(getLocalTimeZone()).add({ days: 1 });
 
 	const maxDate = minDate.add({ weeks: 2 });
 </script>
@@ -163,7 +151,7 @@
 												/>
 												<Label
 													for={`service-${service.id}`}
-													class="block cursor-pointer rounded-xl border-2 border-stone-200 bg-white p-4 transition-all hover:bg-stone-50 peer-data-[state=checked]:border-amber-600 peer-data-[state=checked]:bg-amber-50 peer-data-[state=checked]:shadow-lg"
+													class="block cursor-pointer rounded-xl border-2 border-stone-200 bg-white p-4 transition-all peer-data-[state=checked]:border-amber-600 peer-data-[state=checked]:bg-amber-50 peer-data-[state=checked]:shadow-lg hover:bg-stone-50"
 												>
 													<div class="flex justify-between font-semibold text-stone-900">
 														<span>{service.name}</span>
@@ -216,8 +204,13 @@
 													maxValue={maxDate}
 													type="single"
 													disableDaysOutsideMonth={true}
+													onValueChange={() => {
+														if (selectedDate) {
+															$form.date = selectedDate.toDate(getLocalTimeZone()).toISOString();
+														}
+													}}
 												/>
-												<p class="mb-2 mt-4 text-center text-sm text-stone-600 md:mb-0">
+												<p class="mt-4 mb-2 text-center text-sm text-stone-600 md:mb-0">
 													Dată selectată: <span class="font-medium"
 														>{selectedDate
 															? df.format(selectedDate.toDate(getLocalTimeZone()))
@@ -244,10 +237,10 @@
 																/>
 																<Label
 																	for={`time-${slot.available_slot}`}
-																	class="w-full cursor-pointer rounded-md border-2 border-stone-200  p-3 text-center text-sm font-semibold transition-all hover:bg-stone-100
-											peer-data-[state=checked]:border-amber-600
+																	class="w-full cursor-pointer rounded-md border-2 border-stone-200  p-3 text-center text-sm font-semibold transition-all peer-data-[state=checked]:border-amber-600
 											peer-data-[state=checked]:bg-amber-50
 											peer-data-[state=checked]:shadow-md
+											hover:bg-stone-100
 											"
 																>
 																	{slot.available_slot}
@@ -325,18 +318,14 @@
 								</div>
 
 								<div class="mb-6 flex items-center space-x-3 pt-4">
-									<input type="hidden" name="serviceId" bind:value={$form.serviceId} />
-
-									<input type="hidden" name="startTime" value={getISOStartTime()} />
-
 									<input
 										type="hidden"
 										name="duration"
 										value={selectedService?.duration_minutes || 0}
 									/>
 
-									<input type="hidden" name="time" value={$form.time} />
 									<Checkbox
+										required
 										id="terms"
 										name="hasAgreedToPolicy"
 										bind:checked={$form.hasAgreedToPolicy}
