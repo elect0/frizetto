@@ -80,9 +80,9 @@ export const updateAppointmentSchema = z.object({
 });
 
 export const updateStatusSchema = z.object({
-	appointmentId: z.string(),
-	status: z.string()
-});
+    appointmentId: z.string(),
+    status: z.string()
+})
 
 export const scheduleOverrideSchema = z.object({
 	date: z.string(),
@@ -105,3 +105,4 @@ export const addServiceSchema = z.object({
 	price: z.coerce.number().positive('Pretul trebuie să fie un număr pozitiv.'),
 	duration: z.coerce.number().positive('Durata serviciului trebuie să fie un număr pozitiv.')
 });
+
