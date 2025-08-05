@@ -9,6 +9,7 @@
 		start_time: z.string(),
 		client_notes: z.string(),
 		profiles: z.object({
+			id: z.string().uuid(),
 			full_name: z.string()
 		}),
 		status: z.enum(['confirmata', 'anulata', 'finalizata', 'neprezentat']),
@@ -303,7 +304,7 @@
 				{:else}
 					<Table.Row>
 						<Table.Cell colspan={columns.length} class="h-24 text-center">
-							Nicio programare.
+							Nu s-au găsit rezultate pentru această pagină.
 						</Table.Cell>
 					</Table.Row>
 				{/each}
@@ -375,7 +376,9 @@
 					status={row.original.status}
 				/>
 			</div>
-			<DropdownMenu.Item>Vezi Profilul Clientului</DropdownMenu.Item>
+			<DropdownMenu.Item>
+						<a href={`/client/${row.original.profiles.id}`}> Vezi Profilul Clientului </a>
+			</DropdownMenu.Item>
 		</DropdownMenu.Content>
 	</DropdownMenu.Root>
 {/snippet}

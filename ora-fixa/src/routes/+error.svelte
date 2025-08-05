@@ -10,9 +10,11 @@
 			<div class="mx-auto h-px w-12 bg-amber-500"></div>
 		</div>
 		<div class="space-y-3">
-			<div class="text-xl font-medium text-stone-900">Pagina nu a fost gasita</div>
+			<div class="text-xl font-medium text-stone-900">Pagina nu a fost găsită.
+
+</div>
 			<p class="leading-relaxed text-stone-600">
-				Pagina pe care o cauti nu exista sau a fost mutata.
+                Pagin pe care o cauți nu există sau a fost mutată.
 			</p>
 		</div>
 		<div class="flex flex-col justify-center gap-3 pt-4 sm:flex-row">

@@ -9,7 +9,8 @@
 		start_time: z.string(),
 		client_notes: z.string(),
 		profiles: z.object({
-			full_name: z.string()
+			id: z.string().uuid(),
+			full_name: z.string(),
 		}),
 		status: z.enum(['confirmata', 'anulata', 'finalizata', 'neprezentat']),
 		services: z.object({
@@ -275,7 +276,7 @@
 				{:else}
 					<Table.Row>
 						<Table.Cell colspan={columns.length} class="h-24 text-center">
-							Nicio programare.
+							Nu s-au găsit rezultate pentru această pagină.
 						</Table.Cell>
 					</Table.Row>
 				{/each}
@@ -365,7 +366,7 @@
 					<button type="submit" class="all-unset">Marchează ca Neprezentat</button>
 				</form></DropdownMenu.Item
 			>
-			<DropdownMenu.Item>Vezi Profilul Clientului</DropdownMenu.Item>
+			<DropdownMenu.Item>		<a href={`/client/${row.original.profiles.id}`}> Vezi Profilul Clientului </a> </DropdownMenu.Item>
 			<DropdownMenu.Separator />
 			<Dialog.Root bind:open={isDialogOpen}>
 				<Dialog.Trigger class="hover:bg-accent rounded-md p-2 text-start text-sm text-red-500"
