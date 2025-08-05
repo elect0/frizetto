@@ -7,7 +7,7 @@
     <div class="@container-main flex flex-1 flex-col gap-2">
         <div class="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
             <div class="px-4 lg:p">
-                <h1 class='text-3xl mb-4'>Management Programări</h1>
+                <h1 class='text-3xl mb-6 font-medium'>Management Programări</h1>
                 <AppointmentsTable currentPage={data.currentPage} appointments={data.appointments} />
             </div>
         </div>
