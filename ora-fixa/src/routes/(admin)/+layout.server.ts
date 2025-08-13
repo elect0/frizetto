@@ -2,12 +2,15 @@ import { error } from '@sveltejs/kit';
 import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ locals }) => {
-	const { session, supabase } = locals;
+	const { session, user, isAdmin } = locals;
 
-
-	const {data: user, error: userError} = await supabase.from('profiles').select('*').eq('id', session?.user.id).single()
-
-	if (!user?.is_admin || userError) {
+	if (!isAdmin || !user) {
 		error(403, { message: 'Acces interzis. Autentificare necesară.' });
+	}
+
+	return {
+		session,
+		user,
+		isAdmin,
 	}
 };

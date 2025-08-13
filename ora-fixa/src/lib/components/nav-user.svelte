@@ -8,8 +8,9 @@
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 
-	let { user }: { user: { name: string; email: string; avatar: string } } = $props();
-
+	let {user} = $props()
+	let userInitials = $derived(user.user_metadata.full_name.charAt(0).toUpperCase())
+	let userName = $derived(user.user_metadata.full_name)
 	const sidebar = Sidebar.useSidebar();
 </script>
 
@@ -25,10 +26,10 @@
 					>
 						<Avatar.Root class="size-8 rounded-lg grayscale">
 							<Avatar.Image src={user.avatar} alt={user.name} />
-							<Avatar.Fallback class="rounded-lg">CP</Avatar.Fallback>
+							<Avatar.Fallback class="rounded-lg">{userInitials}</Avatar.Fallback>
 						</Avatar.Root>
 						<div class="grid flex-1 text-left text-sm leading-tight">
-							<span class="truncate font-medium">{user.name}</span>
+							<span class="truncate font-medium">{userName}</span>
 							<span class="text-muted-foreground truncate text-xs">
 								{user.email}
 							</span>
@@ -46,11 +47,10 @@
 				<DropdownMenu.Label class="p-0 font-normal">
 					<div class="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
 						<Avatar.Root class="size-8 rounded-lg">
-							<Avatar.Image src={user.avatar} alt={user.name} />
-							<Avatar.Fallback class="rounded-lg">CP</Avatar.Fallback>
+							<Avatar.Fallback class="rounded-lg">{userInitials}</Avatar.Fallback>
 						</Avatar.Root>
 						<div class="grid flex-1 text-left text-sm leading-tight">
-							<span class="truncate font-medium">{user.name}</span>
+							<span class="truncate font-medium">{userName}</span>
 							<span class="text-muted-foreground truncate text-xs">
 								{user.email}
 							</span>
@@ -59,24 +59,13 @@
 				</DropdownMenu.Label>
 				<DropdownMenu.Separator />
 				<DropdownMenu.Group>
-					<DropdownMenu.Item>
-						<UserCircleIcon />
-						Account
-					</DropdownMenu.Item>
-					<DropdownMenu.Item>
-						<CreditCardIcon />
-						Billing
-					</DropdownMenu.Item>
-					<DropdownMenu.Item>
-						<NotificationIcon />
-						Notifications
-					</DropdownMenu.Item>
+					<a href="/cont">
+						<DropdownMenu.Item>
+							<UserCircleIcon />
+							Cont
+						</DropdownMenu.Item>
+					</a>
 				</DropdownMenu.Group>
-				<DropdownMenu.Separator />
-				<DropdownMenu.Item>
-					<LogoutIcon />
-					Log out
-				</DropdownMenu.Item>
 			</DropdownMenu.Content>
 		</DropdownMenu.Root>
 	</Sidebar.MenuItem>

@@ -2,7 +2,7 @@ import { createBrowserClient, createServerClient, isBrowser } from '@supabase/ss
 import { PUBLIC_SUPABASE_ANON_KEY, PUBLIC_SUPABASE_URL } from '$env/static/public';
 import type { LayoutLoad } from './$types';
 
-export const load: LayoutLoad = async ({ data, depends, fetch, url }) => {
+export const load: LayoutLoad = async ({ data, depends, fetch, url}) => {
 	depends('supabase:auth');
 
 	const supabase = isBrowser()
@@ -22,13 +22,7 @@ export const load: LayoutLoad = async ({ data, depends, fetch, url }) => {
 				}
 			});
 
-	const {
-		data: { session }
-	} = await supabase.auth.getSession();
-
-	const {
-		data: { user }
-	} = await supabase.auth.getUser();
+	const {user, session, isAdmin} = data
 
 	const defaultSeo = {
 		title: 'Frizetto | Programări Online',
@@ -36,5 +30,5 @@ export const load: LayoutLoad = async ({ data, depends, fetch, url }) => {
 		ogImage: `${url?.origin}/images/auth.webp`
 	};
 
-	return { session, supabase, user, seo: defaultSeo };
+	return { session, supabase, user, isAdmin, seo: defaultSeo };
 };

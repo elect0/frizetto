@@ -17,7 +17,8 @@ export const load: PageServerLoad = async ({ locals: { supabase, session } }) =>
 	return {
 		services,
 		addServiceForm,
-		session
+		session,
+		pageTitle: 'Servicii'
 	};
 };
 

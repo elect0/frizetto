@@ -40,7 +40,8 @@ export const load: PageServerLoad = async ({ locals: { supabase, session }, url 
 	return {
 		appointments: data ?? [],
 		currentPage: page,
-		session
+		session,
+		pageTitle: 'Programări'
 	};
 };
 

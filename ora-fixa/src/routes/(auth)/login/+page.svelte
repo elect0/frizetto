@@ -2,7 +2,7 @@
 	import type { PageData } from './$types';
 	import { superForm } from 'sveltekit-superforms/client';
 	import { zod } from 'sveltekit-superforms/adapters';
-	import { registerSchema } from '$lib/schemas';
+	import { LoginSchema } from '$lib/schemas';
 	import { toast } from 'svelte-sonner';
 
 	import * as Card from '$lib/components/ui/card/index.js';
@@ -11,53 +11,44 @@
 	import { Label } from '$lib/components/ui/label/index.js';
 	import { Loader2 } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
+	import { Lock } from '@lucide/svelte';
 
-	export let data: PageData;
+	let { data } = $props();
 
 	const { form, errors, submitting, enhance, message } = superForm(data.form, {
-		validators: zod(registerSchema),
+		validators: zod(LoginSchema),
 		onResult: ({ result }) => {
-			console.log('salut');
-
 			if (result.type === 'success' && result.data?.form.message) {
 				toast.success('Felicitări!', { description: result.data.form.message });
-				setTimeout(() => {
-					goto('/', { invalidateAll: true });
-				}, 1000);
+				goto('/cont/completeaza-profilul', { invalidateAll: true });
 			} else if (result.type === 'failure') {
-				toast.error('A apărut o eroare', { description: 'Completeaza formularu corect.' });
+				toast.error('A apărut o eroare', {
+					description: 'Va rugam sa completati formularul corect.'
+				});
 			}
 		},
 		resetForm: true
 	});
 </script>
 
-<svelte:head>
-	<title>Creează Cont - OraFixa</title>
-</svelte:head>
-
-<div class="w-full lg:grid lg:min-h-screen lg:grid-cols-2">
-	<div class="bg-muted relative hidden lg:block">
-		<img src="/images/auth.jpg" alt="Interior barbershop" class="h-screen w-full object-cover" />
-		<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-black/10"></div>
-	</div>
-
+<div class="w-full">
 	<div class="flex h-screen items-center justify-center bg-stone-50 py-12">
-		<Card.Root class="w-full max-w-sm border-stone-200 shadow-xl">
-			<form method="POST" use:enhance>
+		<Card.Root class="mx-3 w-full max-w-sm border-stone-200 shadow-xl md:m-0">
+			<form method="POST" use:enhance class="space-y-4">
 				<Card.Header class="text-center">
-					<Card.Title class="text-2xl font-bold">Creează un Cont Nou</Card.Title>
-					<Card.Description>Este rapid, simplu și gratuit.</Card.Description>
+					<Card.Title class="text-2xl font-bold">Autentificare</Card.Title>
+					<Card.Description>Intră în contul tău și continuă aventura.</Card.Description>
 				</Card.Header>
 
-				<Card.Content class="grid gap-4">
+				<Card.Content class="grid gap-6">
 					<div class="grid gap-2">
 						<Label for="email">Email</Label>
 						<Input
 							type="email"
 							id="email"
+							class="text-sm"
 							name="email"
-							placeholder="nume@exemplu.com"
+							placeholder="Ex: alexandrupopescu1@gmail.com"
 							bind:value={$form.email}
 							aria-invalid={$errors.email ? 'true' : undefined}
 						/>
@@ -72,28 +63,14 @@
 						<Input
 							type="password"
 							id="password"
+							class="text-sm"
 							name="password"
-							placeholder="Minim 8 caractere"
+							placeholder="Minim 8 caractere."
 							bind:value={$form.password}
 							aria-invalid={$errors.password ? 'true' : undefined}
 						/>
 						{#if $errors.password}
 							<p class="text-sm text-red-600">{$errors.password}</p>
-						{/if}
-					</div>
-
-					<div class="grid gap-2">
-						<Label for="passwordConfirm">Confirmă Parola</Label>
-						<Input
-							type="password"
-							id="passwordConfirm"
-							name="passwordConfirm"
-							placeholder="Repetă parola"
-							bind:value={$form.passwordConfirm}
-							aria-invalid={$errors.passwordConfirm ? 'true' : undefined}
-						/>
-						{#if $errors.passwordConfirm}
-							<p class="text-sm text-red-600">{$errors.passwordConfirm}</p>
 						{/if}
 					</div>
 
@@ -104,18 +81,21 @@
 					>
 						{#if $submitting}
 							<Loader2 class="mr-2 h-4 w-4 animate-spin" />
-							Se creează...
+							Se autentifica...
 						{:else}
-							Creează Contul
+							<Lock /> Autentificare
 						{/if}
 					</Button>
 				</Card.Content>
 
 				<Card.Footer>
 					<div class="w-full text-center text-sm">
-						Ai deja un cont?
-						<a href="/login" class="font-medium text-amber-700 underline hover:text-amber-800">
-							Autentifică-te aici
+						Nu ai inca un cont?
+						<a
+							href="/inregistrare"
+							class="font-medium text-amber-700 underline hover:text-amber-800"
+						>
+							Inregistreaza-te aici
 						</a>
 					</div>
 				</Card.Footer>

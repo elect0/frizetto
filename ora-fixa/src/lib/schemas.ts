@@ -25,10 +25,6 @@ export const bookingSchema = z
 		hasAgreedToPolicy: z.boolean(),
 		clientNotes: z.string().optional()
 	})
-	.refine((data) => data.hasAgreedToPolicy === true, {
-		message: 'Trebuie sa confirmi angajamentul pentru a continua.',
-		path: ['hasAgreedToPolicy']
-	});
 
 export const profileSchema = z.object({
 	fullName: z.string().nonempty('Te rugăm să completezi acest câmp.'),

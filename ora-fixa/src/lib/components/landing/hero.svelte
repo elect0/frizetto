@@ -31,7 +31,7 @@
 					<Award class="mr-2 h-4 w-4" />
 					Maiestrie in arta frizeriei
 				</Badge>
-				<div class="hero-element space-y-6">
+				<div class="hero-element mb-2 space-y-4 md:mb-3 md:space-y-6">
 					<h1 class="text-6xl font-black leading-[0.9] tracking-tight text-stone-900 md:text-7xl">
 						STILUL{' '}
 						<span
@@ -39,22 +39,21 @@
 						>
 							TĂU
 						</span>
-						<span class="mt-2 block text-4xl font-light text-stone-600 md:text-5xl"
-							>la Cip Barbershop</span
+						<span class="mt-1 block text-2xl font-light text-stone-600 md:mt-2 md:text-4xl"
+							>Mai mult decât o tunsoare.</span
 						>
 					</h1>
-					<p class="max-w-xl text-xl leading-relaxed text-stone-600 md:text-2xl">
-						Platforma de programari online pentru barbershop-ul tau din {' '}
-						<span class="text-800 font-semibold">Bailesti</span>
+					<p class="max-w-xl text-lg leading-relaxed text-stone-600 md:text-2xl">
+						Momentul tău de răsfăț începe cu o programare online la noi.
 					</p>
 				</div>
-				<div class="hero-element pt-2 md:pt-4">
+				<div class="hero-element pt-4">
 					<a
 						href="#booking"
-						use:smoothscroll={{offset: 50}}
-						class="group inline-flex items-center justify-center rounded-2xl bg-amber-600 px-6 py-3 text-base text-white shadow-xl shadow-amber-600/25 transition-all duration-300 hover:bg-amber-700 hover:shadow-2xl hover:shadow-amber-600/30 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 sm:px-10 sm:text-lg md:px-12"
+						use:smoothscroll={{ offset: 50 }}
+						class="group inline-flex items-center justify-center rounded-xl bg-amber-600 px-5 py-2.5 text-base text-white shadow-xl shadow-amber-600/25 transition-all duration-300 hover:bg-amber-700 hover:shadow-2xl hover:shadow-amber-600/30 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 md:rounded-2xl md:px-12 md:py-3 md:text-lg"
 					>
-						<Calendar class="mr-2 h-5 w-5 sm:mr-3 sm:h-6 sm:w-6" />
+						<Calendar class="mr-2 h-4 w-4 md:mr-3 md:h-6 md:w-6" />
 						<span>Programează-te Acum</span>
 						<ChevronRight
 							class="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1 sm:h-5 sm:w-5"
@@ -99,7 +98,7 @@
 							class="h-16 w-4 rounded-full bg-gradient-to-b from-amber-600 via-white to-stone-600 shadow-lg"
 						></div>
 						<div>
-							<div class="text-lg font-bold text-stone-900">Est. 2018</div>
+							<div class="text-base font-bold text-stone-900 md:text-lg">Est. 2018</div>
 							<div class="text-sm text-stone-600">Traditie & Eleganta</div>
 						</div>
 					</div>

@@ -27,7 +27,7 @@ export const actions: Actions = {
 		const session = await safeGetSession();
 
 		if (!session) {
-			return fail(401, { message: 'Trebuie sa fii autentificat pentru a face o programare.' });
+			throw redirect(303, '/login')
 		}
 
 		const { data: profile } = await supabase
@@ -54,6 +54,8 @@ export const actions: Actions = {
 		};
 
 		const { error } = await supabase.from('appointments').insert(newAppointment);
+		
+
 
 		if (error) {
 			console.error('Eroare la INSERT programare:', error);

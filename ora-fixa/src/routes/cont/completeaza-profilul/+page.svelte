@@ -10,17 +10,16 @@
 	import { toast } from 'svelte-sonner';
 	import { goto } from '$app/navigation';
 	import { Loader2 } from 'lucide-svelte';
+	import { Save } from '@lucide/svelte';
 
-	let {data} = $props()
+	let { data } = $props();
 
 	const { form, errors, submitting, message, enhance } = superForm(data.form, {
 		validators: zod(profileSchema),
 		onResult: ({ result }) => {
 			if (result.type === 'success') {
 				toast.success('Detaliile contului tau au fost modificate cu succes!');
-				setTimeout(() => {
-					goto('/profil');
-				}, 1000);
+				goto('/cont');
 			} else {
 				console.log(data.form);
 				toast.error('Erroare!', { description: 'Detaliile contului nu au putut fi modificate.' });
@@ -81,7 +80,7 @@
 						<Loader2 class="mr-2 h-4 w-4 animate-spin" />
 						Se modifica...
 					{:else}
-						Salvează și Continuă
+						<Save /> Salvează și Continuă
 					{/if}
 				</Button>
 			</Card.Content>

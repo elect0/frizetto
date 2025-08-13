@@ -5,7 +5,7 @@ export const load: LayoutServerLoad = async ({
 	locals,
 	url
 }) => {
-	const { session, supabase, user } = locals
+	const { session, supabase, user, isAdmin } = locals
 
 	const { data: profile } = await supabase
 		.from('profiles')
@@ -30,5 +30,6 @@ export const load: LayoutServerLoad = async ({
 	return {
 		session,
 		user,
+		isAdmin,
 	};
 };

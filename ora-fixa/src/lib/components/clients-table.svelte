@@ -39,7 +39,6 @@
 	import { goto } from '$app/navigation';
 	import Input from './ui/input/input.svelte';
 
-	console.log(ClientSchema, 'EEE');
 
 	let {
 		clients,

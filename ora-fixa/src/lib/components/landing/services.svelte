@@ -61,8 +61,8 @@
 			<Badge class="mb-6 border-amber-200 bg-amber-600/10 px-4 py-2 text-amber-700">
 				Servicii & Tarife
 			</Badge>
-			<h2 class="mb-6 text-4xl font-bold text-stone-900 md:text-5xl">Servicii Premium</h2>
-			<p class="mx-auto max-w-2xl text-xl text-stone-600">
+			<h2 class="mb-4 md:mb-6 text-4xl font-bold text-stone-900 md:text-5xl">Servicii Premium</h2>
+			<p class="mx-auto max-w-2xl text-lg md:text-xl text-stone-600">
 				Transparență completă în prețuri. Fără surprize, doar calitate garantată.
 			</p>
 		</div>
@@ -110,7 +110,7 @@
 					class="absolute -bottom-4 -right-4 rounded-2xl border border-stone-100 bg-white p-6 shadow-xl"
 				>
 					<div class="text-center">
-						<div class="text-2xl font-bold text-stone-900">100%</div>
+						<div class="text-xl md:text-2xl font-bold text-stone-900">100%</div>
 						<div class="text-sm text-stone-600">Satisfactie</div>
 					</div>
 				</div>
