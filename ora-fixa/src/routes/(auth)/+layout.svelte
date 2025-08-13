@@ -1,20 +1,7 @@
 <script lang="ts">
-	import { invalidate } from '$app/navigation';
-	import Navbar from '$lib/components/layout/navbar.svelte';
+	import AuthNavbar from '$lib/components/layout/auth-navbar.svelte';
 	import { page } from '$app/state';
-
-	let { data, children } = $props();
-	let { session, supabase } = $derived(data);
-
-	$effect(() => {
-		const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
-			if (newSession?.expires_at !== session?.expires_at) {
-				invalidate('supabase:auth');
-			}
-		});
-
-		return () => data.subscription.unsubscribe();
-	});
+	let { children, data } = $props();
 </script>
 
 <svelte:head>
@@ -23,7 +10,7 @@
 
 	<meta name="theme-color" content="#FFFFFF" />
 
-	<title>{data.seo.title}</title>
+	<title>{page.data.pageTitle ? `Frizetto - ${page.data.pageTitle}` : data.seo.title}</title>
 
 	<meta name="description" content={data.seo.description} />
 
@@ -41,5 +28,5 @@
 	<meta name="twitter:image" content={data.seo.ogImage} />
 </svelte:head>
 
-<Navbar />
+<AuthNavbar />
 {@render children()}

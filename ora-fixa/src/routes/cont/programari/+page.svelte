@@ -5,13 +5,12 @@
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { CalendarPlus } from 'lucide-svelte';
 	import AppointmentCard from '$lib/components/account/appointment-card.svelte';
-	import type { PageData } from './$types';
 	import { onMount } from 'svelte';
 	import { gsap } from 'gsap';
 
-	export let data: PageData;
+	let {data} = $props()
 
-	$: ({ upcomingAppointments, pastAppointments, favoriteServiceId } = data);
+	let {upcomingAppointments, pastAppointments, favoriteServiceId} = data
 
 	onMount(() => {
 		gsap.from('.appointment-card', {
@@ -32,8 +31,8 @@
 	<div class="container mx-auto px-4 lg:px-6">
 		<div class="mb-12 text-center">
 			<Badge class="mb-6 bg-amber-600 px-4 py-2 text-white">Programari & Istoric</Badge>
-			<h2 class="mb-6 text-4xl font-bold text-stone-900 md:text-5xl">Programarile mele</h2>
-			<p class="mx-auto max-w-2xl text-xl text-stone-600">
+			<h2 class="mb-4 md:mb-6 text-3xl md:text-4xl font-bold text-stone-900 md:text-5xl">Programarile mele</h2>
+			<p class="mx-auto max-w-2xl text-lg md:text-xl text-stone-600">
 				Totul la îndemână. Vezi, modifică sau anulează programările tale oricând.
 			</p>
 		</div>

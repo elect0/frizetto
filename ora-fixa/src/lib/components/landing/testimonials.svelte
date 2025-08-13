@@ -40,8 +40,8 @@
 			<Badge class="mb-6 border-stone-200 bg-stone-100 px-4 py-2 text-stone-700">
 				Dovada Sociala
 			</Badge>
-			<h2 class="mb-6 text-4xl font-bold text-stone-900 md:text-5xl">Rezultate & Pareri</h2>
-			<p class="mx-auto max-w-2xl text-xl text-stone-600">
+			<h2 class="mb-4 md:mb-6 text-4xl font-bold text-stone-900 md:text-5xl">Rezultate & Pareri</h2>
+			<p class="mx-auto max-w-2xl text-lg md:text-xl text-stone-600">
 				Lucrarile noastre vorbesc de la sine, iar clientii confirma calitatea.
 			</p>
 		</div>
@@ -60,7 +60,7 @@
 					<div
 						class="absolute bottom-4 left-4 flex opacity-0 transition-opacity duration-300 group-hover:opacity-100"
 					>
-						<div class="text-xl font-semibold text-white">Taper</div>
+						<div class="text-lg md:text-xl font-semibold text-white">Taper</div>
 					</div>
 				</div>
 			{/each}
@@ -77,7 +77,7 @@
 							<Star class="w-5-h-5 fill-current text-amber-500" />
 							<Star class="w-5-h-5 fill-current text-amber-500" />
 						</div>
-						<p class="mb-6 italic text-stone-600">
+						<p class="mb-4 md:mb-6 italic text-stone-600">
 							'{testimonial.text}'
 						</p>
 						<div class="flex items-center gap-4">

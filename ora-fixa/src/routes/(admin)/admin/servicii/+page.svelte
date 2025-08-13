@@ -12,7 +12,7 @@
 					<h1 class="mb-6 text-3xl font-medium">Management</h1>
 					<AddServiceModal addServiceForm={data.addServiceForm} />
 				</div>
-				<div class="grid grid-cols-1 gap-4 md:grid-cols-4">
+				<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
 					{#each data.services as service (service.service_id)}
 						<ServiceCard {service} />
 					{/each}

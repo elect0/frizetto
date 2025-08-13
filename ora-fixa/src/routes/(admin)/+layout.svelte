@@ -2,7 +2,15 @@
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
 	import AppSidebar from '$lib/components/app-sidebar.svelte';
 	import SiteHeader from '$lib/components/site-header.svelte';
+	import {page} from '$app/state'
+	console.log(page)
 </script>
+
+
+<svelte:head>
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Frizetto - {page.data.pageTitle}</title>
+</svelte:head>
 
 <div>
 	<Sidebar.Provider

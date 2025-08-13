@@ -188,7 +188,8 @@
 									type="single"
 									onValueChange={() => {
 										if (dateValue) {
-											$form.date = dateValue.toDate(getLocalTimeZone()).toISOString();
+																					$form.date = formatISO(dateValue.toDate(getLocalTimeZone()))
+
 										}
 									}}
 									bind:value={dateValue}

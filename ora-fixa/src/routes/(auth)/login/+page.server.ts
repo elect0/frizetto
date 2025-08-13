@@ -10,7 +10,7 @@ export const load: PageServerLoad = async (event) => {
 	const session = event.locals.session;
 
 	const form = await superValidate(zod(LoginSchema));
-	return { form, session };
+	return { form, session, pageTitle: 'Autentificare' };
 };
 
 export const actions = {

@@ -43,7 +43,7 @@
 				<Badge class="mb-6 border-stone-200 bg-stone-100 px-4 py-2 text-stone-700"
 					>Intrebari Frecvente</Badge
 				>
-				<h2 class="mb-6 text-4xl font-bold text-stone-900 md:text-5xl">
+				<h2 class="mb-4 md:mb-6 text-4xl font-bold text-stone-900 md:text-5xl">
 					Raspunsuri la intrebarile tale.
 				</h2>
 			</div>

@@ -17,6 +17,7 @@
 	import { z } from 'zod';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { toast } from 'svelte-sonner';
+	import { formatISO } from 'date-fns';
 
 	type Props = {
 		clients: Profile[];
@@ -36,8 +37,6 @@
 		walkInForm
 	}: Props = $props();
 
-	console.log(clients);
-
 	const { form, errors, enhance } = superForm(walkInForm, {
 		validators: zod(walkInSchema),
 		invalidateAll: true,
@@ -54,7 +53,7 @@
 				toast.success('Programarea a fost adăugată cu succes!');
 				dateValue = undefined;
 			} else {
-				console.log(form);
+				(form);
 				toast.error('A apărut o eroare la adăugarea programării. Te rugăm să încerci din nou!');
 			}
 		}
@@ -190,7 +189,7 @@
 								type="single"
 								onValueChange={() => {
 									if (dateValue) {
-										$form.date = dateValue.toDate(getLocalTimeZone()).toISOString();
+										$form.date = formatISO(dateValue.toDate(getLocalTimeZone()))
 									}
 								}}
 								bind:value={dateValue}

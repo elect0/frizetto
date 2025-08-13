@@ -18,7 +18,8 @@ export const load: PageServerLoad = async ({ locals: { supabase, session } }) =>
 		workSchedules,
 		scheduleOverrides,
 		overrideForm,
-		session
+		session,
+		pageTitle: 'Program'
 	};
 };
 

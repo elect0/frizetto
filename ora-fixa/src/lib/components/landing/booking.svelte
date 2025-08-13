@@ -26,6 +26,7 @@
 	import { zod } from 'sveltekit-superforms/adapters';
 	import SuperDebug from 'sveltekit-superforms';
 	import { formatISO } from 'date-fns';
+	import { CalendarPlus } from '@lucide/svelte';
 
 	let { services, form: initialForm } = $props<{
 		services: Service[];
@@ -121,8 +122,10 @@
 		<div class="mx-auto max-w-4xl">
 			<div class="mb-12 text-center">
 				<Badge class="mb-6 border-0 bg-amber-600 px-4 py-2 text-white">Programare Online</Badge>
-				<h2 class="mb-6 text-3xl font-bold text-stone-900 md:text-5xl">Alege o data si o ora</h2>
-				<p class="text-md md:text-xl text-stone-600">
+				<h2 class="mb-4 text-4xl font-bold text-stone-900 md:mb-6 md:text-5xl">
+					Alege o data si o ora.
+				</h2>
+				<p class="text-md text-stone-600 md:text-xl">
 					Procesul de rezervare este simplu si rapid. In doar 2 pasi esti programat.
 				</p>
 			</div>
@@ -136,14 +139,16 @@
 						<form method="POST" use:enhance>
 							<AccordionItem value="item-1" class="space-y-4">
 								<AccordionTrigger
-									class="mb-4 flex cursor-pointer items-center gap-3 no-underline hover:no-underline focus:no-underline"
+									class="mb-2 flex cursor-pointer items-center gap-3 no-underline hover:no-underline focus:no-underline md:mb-4"
 								>
 									<div
 										class="flex h-8 w-8 items-center justify-center rounded-full bg-amber-600 font-bold text-white"
 									>
 										1
 									</div>
-									<h3 class="text-xl font-semibold text-stone-900">Selecteaza Serviciul</h3>
+									<h3 class="text-lg font-semibold text-stone-900 md:text-xl">
+										Selecteaza Serviciul
+									</h3>
 								</AccordionTrigger>
 								<AccordionContent>
 									<RadioGroup.Root
@@ -193,11 +198,11 @@
 										2
 									</div>
 									<h3
-										class="text-xl font-semibold"
+										class="text-lg font-semibold md:text-xl"
 										class:text-stone-900={selectedService}
 										class:text-stone-600={!selectedService}
 									>
-										{selectedService ? 'Alege data' : 'Alege data (dupa selectarea serviciului'}
+										{selectedService ? 'Alege data' : 'Alege data (dupa selectarea serviciului).'}
 									</h3>
 								</AccordionTrigger>
 								{#if selectedService}
@@ -215,7 +220,7 @@
 													disableDaysOutsideMonth={true}
 													onValueChange={() => {
 														if (selectedDate) {
-															$form.date = formatISO(selectedDate.toDate(getLocalTimeZone())); 
+															$form.date = formatISO(selectedDate.toDate(getLocalTimeZone()));
 														}
 													}}
 												/>
@@ -247,7 +252,7 @@
 																/>
 																<Label
 																	for={`time-${slot.available_slot}`}
-																	class="w-full cursor-pointer rounded-md border-2 border-stone-200  p-3 text-center text-sm font-semibold transition-all hover:bg-stone-100
+																	class="w-full cursor-pointer rounded-md border-2 border-stone-200 p-3 text-center text-sm font-semibold transition-all hover:bg-stone-100
 											peer-data-[state=checked]:border-amber-600
 											peer-data-[state=checked]:bg-amber-50
 											peer-data-[state=checked]:shadow-md
@@ -270,7 +275,7 @@
 							</AccordionItem>
 							{#if selectedService && selectedDate && $form.time}
 								<div class="mt-4">
-									<h3 class="mb-4 text-xl font-semibold text-stone-900">Sumar Programare</h3>
+									<h3 class="mb-4 text-xl font-semibold text-stone-900">Sumar Programare.</h3>
 									<div class="space-y-4 rounded-lg border border-stone-200 bg-stone-50 p-6">
 										<div class="flex items-center">
 											<div
@@ -313,7 +318,7 @@
 								</div>
 								<div class="mt-4 space-y-2">
 									<Label for="clientNotes" class="font-semibold text-stone-800"
-										>Adaugă o notiță (opțional)</Label
+										>Adaugă o notiță (opțional).</Label
 									>
 									<Textarea
 										id="clientNotes"
@@ -327,7 +332,7 @@
 									{/if}
 								</div>
 
-								<div class="mb-6 flex items-center space-x-3 pt-4">
+								<div class="mb-6 flex items-center space-x-4 pt-4">
 									<input type="hidden" name="duration" bind:value={$form.duration} />
 									<input type="hidden" name="date" bind:value={$form.date} />
 
@@ -339,13 +344,12 @@
 									/>
 									<div class="grid gap-1.5 leading-none">
 										<Label for="terms" class="cursor-pointer text-sm font-medium text-stone-700">
-											Confirm angajamentul de a ma prezenta.
+											Confirm angajamentul de a mă prezența.
 										</Label>
-										<p class="text-xs text-stone-500">Inteleg ca pot anula programarea.</p>
+										<p class="text-xs text-stone-500">Înțeleg că pot anula programarea.</p>
 									</div>
-									<SuperDebug data={form} />
 								</div>
-								<Button type="submit" class="text-white">Confirma Programarea</Button>
+								<Button type="submit" class="text-white"><CalendarPlus /> Confirmă Programarea</Button>
 							{/if}
 						</form>
 					</div>

@@ -21,15 +21,13 @@ export const actions: Actions = {
 		const form = await superValidate(request, zod(bookingSchema));
 
 		if (!form.valid) {
-			console.log(form.errors, form.data)
 			return fail(400, { form });
 		}
 
 		const session = await safeGetSession();
 
 		if (!session) {
-			console.log('re')
-			return fail(401, { message: 'Trebuie sa fii autentificat pentru a face o programare.' });
+			throw redirect(303, '/login')
 		}
 
 		const { data: profile } = await supabase
@@ -56,8 +54,7 @@ export const actions: Actions = {
 		};
 
 		const { error } = await supabase.from('appointments').insert(newAppointment);
-
-		console.log('EROARE')
+		
 
 
 		if (error) {

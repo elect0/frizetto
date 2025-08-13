@@ -18,7 +18,8 @@
 		CalendarDays,
 		CalendarPlus,
 		Wallet,
-		Check
+		Check,
+		Save
 	} from '@lucide/svelte';
 	import { superForm } from 'sveltekit-superforms/client';
 	import { toast } from 'svelte-sonner';
@@ -129,8 +130,8 @@
 <div class="min-h-screen bg-stone-50 py-32">
 	<div class="container mx-auto max-w-6xl px-4 lg:px-6">
 		<div class="mb-6">
-			<h2 class="mb-5 text-3xl font-bold text-stone-900 md:text-5xl">Setările Contului</h2>
-			<p class="max-w-2xl text-lg text-stone-600">
+			<h2 class="mb-5 text-3xl font-bold text-stone-900 md:text-5xl">Setările Contului.</h2>
+			<p class="max-w-2xl text-base text-stone-600 md:text-lg">
 				Aici îți poți actualiza detaliile personale, schimba parola și personaliza preferințele de
 				comunicare.
 			</p>
@@ -156,7 +157,8 @@
 							<a href={`/?serviceId=${data.favoriteService.id}#booking`}>
 								<Button class="mt-4 cursor-pointer md:mt-0">
 									<CalendarDays class="h-5 w-5" />
-									Programeaza-l Acum</Button>
+									Programeaza-l Acum</Button
+								>
 							</a>
 						</div>
 					</Card.Content>
@@ -167,13 +169,13 @@
 					<Card.Root class="border-stone-200 bg-white shadow-lg">
 						<Card.Header>
 							<Card.Title class="text-2xl">Urmatoarea Programare</Card.Title>
-							<Card.Description class="text-md"
+							<Card.Description class="text-base"
 								>Vezi detaliile și confirmă următoarea ta programare.</Card.Description
 							>
 						</Card.Header>
 						<Card.Content>
-							<h2 class="text-2xl font-bold">{data.nextAppointment.services.name}</h2>
-							<div class="mb-4 flex items-center space-x-3">
+							<h2 class="text-lg font-bold md:text-2xl">{data.nextAppointment.services.name}</h2>
+							<div class="mb-2 flex items-center space-x-3 md:mb-4">
 								<div class="mt-1 flex items-center text-sm text-stone-600">
 									<Clock class="mr-1 h-4 w-4" />
 									{data.nextAppointment.services.duration_minutes} minute
@@ -187,7 +189,7 @@
 								<Card.Content>
 									<div class="flex items-center">
 										<div
-											class="mr-4 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-amber-100 text-amber-700"
+											class="mr-4 flex h-8 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-amber-100 text-amber-700"
 										>
 											<CalendarDays class="h-5 w-5" />
 										</div>
@@ -202,13 +204,14 @@
 							</Card.Root>
 							<a href="/cont/programari">
 								<Button variant="default" class="cursor-pointer">
-									<Edit class='h-5 w-5' />
-									Modifica Programarea</Button>
+									<Edit class="h-5 w-5" />
+									Modifica Programarea</Button
+								>
 							</a>
 						</Card.Content>
 					</Card.Root>
 				{:else}
-					<Card.Root class='border-stone-200 bg-white shadow-lg'>
+					<Card.Root class="border-stone-200 bg-white shadow-lg">
 						<Card.Content class="flex flex-col items-center justify-center p-10 text-center">
 							<div class="mb-4 rounded-full bg-stone-100 p-4">
 								<CalendarPlus class="h-12 w-12 text-stone-500" />
@@ -219,7 +222,7 @@
 								look.
 							</p>
 							<a href="/#booking" class="mt-6">
-								<Button size="lg" class='cursor-pointer'>
+								<Button size="lg" class="cursor-pointer">
 									<CalendarPlus class="h-5 w-5" />
 									Programează-te Acum
 								</Button>
@@ -294,10 +297,10 @@
 						class="cursor-pointer border-stone-200 bg-white p-4 shadow-lg ring-0 transition-shadow hover:shadow-xl data-[state=active]:border-amber-600 data-[state=active]:bg-amber-50 data-[state=active]:shadow-xl"
 						value="security">Securitate</Tabs.Trigger
 					>
-					<Tabs.Trigger
+					<!-- <Tabs.Trigger
 						class="cursor-pointer border-stone-200 bg-white p-4 shadow-lg ring-0 transition-shadow hover:shadow-xl data-[state=active]:border-amber-600 data-[state=active]:bg-amber-50 data-[state=active]:shadow-xl"
 						value="notifications">Notificari</Tabs.Trigger
-					>
+					> -->
 				</Tabs.List>
 				<Tabs.Content value="profile" class="mt-4">
 					<Card.Root
@@ -337,7 +340,8 @@
 											type="text"
 											id="full_name"
 											name="full_name"
-											placeholder="Cinca Eduard"
+											class="text-sm md:text-base"
+											placeholder="Ex: Alexandru Popescu"
 											bind:value={$profile.full_name}
 											aria-invalid={$profileErrors.full_name ? 'true' : undefined}
 										/>
@@ -352,8 +356,9 @@
 										<Input
 											type="text"
 											id="phone"
+											class="text-sm md:text-base"
 											name="phone"
-											placeholder="0743400883"
+											placeholder="Ex: 0751 298 489"
 											bind:value={$profile.phone}
 											aria-invalid={$profileErrors.phone ? 'true' : undefined}
 										/>
@@ -367,6 +372,7 @@
 										<Label class="mb-1" for="notes">Notita Utilizator</Label>
 										<Input
 											type="text"
+											class="text-sm md:text-base"
 											id="notes"
 											name="notes"
 											placeholder="Ex: Prefer tuns mai scurt pe lateral"
@@ -380,9 +386,10 @@
 										{/if}
 									</div>
 								</div>
-								<Button type="submit" class="w-full cursor-pointer">Salveaza Modificarile</Button>
+								<Button type="submit" class="w-full cursor-pointer"
+									><Save /> Salveaza Modificarile</Button
+								>
 							</form>
-							<!-- TODO: Maybe add card footer -->
 						</Card.Content>
 					</Card.Root>
 				</Tabs.Content>
@@ -410,6 +417,7 @@
 											type="password"
 											id="newPassword"
 											name="newPassword"
+											class="text-sm md:text-base"
 											bind:value={$password.newPassword}
 											placeholder="Alege o parolă nouă (minim 8 caractere)"
 											aria-invalid={$passwordErrors.newPassword ? 'true' : undefined}
@@ -426,6 +434,7 @@
 											type="password"
 											id="passwordConfirm"
 											name="passwordConfirm"
+											class="text-sm md:text-base"
 											bind:value={$password.passwordConfirm}
 											placeholder="Reintrodu parola pentru confirmare"
 											aria-invalid={$passwordErrors.passwordConfirm ? 'true' : undefined}
@@ -437,12 +446,14 @@
 										{/if}
 									</div>
 								</div>
-								<Button type="submit" class="w-full cursor-pointer">Actualizează parola</Button>
+								<Button type="submit" class="w-full cursor-pointer"
+									><Save /> Actualizează parola</Button
+								>
 							</form>
 						</Card.Content>
 					</Card.Root>
 				</Tabs.Content>
-				<Tabs.Content value="notifications" class="mt-4">
+				<!-- <Tabs.Content value="notifications" class="mt-4">
 					<Card.Root
 						class="border border-stone-200 bg-white shadow-lg transition-shadow hover:shadow-xl"
 					>
@@ -502,7 +513,7 @@
 							</form>
 						</Card.Content>
 					</Card.Root>
-				</Tabs.Content>
+				</Tabs.Content> -->
 			</Tabs.Root>
 		</div>
 	</div>

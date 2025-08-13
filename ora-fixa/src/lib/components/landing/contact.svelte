@@ -25,8 +25,8 @@
 			<div class="space-y-8">
 				<Badge class="border-0 bg-amber-600 px-4 py-2 text-white">Locatie & Contact</Badge>
 				<div class="space-y-6">
-					<h2 class="text-4xl font-bold">Vino sa ne cunoastem</h2>
-					<p class="text-lg text-stone-300">
+					<h2 class="text-3xl md:text-4xl font-bold">Vino sa ne cunoastem</h2>
+					<p class="text-base md:text-lg text-stone-300">
 						Te asteptam in salonul nostru din centrul Bailestiului pentru o experienta de grooming
 						de neuitat
 					</p>

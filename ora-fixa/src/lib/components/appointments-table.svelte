@@ -211,7 +211,6 @@
 	function navigateToPage(pageNumber: number) {
 		const params = new URLSearchParams(page.url.searchParams);
 		params.set('page', pageNumber.toString());
-		console.log(params.toString(), page.url.pathname);
 		const url = `${page.url.pathname}?${params.toString()}`;
 
 		goto(url, {
@@ -221,10 +220,6 @@
 		});
 	}
 
-	$effect(() => {
-		console.log(page);
-		console.log(id);
-	});
 </script>
 
 <div>

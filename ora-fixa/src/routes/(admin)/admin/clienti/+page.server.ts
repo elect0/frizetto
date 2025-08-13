@@ -32,7 +32,8 @@ export const load: PageServerLoad = async ({locals: {supabase, session}, url}) =
         currentPage: page,
         pageSize,
         services: services || [],
-        session
+        session,
+        pageTitle: "Clienti"
     }
 }
 
