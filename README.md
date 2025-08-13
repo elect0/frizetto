@@ -13,7 +13,7 @@
 <br>
 
 <p align="center">
-  <img src="https://imgur.com/7dc60c6e-72ee-446a-9cba-bcc6cdfd03a3" alt="OraFixa Demo" width="90%">
+  <img src="https://i.imgur.com/SF70NDA.png" alt="OraFixa Demo" width="90%">
 </p>
 
 ## About The Project
