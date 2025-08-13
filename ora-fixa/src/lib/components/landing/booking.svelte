@@ -25,6 +25,7 @@
 	import Textarea from '../ui/textarea/textarea.svelte';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import SuperDebug from 'sveltekit-superforms';
+	import { formatISO } from 'date-fns';
 
 	let { services, form: initialForm } = $props<{
 		services: Service[];
@@ -39,6 +40,11 @@
 			if (event.paths[0] === 'date' || event.paths[0] === 'serviceId') {
 				if (selectedDate && $form.date && $form.serviceId) {
 					fetchAvailableTimes(selectedDate);
+				}
+			}
+			if (event.paths[0] === 'serviceId') {
+				if ($form.serviceId) {
+					$form.duration = selectedService?.duration_minutes;
 				}
 			}
 		},
@@ -99,6 +105,8 @@
 		}
 	}
 
+	let duration = $state(0);
+
 	const df = new DateFormatter('ro-RO', {
 		dateStyle: 'long'
 	});
@@ -113,8 +121,8 @@
 		<div class="mx-auto max-w-4xl">
 			<div class="mb-12 text-center">
 				<Badge class="mb-6 border-0 bg-amber-600 px-4 py-2 text-white">Programare Online</Badge>
-				<h2 class="mb-6 text-4xl font-bold text-stone-900 md:text-5xl">Alege o data si o ora</h2>
-				<p class="text-xl text-stone-600">
+				<h2 class="mb-6 text-3xl font-bold text-stone-900 md:text-5xl">Alege o data si o ora</h2>
+				<p class="text-md md:text-xl text-stone-600">
 					Procesul de rezervare este simplu si rapid. In doar 2 pasi esti programat.
 				</p>
 			</div>
@@ -140,6 +148,7 @@
 								<AccordionContent>
 									<RadioGroup.Root
 										bind:value={$form.serviceId}
+										name="serviceId"
 										class="grid grid-cols-1 gap-4 md:grid-cols-2"
 									>
 										{#each services as service (service.id)}
@@ -151,7 +160,7 @@
 												/>
 												<Label
 													for={`service-${service.id}`}
-													class="block cursor-pointer rounded-xl border-2 border-stone-200 bg-white p-4 transition-all peer-data-[state=checked]:border-amber-600 peer-data-[state=checked]:bg-amber-50 peer-data-[state=checked]:shadow-lg hover:bg-stone-50"
+													class="block cursor-pointer rounded-xl border-2 border-stone-200 bg-white p-4 transition-all hover:bg-stone-50 peer-data-[state=checked]:border-amber-600 peer-data-[state=checked]:bg-amber-50 peer-data-[state=checked]:shadow-lg"
 												>
 													<div class="flex justify-between font-semibold text-stone-900">
 														<span>{service.name}</span>
@@ -206,11 +215,11 @@
 													disableDaysOutsideMonth={true}
 													onValueChange={() => {
 														if (selectedDate) {
-															$form.date = selectedDate.toDate(getLocalTimeZone()).toISOString();
+															$form.date = formatISO(selectedDate.toDate(getLocalTimeZone())); 
 														}
 													}}
 												/>
-												<p class="mt-4 mb-2 text-center text-sm text-stone-600 md:mb-0">
+												<p class="mb-2 mt-4 text-center text-sm text-stone-600 md:mb-0">
 													Dată selectată: <span class="font-medium"
 														>{selectedDate
 															? df.format(selectedDate.toDate(getLocalTimeZone()))
@@ -226,6 +235,7 @@
 												{:else if availableSlots.length > 0}
 													<RadioGroup.Root
 														bind:value={$form.time}
+														name="time"
 														class="grid grid-cols-2 gap-3 md:grid-cols-3"
 													>
 														{#each availableSlots as slot (slot)}
@@ -237,10 +247,10 @@
 																/>
 																<Label
 																	for={`time-${slot.available_slot}`}
-																	class="w-full cursor-pointer rounded-md border-2 border-stone-200  p-3 text-center text-sm font-semibold transition-all peer-data-[state=checked]:border-amber-600
+																	class="w-full cursor-pointer rounded-md border-2 border-stone-200  p-3 text-center text-sm font-semibold transition-all hover:bg-stone-100
+											peer-data-[state=checked]:border-amber-600
 											peer-data-[state=checked]:bg-amber-50
 											peer-data-[state=checked]:shadow-md
-											hover:bg-stone-100
 											"
 																>
 																	{slot.available_slot}
@@ -318,11 +328,8 @@
 								</div>
 
 								<div class="mb-6 flex items-center space-x-3 pt-4">
-									<input
-										type="hidden"
-										name="duration"
-										value={selectedService?.duration_minutes || 0}
-									/>
+									<input type="hidden" name="duration" bind:value={$form.duration} />
+									<input type="hidden" name="date" bind:value={$form.date} />
 
 									<Checkbox
 										required
@@ -336,6 +343,7 @@
 										</Label>
 										<p class="text-xs text-stone-500">Inteleg ca pot anula programarea.</p>
 									</div>
+									<SuperDebug data={form} />
 								</div>
 								<Button type="submit" class="text-white">Confirma Programarea</Button>
 							{/if}
