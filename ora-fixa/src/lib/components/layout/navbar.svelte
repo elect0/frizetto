@@ -23,6 +23,7 @@
 	} from '$lib/components/ui/dropdown-menu';
 	import Separator from '../ui/separator/separator.svelte';
 	import Dashboard from '@tabler/icons-svelte/icons/dashboard';
+	import { smoothscroll } from '$lib/hooks/smooth-scrolling';
 
 	const navItems = [
 		{ id: 'servicii', label: 'Servicii', icon: Scissors },
@@ -52,7 +53,7 @@
 		<div class="flex h-16 items-center justify-between">
 			<!-- Logo -->
 			<div class="flex-shrink-0">
-				<a href="/" class="flex items-center space-x-3">
+				<a href="/#hero" class="flex items-center space-x-3" use:smoothscroll={{ offset: 50 }}>
 					<div class="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
 						<span class="text-primary-foreground text-sm font-bold"> F </span>
 					</div>
@@ -63,6 +64,7 @@
 				{#each navItems as item (item.id)}
 					<a
 						href="#{item.id}"
+						use:smoothscroll={{ offset: 50 }}
 						class="text-muted-foreground hover:text-foreground group relative text-base font-medium transition-colors duration-200"
 					>
 						{item.label}
@@ -149,7 +151,7 @@
 					</Sheet.Trigger>
 					<Sheet.Content side="right" class="w-[300px] p-4 sm:w-[400px]">
 						<div class="flex items-center space-x-2 px-1">
-							<a href="/" class="flex items-center space-x-3">
+							<a href="/#hero" class="flex items-center space-x-3" use:smoothscroll={{ offset: 50 }}>
 								<div class="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
 									<!-- logo -->
 									<span class="text-primary-foreground text-sm font-bold"> F </span>
@@ -161,6 +163,7 @@
 							{#each navItems as item (item.id)}
 								<a
 									href="#{item.id}"
+									use:smoothscroll={{ offset: 50 }}
 									onclick={() => (isOpen = false)}
 									class="text-muted-foreground flex items-center rounded-md px-3 py-3 text-base text-sm font-medium transition-colors duration-200 hover:bg-amber-50 hover:text-amber-600"
 								>
