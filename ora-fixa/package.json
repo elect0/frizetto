@@ -67,6 +67,7 @@
 		"date-fns": "^4.1.0",
 		"gsap": "^3.13.0",
 		"ics": "^3.8.1",
+		"libphonenumber-js": "^1.12.17",
 		"lucide-svelte": "^0.516.0",
 		"resend": "^6.0.1",
 		"sveltekit-superforms": "^2.26.1",

@@ -25,7 +25,7 @@
 		row: Row<Appointment>;
 	} = $props();
 
-	let availableSlots = $state<{ available_slot: string }[]>([]);
+let availableSlots = $state<{ available_slot: string }[]>([]);
 	let isLoading = $state(false);
 	let clientName = $state(row.original.profiles.full_name)
 

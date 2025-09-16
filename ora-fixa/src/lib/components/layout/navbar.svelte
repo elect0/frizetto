@@ -90,7 +90,7 @@
 											{userInitials}
 										</AvatarFallback>
 									</Avatar>
-									<span class="text-sm font-semibold text-stone-700">Salut, {userName}</span>
+									<span class="text-sm font-semibold text-stone-700">Salut, {userName}!</span>
 								</Button>
 							{/snippet}
 						</DropdownMenuTrigger>

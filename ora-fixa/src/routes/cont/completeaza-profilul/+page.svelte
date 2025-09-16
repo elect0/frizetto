@@ -3,7 +3,6 @@
 	import { Label } from '$lib/components/ui/label';
 	import { Input } from '$lib/components/ui/input';
 	import { Button } from '$lib/components/ui/button';
-	import type { PageData } from './$types';
 	import { superForm } from 'sveltekit-superforms/client';
 	import { profileSchema } from '$lib/schemas';
 	import { zod } from 'sveltekit-superforms/adapters';
@@ -14,7 +13,7 @@
 
 	let { data } = $props();
 
-	const { form, errors, submitting, message, enhance } = superForm(data.form, {
+	const { form, errors, submitting, enhance } = superForm(data.form, {
 		validators: zod(profileSchema),
 		onResult: ({ result }) => {
 			if (result.type === 'success') {
@@ -62,7 +61,7 @@
 						type="phoneNumber"
 						id="phoneNumber"
 						name="phoneNumber"
-						placeholder="Minim 10 caractere"
+						placeholder="0724 212 092"
 						bind:value={$form.phoneNumber}
 						aria-invalid={$errors.phoneNumber ? 'true' : undefined}
 					/>

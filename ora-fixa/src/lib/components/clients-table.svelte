@@ -3,11 +3,14 @@
 		id: z.string().uuid(),
 		full_name: z.string(),
 		phone: z.string(),
+    email: z.string(),
 		last_visit: z.string(),
 		total_visits: z.number(),
 		total_spent: z.number(),
 		noshow_count: z.number(),
-		status: z.string()
+		status: z.string(),
+    created_at: z.string(),
+    client_notes: z.string()
 	});
 
 	export type Client = z.infer<typeof ClientSchema>;
@@ -38,6 +41,7 @@
 	import { page } from '$app/state';
 	import { goto } from '$app/navigation';
 	import Input from './ui/input/input.svelte';
+	import CustomerProfileModal from './customer-profile-modal.svelte';
 
 
 	let {
@@ -181,6 +185,8 @@
 		getPaginationRowModel: getPaginationRowModel(),
 		getCoreRowModel: getCoreRowModel()
 	});
+
+  console.log(clients)
 </script>
 
 <div class="flex flex-col py-4 sm:flex-row sm:items-center sm:justify-between">
@@ -307,9 +313,7 @@
 			{/snippet}
 		</DropdownMenu.Trigger>
 		<DropdownMenu.Content align="end" class="w-32">
-			<DropdownMenu.Item>
-				<a href={`/client/${row.original.id}`}> Vezi Profilul Clientului </a>
-			</DropdownMenu.Item>
+        <CustomerProfileModal {row} />
 			<DropdownMenu.Separator />
 			<WalkInModal {row} {services} />
 		</DropdownMenu.Content>

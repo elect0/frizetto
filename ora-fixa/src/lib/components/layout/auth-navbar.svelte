@@ -66,7 +66,7 @@
 											{userInitials}
 										</AvatarFallback>
 									</Avatar>
-									<span class="text-sm font-semibold text-stone-700">Salut, {userName}</span>
+									<span class="text-sm font-semibold text-stone-700">Salut, {userName}!</span>
 								</Button>
 							{/snippet}
 						</DropdownMenuTrigger>
@@ -146,7 +146,7 @@
 										{userInitials}
 									</AvatarFallback>
 								</Avatar>
-								<span class="font-semibold text-stone-800">Salut, {userName}</span>
+								<span class="font-semibold text-stone-800">Salut, {userName}!</span>
 							</div>
 							<a
 								href="/cont/programari"

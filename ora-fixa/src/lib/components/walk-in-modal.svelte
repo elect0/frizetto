@@ -1,13 +1,11 @@
 <script lang="ts">
-	import { CheckIcon, ChevronsUpDownIcon, CalendarIcon, Save } from '@lucide/svelte';
-	import { tick } from 'svelte';
-	import * as Command from '$lib/components/ui/command/index.js';
+	import { CalendarIcon, Save } from '@lucide/svelte';
 	import * as Popover from '$lib/components/ui/popover/index.js';
 	import * as Select from '$lib/components/ui/select/index.js';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { cn } from '$lib/utils.js';
-	import type { Profile, Service } from '$lib/types/supabase';
+	import type { Service } from '$lib/types/supabase';
 	import { buttonVariants } from '$lib/components/ui/button/index.js';
 	import { Label } from '$lib/components/ui/label/index.js';
 	import { Calendar } from '$lib/components/ui/calendar/index.js';
@@ -15,16 +13,14 @@
 	import { Input } from '$lib/components/ui/input/index.js';
 
 	import { DateFormatter, type DateValue, getLocalTimeZone } from '@internationalized/date';
-	import { defaults, superForm, type SuperValidated } from 'sveltekit-superforms/client';
+	import { defaults, superForm } from 'sveltekit-superforms/client';
 	import { walkInSchema } from '$lib/schemas';
-	import { z } from 'zod';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { toast } from 'svelte-sonner';
 	import type { Client } from './clients-table.svelte';
 	import type { Row } from '@tanstack/table-core';
 
 	let dateValue = $state<DateValue>();
-	let serviceValue = $state<string>();
 
 	let { services, row }: { services: Service[]; row: Row<Client> } = $props();
 
@@ -60,7 +56,6 @@
 	);
 
 	let isOpen = $state(false);
-	let triggerRef = $state<HTMLButtonElement>(null!);
 	let contentRef = $state<HTMLElement | null>(null);
 
 	let availableSlots = $state<{ available_slot: string }[]>([]);

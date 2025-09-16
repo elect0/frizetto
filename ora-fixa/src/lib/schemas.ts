@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { parsePhoneNumberFromString } from 'libphonenumber-js/min';
 
 export const LoginSchema = z.object({
 	email: z.string().email('Te rugam sa introduci o adresa de email valida.'),
@@ -16,24 +17,39 @@ export const registerSchema = z
 		path: ['passwordConfirm']
 	});
 
-export const bookingSchema = z
-	.object({
-		serviceId: z.string().min(1, { message: 'Te rugăm să alegi un serviciu.' }),
-		date: z.string().min(1, { message: 'Te rugăm să alegi o zi.' }),
-		duration: z.coerce.number().positive(),
-		time: z.string().min(1, { message: 'Te rugăm să alegi o oră.' }),
-		hasAgreedToPolicy: z.boolean(),
-		clientNotes: z.string().optional()
-	})
+export const bookingSchema = z.object({
+	serviceId: z.string().min(1, { message: 'Te rugăm să alegi un serviciu.' }),
+	date: z.string().min(1, { message: 'Te rugăm să alegi o zi.' }),
+	duration: z.coerce.number().positive(),
+	time: z.string().min(1, { message: 'Te rugăm să alegi o oră.' }),
+	hasAgreedToPolicy: z.boolean(),
+	clientNotes: z.string().optional()
+});
 
 export const profileSchema = z.object({
 	fullName: z.string().nonempty('Te rugăm să completezi acest câmp.'),
-	phoneNumber: z.string().min(10, 'Numărul de telefon trebuie să conțină cel puțin 10 cifre.')
+	phoneNumber: z.string().refine(
+		(val) => {
+			const phone = parsePhoneNumberFromString(val, 'RO'); // default country Romania
+			return phone?.isValid() ?? false;
+		},
+		{
+			message: 'Numărul de telefon trebuie să aibă un format valid.'
+		}
+	)
 });
 
 export const accountSchema = z.object({
 	full_name: z.string().nonempty('Te rugăm să completezi acest câmp.'),
-	phone: z.string().min(10, 'Numărul de telefon trebuie să conțină cel puțin 10 cifre.'),
+	phone: z.string().refine(
+		(val) => {
+			const phone = parsePhoneNumberFromString(val, 'RO'); // default country Romania
+			return phone?.isValid() ?? false;
+		},
+		{
+			message: 'Numărul de telefon trebuie să aibă un format valid.'
+		}
+	),
 	notes: z.string().nullable().optional()
 });
 
@@ -76,9 +92,9 @@ export const updateAppointmentSchema = z.object({
 });
 
 export const updateStatusSchema = z.object({
-    appointmentId: z.string(),
-    status: z.string()
-})
+	appointmentId: z.string(),
+	status: z.string()
+});
 
 export const scheduleOverrideSchema = z.object({
 	date: z.string(),
@@ -101,4 +117,3 @@ export const addServiceSchema = z.object({
 	price: z.coerce.number().positive('Pretul trebuie să fie un număr pozitiv.'),
 	duration: z.coerce.number().positive('Durata serviciului trebuie să fie un număr pozitiv.')
 });
-

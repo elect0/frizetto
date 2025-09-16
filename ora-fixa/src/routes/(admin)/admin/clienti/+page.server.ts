@@ -19,12 +19,13 @@ export const load: PageServerLoad = async ({locals: {supabase, session}, url}) =
         p_sort_order: sortOrder,
         p_sort_column: sortBy,
     })
-    
+
     const countPromise = supabase.rpc('get_clients_count', {
         p_search_term: search,
     })
 
     const [{data: clients}, {data: count}, {data:services}] = await Promise.all([clientsPromise, countPromise, servicesPromise])
+
 
     return {
         clients: clients || [],
