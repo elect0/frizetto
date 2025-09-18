@@ -32,7 +32,7 @@
 	<Card.Root class="w-full max-w-sm border-stone-200 shadow-xl">
 		<form method="POST" use:enhance>
 			<Card.Header class="text-center">
-				<Card.Title class="text-2xl font-bold">Bun venit la OraFixa!</Card.Title>
+				<Card.Title class="text-2xl font-bold">Bun venit la Frizetto!</Card.Title>
 				<Card.Description
 					>Aproape gata! Mai avem nevoie de câteva detalii pentru a-ți personaliza experiența.</Card.Description
 				>

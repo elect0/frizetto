@@ -2,25 +2,34 @@
 	import { Badge } from '$lib/components/ui/badge';
 	import { Card, CardContent } from '$lib/components/ui/card';
 	import { Star } from 'lucide-svelte';
+	import * as Avatar from '$lib/components/ui/avatar/index.js';
 
 	let testimonials = [
 		{
-			name: 'Mihai Ionescu',
-			role: 'Client fidel',
-			text: 'Cel mai bun frizer din Băilești! Andrei înțelege exact ce vreau și rezultatul este mereu perfect. Atmosfera din salon este foarte relaxantă.',
-			initial: 'M'
+			name: 'Bogdan Apostu',
+			role: 'Prima vizită',
+			text: 'Un super loc, super frizer, Ciprian te face sa te simți bine în compania sa, te tunde exact asa cum îți dorești, Frizetto îți oferă imaginea de care ai nevoie',
+			initial: 'BA',
+			picture:
+				'https://lh3.googleusercontent.com/a-/ALV-UjWgTTNU0SJ6NaPWYP3tOIr3VAlQd1D5HoJ0ESa3f2ZdchwSBdaH8g=w128-h128-p-rp-mo-br100'
 		},
 		{
-			name: 'Alexandru Popa',
-			role: 'Antreprenor',
-			text: 'Profesionalism de top! Am încercat multe saloane, dar aici am găsit ceea ce căutam. Recomand cu încredere!',
-			initial: 'A'
+			name: 'Ionut Cataneanu',
+			role: 'Client Fidel',
+			text: 'Loc îngrijit, curat, iar Ciprian îți oferă consultanță și ajutor în a-ți găsi o tunsoare potrivită și care să meargă cu stilul tău de viață, lucru care lipsește cu desăvârșire în celelalte locații. Respect!',
+			initial: 'IC',
+
+			picture:
+				'https://lh3.googleusercontent.com/a-/ALV-UjUt1RhPzg2vqtufqvNQJOz_AZS-ogf5UQByyGeQg6MvcBIVHfo=w128-h128-p-rp-mo-br100'
 		},
 		{
-			name: 'Radu Marinescu',
-			role: 'Manager',
-			text: 'Experiența completă! De la atmosferă la rezultatul final, totul este la nivel înalt. Mă întorc mereu cu plăcere.',
-			initial: 'R'
+			name: 'Radu Oprescu',
+			role: 'Client',
+			text: 'Recomand Frizetto cu toată încrederea! Am avut parte de servicii de înaltă calitate. Personalul este foarte amabil și profesionist așa că voi reveni cu siguranță.',
+			initial: 'RO',
+
+			picture:
+				'https://lh3.googleusercontent.com/a/ACg8ocLKITSLZmARdXQH6cV5NEoWBdIubqKlBMEQZawziSQRoncyAw=s128-c-rp-mo-br100'
 		}
 	];
 
@@ -40,8 +49,8 @@
 			<Badge class="mb-6 border-stone-200 bg-stone-100 px-4 py-2 text-stone-700">
 				Dovada Sociala
 			</Badge>
-			<h2 class="mb-4 md:mb-6 text-4xl font-bold text-stone-900 md:text-5xl">Rezultate & Pareri</h2>
-			<p class="mx-auto max-w-2xl text-lg md:text-xl text-stone-600">
+			<h2 class="mb-4 text-4xl font-bold text-stone-900 md:mb-6 md:text-5xl">Rezultate & Pareri</h2>
+			<p class="mx-auto max-w-2xl text-lg text-stone-600 md:text-xl">
 				Lucrarile noastre vorbesc de la sine, iar clientii confirma calitatea.
 			</p>
 		</div>
@@ -60,7 +69,7 @@
 					<div
 						class="absolute bottom-4 left-4 flex opacity-0 transition-opacity duration-300 group-hover:opacity-100"
 					>
-						<div class="text-lg md:text-xl font-semibold text-white">Taper</div>
+						<div class="text-lg font-semibold text-white md:text-xl">Taper</div>
 					</div>
 				</div>
 			{/each}
@@ -77,17 +86,14 @@
 							<Star class="w-5-h-5 fill-current text-amber-500" />
 							<Star class="w-5-h-5 fill-current text-amber-500" />
 						</div>
-						<p class="mb-4 md:mb-6 italic text-stone-600">
+						<p class="mb-4 text-stone-600 italic md:mb-6">
 							'{testimonial.text}'
 						</p>
 						<div class="flex items-center gap-4">
-							<div
-								class="flex h-12 w-12 items-center justify-center overflow-hidden rounded-full bg-stone-300"
-							>
-								<span class="font-semibold text-stone-600">
-									{testimonial.initial}
-								</span>
-							</div>
+							<Avatar.Root class="h-12 w-12" delayMs={1000}>
+								<Avatar.Image src={testimonial.picture} alt={testimonial.initial} />
+								<Avatar.Fallback>{testimonial.initial}</Avatar.Fallback>
+							</Avatar.Root>
 							<div>
 								<div class="font-semibold text-stone-900">{testimonial.name}</div>
 								<div class="text-sm text-stone-500">{testimonial.role}</div>

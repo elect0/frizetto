@@ -24,8 +24,9 @@ export const load: PageServerLoad = async ({locals: {supabase, session}, url}) =
         p_search_term: search,
     })
 
-    const [{data: clients}, {data: count}, {data:services}] = await Promise.all([clientsPromise, countPromise, servicesPromise])
-
+    const [{data: clients, error}, {data: count}, {data:services}] = await Promise.all([clientsPromise, countPromise, servicesPromise])
+    
+    console.log(error)
 
     return {
         clients: clients || [],

@@ -3,7 +3,6 @@
 	import Label from '$lib/components/ui/label/label.svelte';
 	import Input from '$lib/components/ui/input/input.svelte';
 	import Separator from '$lib/components/ui/separator/separator.svelte';
-	import Switch from '$lib/components/ui/switch/switch.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
 	import * as Card from '$lib/components/ui/card/index.js';
 	import * as Tabs from '$lib/components/ui/tabs/index.js';
@@ -11,10 +10,8 @@
 	import {
 		Star,
 		Clock,
-		DollarSign,
 		Rocket,
 		Edit,
-		Scissors,
 		CalendarDays,
 		CalendarPlus,
 		Wallet,
@@ -189,7 +186,7 @@
 								<Card.Content>
 									<div class="flex items-center">
 										<div
-											class="mr-4 flex h-8 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-amber-100 text-amber-700"
+											class="mr-4 flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-amber-100 text-amber-700"
 										>
 											<CalendarDays class="h-5 w-5" />
 										</div>

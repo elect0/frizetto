@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Badge } from '$lib/components/ui/badge';
-	import { MapPin, Clock, Phone, Instagram, Facebook } from 'lucide-svelte';
+	import { MapPin, Clock, Phone, Instagram, Facebook } from '@lucide/svelte';
+	import Footer from '../layout/footer.svelte';
 
 	const contactInfo = {
 		address: {
@@ -14,8 +15,8 @@
 		},
 		phone: '0723.456.789',
 		whatsapp: true,
-		instagram: '#',
-		facebook: '#'
+		instagram: 'https://www.instagram.com/ciprian_frizeru/',
+		facebook: 'https://www.facebook.com/duma.alex.58/'
 	};
 </script>
 
@@ -25,8 +26,8 @@
 			<div class="space-y-8">
 				<Badge class="border-0 bg-amber-600 px-4 py-2 text-white">Locatie & Contact</Badge>
 				<div class="space-y-6">
-					<h2 class="text-3xl md:text-4xl font-bold">Vino sa ne cunoastem</h2>
-					<p class="text-base md:text-lg text-stone-300">
+					<h2 class="text-3xl font-bold md:text-4xl">Vino sa ne cunoastem</h2>
+					<p class="text-base text-stone-300 md:text-lg">
 						Te asteptam in salonul nostru din centrul Bailestiului pentru o experienta de grooming
 						de neuitat
 					</p>
@@ -111,5 +112,6 @@
 				<!-- </div> -->
 			</div>
 		</div>
+		<Footer />
 	</div>
 </section>

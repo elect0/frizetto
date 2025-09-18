@@ -20,7 +20,6 @@ export const load: PageServerLoad = async ({ locals: { supabase, safeGetSession 
 		.eq('id', session.user?.id)
 		.single();
 
-	// Așteptăm ambele promisiuni
 	const [{ data: allAppointments }, { data: profile }] = await Promise.all([
 		appointmentsPromise,
 		profilePromise

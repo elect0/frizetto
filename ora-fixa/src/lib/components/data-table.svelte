@@ -382,19 +382,20 @@
 					</Dialog.Header>
 					<Dialog.Footer>
 						<form
+              class='flex justify-center'
 							action="?/cancelAppointment"
 							method="POST"
 							use:enhance={() => {
 								return async ({ result }) => {
 									if (result.type === 'success') {
-										toast.success('Programarea a fost marcată ca neprezentată.');
+										toast.success('Programarea a fost anulată cu succes!');
 										await invalidateAll();
 										setTimeout(() => {
 											isDialogOpen = false;
 										}, 500);
 									} else {
 										toast.error('Eroare:', {
-											description: 'programarea nu a putut fi marcată ca neprezentată.'
+											description: 'programarea nu a putut fi anulată!'
 										});
 									}
 								};

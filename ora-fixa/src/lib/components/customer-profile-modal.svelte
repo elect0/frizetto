@@ -18,9 +18,10 @@
 		row: Row<Client>;
 	} = $props();
 
-	console.log(row);
 	let isDialogOpen = $state<boolean>(false);
 	let phoneNumber = parsePhoneNumberWithError(row.original.phone, 'RO');
+
+
 </script>
 
 <Dialog.Root bind:open={isDialogOpen}>
@@ -37,8 +38,8 @@
 					</Avatar.Fallback>
 				</Avatar.Root>
 				<div class="space-x-3">
-					<Button variant="outline" class='cursor-pointer'> <Ban /> Blocheaza</Button>
-					<Button variant="destructive" class='cursor-pointer'><Trash /> Sterge</Button>
+					<Button size='sm' variant="outline" class='cursor-pointer'> <Ban /> Blocheaza</Button>
+					<Button size='sm' variant="destructive" class='cursor-pointer'><Trash /> Sterge</Button>
 				</div>
 			</div>
 
@@ -52,7 +53,7 @@
 				</Dialog.Description>
 			</div>
 		</Dialog.Header>
-		<div class="grid grid-cols-1 md:grid-cols-4 w-full gap-4">
+		<div class="grid grid-cols-2 md:grid-cols-4 w-full gap-4">
 			<div class="space-y-2">
 				<p class="text-stone-500">Înregistrat din</p>
 				{format(parseISO(row.original.created_at), 'd MMM, yyyy', { locale: ro })}
@@ -78,7 +79,7 @@
         Nume
       </div>
       <div>
-        <Input disabled type='text' value={row.original.full_name} class="text-black"/>
+        <Input disabled type='text' value={row.original.full_name} class="text-black text-sm"/>
       </div>
     </div>
     <Separator />
@@ -87,7 +88,7 @@
         Email
       </div>
       <div>
-        <Input disabled type='text' value={row.original.email} class="text-black"/>
+        <Input disabled type='text' value={row.original.email} class="text-black text-sm"/>
       </div>
     </div>
     <Separator />
@@ -96,7 +97,7 @@
         Preferinte
       </div>
       <div>
-        <Input disabled type='text' value={row.original.client_notes ? row.original.client_notes : "Nicio preferinta."} class="text-black"/>
+        <Input disabled type='text' value={row.original.client_notes ? row.original.client_notes : "Nicio preferinta."} class="text-black text-sm"/>
       </div>
     </div>
 

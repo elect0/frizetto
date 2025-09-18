@@ -16,8 +16,11 @@
 	import * as Popover from '$lib/components/ui/popover/index.js';
 	import { superForm } from 'sveltekit-superforms';
 	import { Save } from 'lucide-svelte';
+	import ScheduleOverrideCard from '$lib/components/schedule-override-card.svelte';
 
 	let { data } = $props();
+
+	console.log(data.scheduleOverrides);
 
 	let dateValue: DateValue | undefined = $state();
 
@@ -27,12 +30,11 @@
 
 	const {
 		form,
-		errors,
 		enhance: formEnhance,
 		submitting: isSubmittingOverride
 	} = superForm(data.overrideForm, {
 		id: 'override-form',
-				onResult: ({ result }) => {
+		onResult: ({ result }) => {
 			if (result.type === 'success') {
 				toast.success('Succes!', { description: result.data?.form.message });
 				dateValue = undefined;
@@ -125,89 +127,105 @@
 								{/each}
 							</Card.Content>
 							<Card.Footer>
-								<Button class="mt-4" type="submit"><Save class='w-5 h-5' />Salvează Programul</Button>
+								<Button class="mt-4" type="submit"
+									><Save class="h-5 w-5" />Salvează Programul</Button
+								>
 							</Card.Footer>
 						</form>
 					</Card.Root>
-					<Card.Root>
-						<Card.Header>
-							<Card.Title>Program Personalizat</Card.Title>
-							<Card.Description
-								>Setează programul de lucru personalizat pentru fiecare zi.</Card.Description
-							>
-						</Card.Header>
-						<Card.Content>
-							<Popover.Root>
-								<Popover.Trigger class="w-full">
-									{#snippet child({ props })}
-										<Button
-											variant="outline"
-											class={cn(
-												'justify-start text-left font-normal',
-												!dateValue && 'text-muted-foreground'
-											)}
-											{...props}
-										>
-											<CalendarIcon class="mr-2 size-4" />
-											{dateValue
-												? df.format(dateValue.toDate(getLocalTimeZone()))
-												: 'Selecteaza o data.'}
-										</Button>
-									{/snippet}
-								</Popover.Trigger>
-								<Popover.Content class="w-auto p-0">
-									<Calendar locale='ro' bind:value={dateValue} minValue={today(getLocalTimeZone())} disableDaysOutsideMonth={true} type="single" initialFocus 								onValueChange={() => {
-									if (dateValue) {
-										$form.date = dateValue.toDate(getLocalTimeZone()).toISOString();
-									}
-								}}/>
-								</Popover.Content>
-							</Popover.Root>
-							{#if dateValue}
-								<Separator class="mt-4" />
-								<form
-									action="?/setScheduleOverride"
-									method="POST"
-									use:formEnhance
+					<div class="space-y-6">
+						<Card.Root>
+							<Card.Header>
+								<Card.Title>Program Personalizat</Card.Title>
+								<Card.Description
+									>Setează programul de lucru personalizat pentru fiecare zi.</Card.Description
 								>
-									<div class="space-y-4 mt-4">
-										<input type="hidden" name="date" bind:value={$form.date} />
-										<div class="flex items-center space-x-2">
-											<Checkbox
-												id="is_active_override"
-												name="isActive"
-												bind:checked={$form.isActive}
-											/>
-											<Label for="is_active_override">Zi lucrătoare</Label>
-										</div>
-										{#if $form.isActive}
-											<div class="flex items-center gap-4">
-												<div class="w-full space-y-2">
-													<Label for="start_time_override">Ora Început</Label>
-													<Input
-														id="start_time_override"
-														name="startTime"
-														bind:value={$form.startTime}
-														type="time"
-													/>
-												</div>
-												<div class="w-full space-y-2">
-													<Label for="end_time_override">Ora Început</Label>
-													<Input
-														id="end_time_override"
-														name="endTime"
-														bind:value={$form.endTime}
-														type="time"
-													/>
-												</div>
+							</Card.Header>
+							<Card.Content>
+								<Popover.Root>
+									<Popover.Trigger class="w-full">
+										{#snippet child({ props })}
+											<Button
+												variant="outline"
+												class={cn(
+													'justify-start text-left font-normal',
+													!dateValue && 'text-muted-foreground'
+												)}
+												{...props}
+											>
+												<CalendarIcon class="mr-2 size-4" />
+												{dateValue
+													? df.format(dateValue.toDate(getLocalTimeZone()))
+													: 'Selecteaza o data.'}
+											</Button>
+										{/snippet}
+									</Popover.Trigger>
+									<Popover.Content class="w-auto p-0">
+										<Calendar
+											locale="ro"
+											bind:value={dateValue}
+											minValue={today(getLocalTimeZone())}
+											disableDaysOutsideMonth={true}
+											type="single"
+											initialFocus
+											onValueChange={() => {
+												if (dateValue) {
+													$form.date = dateValue.toDate(getLocalTimeZone()).toISOString();
+												}
+											}}
+										/>
+									</Popover.Content>
+								</Popover.Root>
+								{#if dateValue}
+									<Separator class="mt-4" />
+									<form action="?/setScheduleOverride" method="POST" use:formEnhance>
+										<div class="mt-4 space-y-4">
+											<input type="hidden" name="date" bind:value={$form.date} />
+											<div class="flex items-center space-x-2">
+												<Checkbox
+													id="is_active_override"
+													name="isActive"
+													bind:checked={$form.isActive}
+												/>
+												<Label for="is_active_override">Zi lucrătoare</Label>
 											</div>
-										{/if}
-										<Button disabled={$isSubmittingOverride} type='submit'><Save class='w-5 h-5' /> Salvează Excepția</Button>
-									</div>
-								</form>
-							{/if}
-						</Card.Content>
-					</Card.Root>
+											{#if $form.isActive}
+												<div class="flex items-center gap-4">
+													<div class="w-full space-y-2">
+														<Label for="start_time_override">Ora Început</Label>
+														<Input
+															id="start_time_override"
+															name="startTime"
+															bind:value={$form.startTime}
+															type="time"
+														/>
+													</div>
+													<div class="w-full space-y-2">
+														<Label for="end_time_override">Ora Sfârșit</Label>
+														<Input
+															id="end_time_override"
+															name="endTime"
+															bind:value={$form.endTime}
+															type="time"
+														/>
+													</div>
+												</div>
+											{/if}
+											<Button disabled={$isSubmittingOverride} type="submit"
+												><Save class="h-5 w-5" /> Salvează Excepția</Button
+											>
+										</div>
+									</form>
+								{/if}
+							</Card.Content>
+						</Card.Root>
+						<div>
+							<h1 class="mb-3 text-xl font-semibold">Excepții</h1>
+							{#each data.scheduleOverrides as override (override.id)}
+								<ScheduleOverrideCard {override} />
+							{/each}
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

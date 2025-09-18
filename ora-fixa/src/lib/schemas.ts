@@ -103,6 +103,10 @@ export const scheduleOverrideSchema = z.object({
 	isActive: z.boolean()
 });
 
+export const deleteScheduleOverrideSchema = z.object({
+  id: z.number(),
+})
+
 export const updateServiceSchema = z.object({
 	serviceId: z.string(),
 	name: z.string().min(1, 'Numele serviciului este obligatoriu.'),
