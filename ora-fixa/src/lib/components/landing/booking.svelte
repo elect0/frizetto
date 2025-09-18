@@ -24,7 +24,6 @@
 	import { toast } from 'svelte-sonner';
 	import Textarea from '../ui/textarea/textarea.svelte';
 	import { zod } from 'sveltekit-superforms/adapters';
-	import SuperDebug from 'sveltekit-superforms';
 	import { formatISO } from 'date-fns';
 	import { CalendarPlus } from '@lucide/svelte';
 
@@ -51,10 +50,12 @@
 		},
 		onResult: ({ result }) => {
 			if (result.type === 'success') {
+				console.log(result.data, 'REZULTAT');
 				toast.success('Programarea a fost adăugată cu succes!');
 				selectedDate = undefined;
+			} else if (result.type === 'failure') {
+				toast.error(result.data?.form.message);
 			} else {
-				console.log(form);
 				toast.error('A apărut o eroare la adăugarea programării. Te rugăm să încerci din nou!');
 			}
 		}
@@ -165,7 +166,7 @@
 												/>
 												<Label
 													for={`service-${service.id}`}
-													class="block cursor-pointer rounded-xl border-2 border-stone-200 bg-white p-4 transition-all hover:bg-stone-50 peer-data-[state=checked]:border-amber-600 peer-data-[state=checked]:bg-amber-50 peer-data-[state=checked]:shadow-lg"
+													class="block cursor-pointer rounded-xl border-2 border-stone-200 bg-white p-4 transition-all peer-data-[state=checked]:border-amber-600 peer-data-[state=checked]:bg-amber-50 peer-data-[state=checked]:shadow-lg hover:bg-stone-50"
 												>
 													<div class="flex justify-between font-semibold text-stone-900">
 														<span>{service.name}</span>
@@ -224,7 +225,7 @@
 														}
 													}}
 												/>
-												<p class="mb-2 mt-4 text-center text-sm text-stone-600 md:mb-0">
+												<p class="mt-4 mb-2 text-center text-sm text-stone-600 md:mb-0">
 													Dată selectată: <span class="font-medium"
 														>{selectedDate
 															? df.format(selectedDate.toDate(getLocalTimeZone()))
@@ -252,10 +253,10 @@
 																/>
 																<Label
 																	for={`time-${slot.available_slot}`}
-																	class="w-full cursor-pointer rounded-md border-2 border-stone-200 p-3 text-center text-sm font-semibold transition-all hover:bg-stone-100
-											peer-data-[state=checked]:border-amber-600
+																	class="w-full cursor-pointer rounded-md border-2 border-stone-200 p-3 text-center text-sm font-semibold transition-all peer-data-[state=checked]:border-amber-600
 											peer-data-[state=checked]:bg-amber-50
 											peer-data-[state=checked]:shadow-md
+											hover:bg-stone-100
 											"
 																>
 																	{slot.available_slot}
@@ -349,7 +350,9 @@
 										<p class="text-xs text-stone-500">Înțeleg că pot anula programarea.</p>
 									</div>
 								</div>
-								<Button type="submit" class="text-white"><CalendarPlus /> Confirmă Programarea</Button>
+								<Button type="submit" class="text-white"
+									><CalendarPlus /> Confirmă Programarea</Button
+								>
 							{/if}
 						</form>
 					</div>

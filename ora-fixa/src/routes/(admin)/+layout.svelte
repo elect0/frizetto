@@ -3,7 +3,6 @@
 	import AppSidebar from '$lib/components/app-sidebar.svelte';
 	import SiteHeader from '$lib/components/site-header.svelte';
 	import {page} from '$app/state'
-	console.log(page)
 </script>
 
 
