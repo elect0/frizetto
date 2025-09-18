@@ -3,14 +3,15 @@
 		id: z.string().uuid(),
 		full_name: z.string(),
 		phone: z.string(),
-    email: z.string(),
+		email: z.string(),
 		last_visit: z.string(),
 		total_visits: z.number(),
 		total_spent: z.number(),
 		noshow_count: z.number(),
 		status: z.string(),
-    created_at: z.string(),
-    client_notes: z.string()
+		created_at: z.string(),
+		client_notes: z.string(),
+		is_banned: z.boolean()
 	});
 
 	export type Client = z.infer<typeof ClientSchema>;
@@ -42,7 +43,6 @@
 	import { goto } from '$app/navigation';
 	import Input from './ui/input/input.svelte';
 	import CustomerProfileModal from './customer-profile-modal.svelte';
-
 
 	let {
 		clients,
@@ -186,7 +186,7 @@
 		getCoreRowModel: getCoreRowModel()
 	});
 
-  console.log(clients)
+	console.log(clients);
 </script>
 
 <div class="flex flex-col py-4 sm:flex-row sm:items-center sm:justify-between">
@@ -313,7 +313,7 @@
 			{/snippet}
 		</DropdownMenu.Trigger>
 		<DropdownMenu.Content align="end" class="w-32">
-        <CustomerProfileModal {row} />
+			<CustomerProfileModal {row} />
 			<DropdownMenu.Separator />
 			<WalkInModal {row} {services} />
 		</DropdownMenu.Content>

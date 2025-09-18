@@ -48,7 +48,6 @@ export const actions: Actions = {
 			throw redirect(303, '/cont/completeaza-profilul');
 		}
 
-
 		if (profile.is_banned) {
 			return message(form, 'Acces restricționat de către un administrator.', {
 				status: 403

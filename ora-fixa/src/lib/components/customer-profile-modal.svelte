@@ -7,7 +7,7 @@
 	import Button from './ui/button/button.svelte';
 	import Separator from './ui/separator/separator.svelte';
 	import Badge from './ui/badge/badge.svelte';
-	import { Star, Trash, Ban } from '@lucide/svelte';
+	import { Star, Trash, UserLock, UserCheck } from '@lucide/svelte';
 	import { parsePhoneNumberWithError } from 'libphonenumber-js';
 	import { ro } from 'date-fns/locale';
 	import { parseISO, format } from 'date-fns';
@@ -39,10 +39,58 @@
 					</Avatar.Fallback>
 				</Avatar.Root>
 				<div class="flex space-x-3">
-          <form action=""> 
-					<Button size="sm" variant="outline" class="cursor-pointer"><Ban /> Blocheaza</Button>
-				 </form>
-            <form
+					{#if row.original.is_banned}
+						<form
+							action="?/unblockUser"
+							method="POST"
+							use:enhance={() => {
+								return async ({ result }) => {
+									if (result.type === 'success') {
+										toast.success('Utilizatorul a fost deblocat cu succes!');
+										await invalidateAll();
+										setTimeout(() => {
+											isDialogOpen = false;
+										}, 500);
+									} else {
+										toast.error('Eroare:', {
+											description: 'Utilizatorul nu a putut fi deblocat cu succes!'
+										});
+									}
+								};
+							}}
+						>
+							<input type="hidden" name="id" value={row.original.id} />
+							<Button type="submit" size="sm" variant="outline" class="cursor-pointer">
+								<UserCheck /> Deblochează
+							</Button>
+						</form>
+					{:else}
+						<form
+							action="?/blockUser"
+							method="POST"
+							use:enhance={() => {
+								return async ({ result }) => {
+									if (result.type === 'success') {
+										toast.success('Utilizatorul a fost blocat cu succes!');
+										await invalidateAll();
+										setTimeout(() => {
+											isDialogOpen = false;
+										}, 500);
+									} else {
+										toast.error('Eroare:', {
+											description: 'Utilizatorul nu a putut fi blocat cu succes!'
+										});
+									}
+								};
+							}}
+						>
+							<input type="hidden" name="id" value={row.original.id} />
+							<Button type="submit" size="sm" variant="outline" class="cursor-pointer"
+								><UserLock /> Blochează</Button
+							>
+						</form>
+					{/if}
+					<form
 						action="?/deleteUser"
 						method="POST"
 						use:enhance={() => {
@@ -63,7 +111,7 @@
 					>
 						<input type="hidden" name="id" value={row.original.id} />
 						<Button type="submit" size="sm" variant="destructive" class="cursor-pointer"
-							><Trash /> Sterge</Button
+							><Trash /> Șterge</Button
 						>
 					</form>
 				</div>
@@ -72,6 +120,9 @@
 			<div class="mt-4 flex items-center space-x-2">
 				<Dialog.Title>{row.original.full_name}</Dialog.Title>
 				<Badge variant="outline" class="bg-stone-100 text-xs"><Star /> {row.original.status}</Badge>
+				{#if row.original.is_banned}
+<Badge variant="outline" class='bg-stone-100 text-xs'><UserLock /> Blocat</Badge>
+        {/if}
 			</div>
 			<div class="flex space-x-3">
 				<Dialog.Description>

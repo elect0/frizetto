@@ -79,10 +79,48 @@ export const actions = {
 
 		const { error } = await supabase.auth.admin.deleteUser(id);
 
-    console.log(error)
+		console.log(error);
 
 		if (error) {
 			return Fail(500, { message: 'Utilizatorul nu a putut fi șters cu succes.' });
+		}
+
+		return { success: true };
+	},
+	blockUser: async ({ request, locals: { supabase } }) => {
+		const data = await request.formData();
+		const id = data.get('id') as string;
+
+		if (!id) return Fail(400, { message: 'ID-ul utilizatorului lipsește.' });
+
+		const { error } = await supabase
+			.from('profiles')
+			.update({
+				is_banned: true
+			})
+			.eq('id', id);
+
+		if (error) {
+			return Fail(500, { message: 'Utilizatorul nu a putut fi blocat cu succes.' });
+		}
+
+		return { success: true };
+	},
+	unblockUser: async ({ request, locals: { supabase } }) => {
+		const data = await request.formData();
+		const id = data.get('id') as string;
+
+		if (!id) return Fail(400, { message: 'ID-ul utilizatorului lipsește.' });
+
+		const { error } = await supabase
+			.from('profiles')
+			.update({
+				is_banned: false
+			})
+			.eq('id', id);
+
+		if (error) {
+			return Fail(500, { message: 'Utilizatorul nu a putut fi debblocat cu succes.' });
 		}
 
 		return { success: true };
