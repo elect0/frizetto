@@ -65,7 +65,7 @@ export const actions: Actions = {
 		console.log(appointmentId, 'APP');
 
 		if (!appointmentId) {
-			return fail(400, { message: 'ID-ul programarii lipseste.' });
+			return fail(400, { message: 'ID-ul programarii lipsește.' });
 		}
 
 		const { data: appointment, error: checkError } = await supabase
