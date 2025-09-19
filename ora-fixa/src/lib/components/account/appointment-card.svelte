@@ -49,8 +49,6 @@
 	};
 	type StatusKey = keyof typeof statusStyles;
 
-	console.log(isUpcoming);
-
 	const format = (date: Date) =>
 		date.getFullYear() +
 		'-' +
@@ -70,13 +68,13 @@
 		<div class="flex items-start justify-between">
 			<div class="flex items-center space-x-4">
 				<div
-					class="flex h-11 w-11 md:h-14 md:w-14 items-center justify-center rounded-lg md:rounded-xl bg-amber-600 transition-colors hover:bg-amber-600"
+					class="flex h-11 w-11 items-center justify-center rounded-lg bg-amber-600 transition-colors hover:bg-amber-600 md:h-14 md:w-14 md:rounded-xl"
 				>
-					<Scissors class="h-5 w-5 md:h-7 md:w-7 text-white" />
+					<Scissors class="h-5 w-5 text-white md:h-7 md:w-7" />
 				</div>
 				<div class="space-y-1">
 					<div class="flex items-center">
-						<h3 class="text-lg md:text-xl font-bold text-stone-900">{appointment.services.name}</h3>
+						<h3 class="text-lg font-bold text-stone-900 md:text-xl">{appointment.services.name}</h3>
 						{#if !isUpcoming || appointment.status !== 'confirmata'}
 							<form method="POST" action="?/setFavorite">
 								<input type="hidden" name="serviceId" value={appointment.services?.id} />
@@ -84,7 +82,7 @@
 									type="submit"
 									variant="ghost"
 									size="icon"
-									class="ml-2 mt-1 h-5 w-5 cursor-pointer"
+									class="mt-1 ml-2 h-5 w-5 cursor-pointer"
 									aria-label="Setează ca favorit"
 								>
 									<Star
@@ -94,7 +92,7 @@
 							</form>
 						{/if}
 					</div>
-					<p class="font-medium text-sm md:text-base text-slate-600">Serviciu Premium</p>
+					<p class="text-sm font-medium text-slate-600 md:text-base">Serviciu Premium</p>
 					<div class="flex items-center text-sm text-stone-500">
 						<Clock class="mr-1 h-4 w-4" />
 						{appointment.services.duration_minutes} minute
@@ -117,7 +115,7 @@
 				</div>
 				<div>
 					<p class="text-sm font-medium text-stone-600">Data</p>
-					<p class="text-base md:text-lg font-semibold text-stone-900">{formattedDate}</p>
+					<p class="text-base font-semibold text-stone-900 md:text-lg">{formattedDate}</p>
 				</div>
 			</div>
 			<div class="flex items-center space-x-3 rounded-lg border border-stone-200 bg-stone-50 p-3">
@@ -126,7 +124,7 @@
 				</div>
 				<div>
 					<p class="text-sm font-medium text-stone-600">Ora</p>
-					<p class="text-base md:text-lg font-semibold text-stone-900">{formattedTime}</p>
+					<p class="text-base font-semibold text-stone-900 md:text-lg">{formattedTime}</p>
 				</div>
 			</div>
 			<div class="flex items-center space-x-3 rounded-lg border border-stone-200 bg-stone-50 p-3">
@@ -135,7 +133,9 @@
 				</div>
 				<div>
 					<p class="text-sm font-medium text-stone-600">Pret</p>
-					<p class="text-base md:text-lg font-semibold text-stone-900">{appointment.services.price} lei</p>
+					<p class="text-base font-semibold text-stone-900 md:text-lg">
+						{appointment.services.price} lei
+					</p>
 				</div>
 			</div>
 		</div>
@@ -150,7 +150,7 @@
 					<AlertDialog.Trigger class="flex justify-end">
 						<Button
 							variant="destructive"
-							class="cursor-pointer bg-red-600 text-white hover:bg-red-700 mt-1"
+							class="mt-1 cursor-pointer bg-red-600 text-white hover:bg-red-700"
 						>
 							<X className="h-4 w-4 mr-2" />
 							Anuleaza Programarea

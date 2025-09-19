@@ -20,7 +20,6 @@ export const GET: RequestHandler = async ({ url, locals: { supabase }, setHeader
 	});
 
 	if (dbError) {
-		console.error('Eroare la apelul RPC get_available_slots:', dbError);
 		throw SvelteKitError(500, 'A apărut o eroare la server.');
 	}
 

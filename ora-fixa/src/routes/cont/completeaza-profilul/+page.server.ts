@@ -19,7 +19,7 @@ export const actions: Actions = {
 			return fail(400, { form });
 		}
 
-		const { error, count } = await supabase
+		const { error } = await supabase
 			.from('profiles')
 			.update({
 				full_name: form.data.fullName,
@@ -30,8 +30,6 @@ export const actions: Actions = {
 		if (error) {
 			return fail(400, { form });
 		}
-
-		console.log(count);
 
 		return message(form, 'Detaliile contului tau au fost modificate cu succes!');
 	}

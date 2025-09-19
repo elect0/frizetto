@@ -53,7 +53,7 @@
 				toast.success('Programarea a fost adăugată cu succes!');
 				dateValue = undefined;
 			} else {
-				(form);
+				form;
 				toast.error('A apărut o eroare la adăugarea programării. Te rugăm să încerci din nou!');
 			}
 		}
@@ -97,7 +97,6 @@
 				availableSlots = data.slots || [];
 			}
 		} catch (error) {
-			console.error('A apărut o eroare în funcția fetch:', error);
 			availableSlots = [];
 		} finally {
 			isLoading = false;
@@ -167,7 +166,7 @@
 					{/each}
 				</Select.Content>
 			</Select.Root>
-			<div class="grid md:grid-cols-2 gap-4">
+			<div class="grid gap-4 md:grid-cols-2">
 				<div>
 					<Label class="mb-2">Data</Label>
 					<Popover.Root>
@@ -189,7 +188,7 @@
 								type="single"
 								onValueChange={() => {
 									if (dateValue) {
-										$form.date = formatISO(dateValue.toDate(getLocalTimeZone()))
+										$form.date = formatISO(dateValue.toDate(getLocalTimeZone()));
 									}
 								}}
 								bind:value={dateValue}

@@ -26,8 +26,6 @@ export const actions = {
 			password: form.data.password
 		});
 
-		console.log(error);
-
 		if (error) {
 			return fail(500, { form, message: 'Could not login in user. Please try again.' });
 		}

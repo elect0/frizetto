@@ -48,7 +48,6 @@
 					dateValue = undefined;
 					isOpen = false;
 				} else {
-					console.log(form);
 					toast.error('A apărut o eroare la adăugarea programării. Te rugăm să încerci din nou!');
 				}
 			}
@@ -86,7 +85,6 @@
 				availableSlots = data.slots || [];
 			}
 		} catch (error) {
-			console.error('A apărut o eroare în funcția fetch:', error);
 			availableSlots = [];
 		} finally {
 			isLoading = false;

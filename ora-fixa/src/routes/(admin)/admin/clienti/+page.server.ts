@@ -31,8 +31,6 @@ export const load: PageServerLoad = async ({ locals: { supabase, session }, url 
 		servicesPromise
 	]);
 
-	console.log(error);
-
 	return {
 		clients: clients || [],
 		totalClients: count || 0,
@@ -65,7 +63,6 @@ export const actions = {
 		const { error } = await supabase.from('appointments').insert(walkInAppointment);
 
 		if (error) {
-			console.error('Eroare la INSERT programare:', error);
 			return message(form, 'Programarea nu a fost confirmată!');
 		}
 
@@ -78,8 +75,6 @@ export const actions = {
 		if (!id) return Fail(400, { message: 'ID-ul utilizatorului lipsește.' });
 
 		const { error } = await supabase.auth.admin.deleteUser(id);
-
-		console.log(error);
 
 		if (error) {
 			return Fail(500, { message: 'Utilizatorul nu a putut fi șters cu succes.' });

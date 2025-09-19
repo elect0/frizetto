@@ -45,7 +45,6 @@
 					await invalidateAll();
 					isDialogOpen = false;
 				} else {
-                    console.log($form);
 					toast.error('A apărut o eroare la modificarea programării. Te rugăm să încerci din nou!');
 				}
 			}

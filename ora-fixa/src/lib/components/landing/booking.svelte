@@ -50,7 +50,6 @@
 		},
 		onResult: ({ result }) => {
 			if (result.type === 'success') {
-				console.log(result.data, 'REZULTAT');
 				toast.success('Programarea a fost adăugată cu succes!');
 				selectedDate = undefined;
 			} else if (result.type === 'failure') {
@@ -96,18 +95,14 @@
 
 			if (response.ok) {
 				const data = await response.json();
-				console.log(data.slots);
 				availableSlots = data.slots || [];
 			}
 		} catch (error) {
-			console.error('A apărut o eroare în funcția fetch:', error);
 			availableSlots = [];
 		} finally {
 			isLoading = false;
 		}
 	}
-
-	let duration = $state(0);
 
 	const df = new DateFormatter('ro-RO', {
 		dateStyle: 'long'

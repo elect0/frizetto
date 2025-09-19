@@ -186,7 +186,6 @@
 		getCoreRowModel: getCoreRowModel()
 	});
 
-	console.log(clients);
 </script>
 
 <div class="flex flex-col py-4 sm:flex-row sm:items-center sm:justify-between">

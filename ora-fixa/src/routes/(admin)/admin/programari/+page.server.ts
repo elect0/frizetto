@@ -33,7 +33,6 @@ export const load: PageServerLoad = async ({ locals: { supabase, session }, url 
 		.range(offset, offset + limit - 1);
 
 	if (appointmentsError) {
-		console.error('Eroare la încărcarea datelor:', appointmentsError);
 		throw error(500, 'A apărut o eroare la server.');
 	}
 
@@ -46,9 +45,9 @@ export const load: PageServerLoad = async ({ locals: { supabase, session }, url 
 };
 
 export const actions: Actions = {
-	updateAppointment: async ({ request, locals: { supabase, isAdmin }}) => {
-		if(!isAdmin){
-			throw redirect(303, '/login')
+	updateAppointment: async ({ request, locals: { supabase, isAdmin } }) => {
+		if (!isAdmin) {
+			throw redirect(303, '/login');
 		}
 
 		const updateAppointmentForm = await superValidate(request, zod(updateAppointmentSchema));
@@ -82,9 +81,9 @@ export const actions: Actions = {
 
 		return message(updateAppointmentForm, 'Programarea a fost modificată cu succes!');
 	},
-	updateStatus: async({request, locals: {supabase, isAdmin}}) => {
-		if(!isAdmin){
-			throw redirect(303, '/login')
+	updateStatus: async ({ request, locals: { supabase, isAdmin } }) => {
+		if (!isAdmin) {
+			throw redirect(303, '/login');
 		}
 
 		const updateStatusForm = await superValidate(request, zod(updateStatusSchema));
@@ -110,4 +109,4 @@ export const actions: Actions = {
 
 		return message(updateStatusForm, 'Statusul a fost modificat cu succes!');
 	}
- };
+};

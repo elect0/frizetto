@@ -4,7 +4,6 @@
 		User,
 		Star,
 		MapPin,
-		X,
 		Menu,
 		CalendarDays,
 		Award,
@@ -41,14 +40,13 @@
 	let userName = $derived(
 		user && user.user_metadata.full_name ? user?.user_metadata.full_name.split(' ')[0] : 'Oaspete'
 	);
-	console.log(page.data);
 
 	let isAdmin = $derived(page.data.isAdmin);
 
 	let isOpen = $state<boolean>(false);
 </script>
 
-<nav class="fixed left-0 right-0 top-0 z-50 w-full border-b bg-white py-1 md:py-3">
+<nav class="fixed top-0 right-0 left-0 z-50 w-full border-b bg-white py-1 md:py-3">
 	<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="flex h-16 items-center justify-between">
 			<!-- Logo -->
@@ -96,7 +94,7 @@
 						</DropdownMenuTrigger>
 						<DropdownMenuContent
 							align="center"
-							class="ml-5 mt-2 w-56 border-2 border-stone-100 shadow-xl"
+							class="mt-2 ml-5 w-56 border-2 border-stone-100 shadow-xl"
 						>
 							<a href="/cont/programari">
 								<DropdownMenuItem class="cursor-pointer py-3 hover:bg-amber-50">
@@ -151,7 +149,11 @@
 					</Sheet.Trigger>
 					<Sheet.Content side="right" class="w-[300px] p-4 sm:w-[400px]">
 						<div class="flex items-center space-x-2 px-1">
-							<a href="/#hero" class="flex items-center space-x-3" use:smoothscroll={{ offset: 50 }}>
+							<a
+								href="/#hero"
+								class="flex items-center space-x-3"
+								use:smoothscroll={{ offset: 50 }}
+							>
 								<div class="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
 									<!-- logo -->
 									<span class="text-primary-foreground text-sm font-bold"> F </span>

@@ -5,9 +5,6 @@
 	let { data } = $props();
 	let kpis = $derived(data.kpis);
 	let weeklyRevenue = $derived(data.weeklyRevenue);
-	$effect(() => {
-		console.log(data.form);
-	});
 </script>
 
 <div class="flex flex-1 flex-col">

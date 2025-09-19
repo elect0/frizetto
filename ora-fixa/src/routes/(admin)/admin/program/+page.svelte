@@ -17,10 +17,11 @@
 	import { superForm } from 'sveltekit-superforms';
 	import { Save } from 'lucide-svelte';
 	import ScheduleOverrideCard from '$lib/components/schedule-override-card.svelte';
+	import { formatISO } from 'date-fns';
+	import { zod } from 'sveltekit-superforms/adapters';
+	import { scheduleOverrideSchema } from '$lib/schemas.js';
 
 	let { data } = $props();
-
-	console.log(data.scheduleOverrides);
 
 	let dateValue: DateValue | undefined = $state();
 
@@ -34,6 +35,7 @@
 		submitting: isSubmittingOverride
 	} = superForm(data.overrideForm, {
 		id: 'override-form',
+		validators: zod(scheduleOverrideSchema),
 		onResult: ({ result }) => {
 			if (result.type === 'success') {
 				toast.success('Succes!', { description: result.data?.form.message });
@@ -170,7 +172,7 @@
 											initialFocus
 											onValueChange={() => {
 												if (dateValue) {
-													$form.date = dateValue.toDate(getLocalTimeZone()).toISOString();
+													$form.date = formatISO(dateValue.toDate(getLocalTimeZone()));
 												}
 											}}
 										/>
@@ -198,6 +200,7 @@
 															name="startTime"
 															bind:value={$form.startTime}
 															type="time"
+															required
 														/>
 													</div>
 													<div class="w-full space-y-2">
@@ -207,6 +210,7 @@
 															name="endTime"
 															bind:value={$form.endTime}
 															type="time"
+															required
 														/>
 													</div>
 												</div>

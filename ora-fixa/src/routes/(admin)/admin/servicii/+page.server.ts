@@ -10,7 +10,6 @@ export const load: PageServerLoad = async ({ locals: { supabase, session } }) =>
 	const { data: services, error: servicesError } = await supabase.rpc('get_service_popularity');
 
 	if (servicesError) {
-		console.error(servicesError);
 		throw error(500, 'A apărut o eroare la server.');
 	}
 
@@ -49,9 +48,6 @@ export const actions: Actions = {
 
 	addService: async ({ request, locals: { supabase } }) => {
 		const form = await superValidate(request, zod(addServiceSchema));
-
-		console.log(form.data)
-
 
 		if (!form.valid) {
 			return fail(400, { form });

@@ -26,7 +26,6 @@ export const load: PageServerLoad = async ({ locals: { supabase, safeGetSession 
 	]);
 
 	if (!allAppointments) {
-		console.error('Eroare la preluarea programărilor:');
 		throw error(500, 'Nu am putut încărca programările tale.');
 	}
 
@@ -41,10 +40,6 @@ export const load: PageServerLoad = async ({ locals: { supabase, safeGetSession 
 			new Date(app.start_time) <= now ||
 			['finalizata', 'anulata', 'neprezentat'].includes(app.status)
 	);
-
-	// console.log('Upcoming Appointments:', upcomingAppointments);
-	// console.log('Past Appointments:', pastAppointments);
-	console.log(profile?.favorite_service_id);
 
 	return {
 		upcomingAppointments,
@@ -62,7 +57,6 @@ export const actions: Actions = {
 
 		const formData = await request.formData();
 		const appointmentId = formData.get('appointmentId') as string;
-		console.log(appointmentId, 'APP');
 
 		if (!appointmentId) {
 			return fail(400, { message: 'ID-ul programarii lipsește.' });
@@ -118,7 +112,6 @@ export const actions: Actions = {
 			.eq('id', session.user?.id);
 
 		if (error) {
-			console.error('Eroare la setarea serviciului favorit:', error);
 			return fail(500, { message: 'A apărut o eroare. Te rugăm să încerci din nou.' });
 		}
 		return { success: true };

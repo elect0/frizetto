@@ -1,7 +1,7 @@
 import { registerSchema } from '$lib/schemas';
 import type { Actions } from './$types';
 import type { PageServerLoad } from './$types';
-import { fail, redirect } from '@sveltejs/kit';
+import { fail } from '@sveltejs/kit';
 import { zod } from 'sveltekit-superforms/adapters';
 
 import { message, superValidate } from 'sveltekit-superforms';
@@ -10,7 +10,7 @@ export const load: PageServerLoad = async (event) => {
 	const session = event.locals.session;
 
 	const form = await superValidate(zod(registerSchema));
-	return { form, session, pageTitle: "Creează Cont"};
+	return { form, session, pageTitle: 'Creează Cont' };
 };
 
 export const actions: Actions = {
@@ -25,7 +25,6 @@ export const actions: Actions = {
 			email: form.data.email,
 			password: form.data.password
 		});
-		console.log(error);
 
 		if (error) {
 			return fail(500, { form, message: 'Could not create user. Please try again.' });

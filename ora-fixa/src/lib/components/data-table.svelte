@@ -181,7 +181,6 @@
 
 	function navigateToDay(offset: number) {
 		const date = new Date(currentDateString + 'T12:00:00Z');
-		console.log(date);
 		date.setUTCDate(date.getDate() + offset);
 
 		const newDateString = date.toISOString().split('T')[0];

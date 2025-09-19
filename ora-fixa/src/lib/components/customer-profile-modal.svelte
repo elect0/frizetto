@@ -121,8 +121,8 @@
 				<Dialog.Title>{row.original.full_name}</Dialog.Title>
 				<Badge variant="outline" class="bg-stone-100 text-xs"><Star /> {row.original.status}</Badge>
 				{#if row.original.is_banned}
-<Badge variant="outline" class='bg-stone-100 text-xs'><UserLock /> Blocat</Badge>
-        {/if}
+					<Badge variant="outline" class="bg-stone-100 text-xs"><UserLock /> Blocat</Badge>
+				{/if}
 			</div>
 			<div class="flex space-x-3">
 				<Dialog.Description>

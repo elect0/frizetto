@@ -52,15 +52,10 @@ export const load: PageServerLoad = async ({ locals: { supabase, session }, url 
 		]);
 
 	if (appointmentsResult.error || statsResult.error || weeklyRevenueResult.error) {
-		console.error(
-			'Eroare la încărcarea datelor:',
-			appointmentsResult.error || statsResult.error || weeklyRevenueResult.error
-		);
 		throw error(500, 'A apărut o eroare la server.');
 	}
 
 	const kpisData = statsResult.data[0];
-	console.log(weeklyRevenueResult);
 
 	return {
 		appointments: appointmentsResult.data || [],
@@ -91,18 +86,18 @@ export const actions: Actions = {
 	markAsComplete: async ({ request, locals: { supabase } }) => {
 		const form = await superValidate(request, zod(idSchema));
 
-		console.log(form.data.appointmentId);
-
 		if (!form.valid) {
 			return fail(400, { form });
 		}
 
-		const { data, error } = await supabase
+		const { error } = await supabase
 			.from('appointments')
 			.update({ status: 'finalizata' })
 			.eq('id', form.data.appointmentId);
 
-		console.log(data);
+		if (error) {
+			return fail(400, { message: 'Statusul programării nu a putut fi modificat.' });
+		}
 
 		return { success: true };
 	},
@@ -142,10 +137,9 @@ export const actions: Actions = {
 
 		return { success: true };
 	},
-	addWalkInAppointment: async ({ request, locals: { supabase, session, isAdmin} }) => {
+	addWalkInAppointment: async ({ request, locals: { supabase, session, isAdmin } }) => {
 		const form = await superValidate(request, zod(walkInSchema));
 		if (!form.valid) {
-			console.log(form);
 			return fail(400, { form });
 		}
 
@@ -167,7 +161,6 @@ export const actions: Actions = {
 
 		const { error } = await supabase.from('appointments').insert(walkInAppointment);
 		if (error) {
-			console.error('Eroare la INSERT programare:', error);
 			return message(form, 'Programarea nu a fost confirmată!');
 		}
 

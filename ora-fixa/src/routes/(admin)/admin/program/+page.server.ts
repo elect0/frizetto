@@ -66,8 +66,6 @@ export const actions: Actions = {
 			{ onConflict: 'date' }
 		);
 
-		console.log(error);
-
 		if (error) return message(form, 'A apărut o eroare la salvarea excepției.', { status: 500 });
 
 		return message(form, 'Excepția a fost salvată cu succes!');
@@ -75,15 +73,11 @@ export const actions: Actions = {
 	deleteOverride: async ({ request, locals: { supabase } }) => {
 		const form = await superValidate(request, zod(deleteScheduleOverrideSchema));
 
-    console.log(form.data)
-
 		if (!form.valid) return fail(400, { form });
 
 		const { error } = await supabase.from('schedule_overrides').delete().eq('id', form.data.id);
 
-    console.log(error)
-
-    if (error) return message(form, 'A apărut o eroare la ștergerea excepției.', { status: 500 });
+		if (error) return message(form, 'A apărut o eroare la ștergerea excepției.', { status: 500 });
 
 		return message(form, 'Excepția a fost ștearsă cu succes!');
 	}

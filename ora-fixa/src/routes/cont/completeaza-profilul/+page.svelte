@@ -20,7 +20,6 @@
 				toast.success('Detaliile contului tau au fost modificate cu succes!');
 				goto('/cont');
 			} else {
-				console.log(data.form);
 				toast.error('Erroare!', { description: 'Detaliile contului nu au putut fi modificate.' });
 			}
 		},

@@ -25,9 +25,9 @@
 		row: Row<Appointment>;
 	} = $props();
 
-let availableSlots = $state<{ available_slot: string }[]>([]);
+	let availableSlots = $state<{ available_slot: string }[]>([]);
 	let isLoading = $state(false);
-	let clientName = $state(row.original.profiles.full_name)
+	let clientName = $state(row.original.profiles.full_name);
 
 	const services = [
 		{ value: 2, label: 'Tuns Zero', duration_minutes: 60 },
@@ -79,7 +79,6 @@ let availableSlots = $state<{ available_slot: string }[]>([]);
 					await invalidateAll();
 					isDialogOpen = false;
 				} else {
-					console.log(form);
 					toast.error('A apărut o eroare la modificarea programării. Te rugăm să încerci din nou!');
 				}
 			}
@@ -107,7 +106,6 @@ let availableSlots = $state<{ available_slot: string }[]>([]);
 				availableSlots = data.slots || [];
 			}
 		} catch (error) {
-			console.error('A apărut o eroare în funcția fetch:', error);
 			availableSlots = [];
 		} finally {
 			isLoading = false;
@@ -135,7 +133,7 @@ let availableSlots = $state<{ available_slot: string }[]>([]);
 <div>
 	<Dialog.Root bind:open={isDialogOpen}>
 		<Dialog.Trigger
-			class="focus:bg-accent focus:text-accent-foreground hover:bg-accent relative flex w-full cursor-default select-none items-center rounded-sm px-2 py-1.5 text-start text-sm outline-none transition-colors data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+			class="focus:bg-accent focus:text-accent-foreground hover:bg-accent relative flex w-full cursor-default items-center rounded-sm px-2 py-1.5 text-start text-sm transition-colors outline-none select-none data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
 			>Editează programarea</Dialog.Trigger
 		>
 		<Dialog.Content>
@@ -188,8 +186,7 @@ let availableSlots = $state<{ available_slot: string }[]>([]);
 									type="single"
 									onValueChange={() => {
 										if (dateValue) {
-																					$form.date = formatISO(dateValue.toDate(getLocalTimeZone()))
-
+											$form.date = formatISO(dateValue.toDate(getLocalTimeZone()));
 										}
 									}}
 									bind:value={dateValue}
