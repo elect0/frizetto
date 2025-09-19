@@ -7,6 +7,8 @@
 	import Services from '$lib/components/landing/services.svelte';
 	import SkeletonBooking from '$lib/components/landing/skeleton-booking.svelte';
 	import Testimonials from '$lib/components/landing/testimonials.svelte';
+	import Footer from '$lib/components/layout/footer.svelte';
+
 	let { data } = $props();
 </script>
 
@@ -23,3 +25,4 @@
 {/await}
 <Faq />
 <Contact />
+<Footer />

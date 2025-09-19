@@ -94,9 +94,6 @@
 				</div>
 			</div>
 			<div class="relative">
-				<!-- <div
-					class="flex h-[500px] items-center justify-center rounded-2xl border border-stone-700 bg-stone-800"
-				> -->
 				<div class="mt-4 flex items-center justify-center">
 					<iframe
 						title="locatie"
@@ -109,9 +106,7 @@
 						referrerpolicy="no-referrer-when-downgrade"
 					></iframe>
 				</div>
-				<!-- </div> -->
 			</div>
 		</div>
-		<Footer />
 	</div>
 </section>
