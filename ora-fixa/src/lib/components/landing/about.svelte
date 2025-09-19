@@ -8,18 +8,26 @@
 	onMount(() => {
 		gsap.registerPlugin(ScrollTrigger);
 
-		gsap.from('#despre .about-element', {
-			y: 75,
-			opacity: 0,
-			duration: 0.8,
-			ease: 'power3.out',
-			stagger: 0.2,
-			scrollTrigger: {
+		const ctx = gsap.context(() => {
+			const tl = gsap.timeline();
+
+			tl.from('#despre .about-element', {
+				y: 75,
+				opacity: 0,
+				duration: 0.8,
+				ease: 'circ.out',
+				stagger: 0.2
+			});
+
+			ScrollTrigger.create({
 				trigger: '#despre',
 				start: 'top 80%',
+				animation: tl,
 				toggleActions: 'play none none none'
-			}
+			});
 		});
+
+		return () => ctx.revert();
 	});
 </script>
 
@@ -32,11 +40,13 @@
 						src="/images/about.webp"
 						alt="Portret frizer profesionist"
 						class="h-[500px] w-full object-cover"
+						height="500"
+						width="712"
 					/>
 				</div>
 
 				<div
-					class="absolute -right-4 -top-4 rounded-2xl bg-amber-600 p-4 shadow-xl md:-right-6 md:-top-6"
+					class="absolute -top-4 -right-4 rounded-2xl bg-amber-600 p-4 shadow-xl md:-top-6 md:-right-6"
 				>
 					<Sparkles class="h-8 w-8 text-white" />
 				</div>
@@ -44,7 +54,7 @@
 			<div class="about-element order-1 space-y-8 lg:order-2">
 				<Badge class="border-stone-200 bg-stone-100 px-4 py-2 text-stone-700">Despre Artizan</Badge>
 				<div class="space-y-6">
-					<h2 class="text-4xl font-bold leading-tight text-stone-900 md:text-5xl">
+					<h2 class="text-4xl leading-tight font-bold text-stone-900 md:text-5xl">
 						Pasiunea pentru <span class="text-amber-600">perfectiune</span>
 					</h2>
 					<div class="text-lx space-y-4 leading-relaxed text-stone-600">
