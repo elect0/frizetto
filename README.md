@@ -1,4 +1,4 @@
-# OraFixa 🗓️
+# Frizetto 🗓️
 
 <p align="center">
   A minimalist platform for appointment management, built for efficiency and reliability.
