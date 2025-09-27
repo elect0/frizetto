@@ -13,7 +13,6 @@
 	} from '$lib/components/ui/dropdown-menu';
 	import Separator from '../ui/separator/separator.svelte';
 	import Dashboard from '@tabler/icons-svelte/icons/dashboard';
-	import { buttonVariants } from '../ui/button';
 	import { cn } from '$lib/utils';
 
 	let user = $derived(page.data.user);
