@@ -61,7 +61,11 @@
 						<span
 							class="bg-primary absolute -bottom-1 left-0 h-0.5 w-0 transition-all duration-200 group-hover:w-full"
 						></span>
+<<<<<<< HEAD
 				</a>
+=======
+					</a>
+>>>>>>> 3974c11 (fix(sitemap): fix website sitemap)
 				{/each}
 			</div>
 
@@ -71,7 +75,11 @@
 						<DropdownMenuTrigger
 							class={cn(
 								buttonVariants({ variant: 'ghost' }),
+<<<<<<< HEAD
 								'hover:bg-stone-100" flex items-center space-x-3 px-4 py-2 transition-all duration-300 hover:scale-105'
+=======
+								'flex items-center space-x-3 px-4 py-2 transition-all duration-300 hover:scale-105 hover:bg-stone-100'
+>>>>>>> 3974c11 (fix(sitemap): fix website sitemap)
 							)}
 						>
 							<Avatar class="h-10 w-10 border-2 border-amber-600 shadow-lg">
@@ -110,7 +118,7 @@
 								<form method="POST" action="/logout">
 									<button type="submit" class="flex flex-row items-center">
 										<LogOut class="mr-5 h-5 w-5 text-amber-600" />
-										<span class="font-medium"> Deconectare </span>
+										<span class="font-medium">Deconectare </span>
 									</button>
 								</form>
 							</DropdownMenuItem>

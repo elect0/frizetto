@@ -1,5 +1,9 @@
 const site = 'https://www.frizetto.com';
+<<<<<<< HEAD
 const pages: string[] = ['', 'cont', 'cont/programari', 'inregistare'];
+=======
+const pages: string[] = ['', 'cont', 'cont/programari', 'inregistrare'];
+>>>>>>> 3974c11 (fix(sitemap): fix website sitemap)
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ url }) {

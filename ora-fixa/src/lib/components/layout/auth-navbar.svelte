@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { User, Menu, CalendarDays, Award, LogOut } from 'lucide-svelte';
 	import { page } from '$app/state';
-	import { Button } from '../ui/button';
+	import { Button, buttonVariants } from '../ui/button';
 	import * as Sheet from '../ui/sheet';
 	import { Avatar, AvatarFallback } from '$lib/components/ui/avatar';
 	import {
@@ -13,7 +13,10 @@
 	} from '$lib/components/ui/dropdown-menu';
 	import Separator from '../ui/separator/separator.svelte';
 	import Dashboard from '@tabler/icons-svelte/icons/dashboard';
+<<<<<<< HEAD
 	import { buttonVariants } from '../ui/button';
+=======
+>>>>>>> 3974c11 (fix(sitemap): fix website sitemap)
 	import { cn } from '$lib/utils';
 
 	let user = $derived(page.data.user);
@@ -25,6 +28,11 @@
 	let userName = $derived(
 		user && user.user_metadata.full_name ? user?.user_metadata.full_name.split(' ')[0] : 'Oaspete'
 	);
+<<<<<<< HEAD
+=======
+
+	let isAdmin = $derived(page.data.isAdmin);
+>>>>>>> 3974c11 (fix(sitemap): fix website sitemap)
 
 	let isAdmin = $derived(page.data.isAdmin);
 	let isOpen = $state<boolean>(false);
