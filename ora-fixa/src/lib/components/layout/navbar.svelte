@@ -1,16 +1,7 @@
 <script lang="ts">
-	import {
-		Scissors,
-		User,
-		Star,
-		MapPin,
-		Menu,
-		CalendarDays,
-		Award,
-		LogOut
-	} from 'lucide-svelte';
+	import { Scissors, User, Star, MapPin, Menu, CalendarDays, Award, LogOut } from 'lucide-svelte';
 	import { page } from '$app/state';
-	import { Button } from '../ui/button';
+	import { Button, buttonVariants } from '../ui/button';
 	import * as Sheet from '../ui/sheet';
 	import { Avatar, AvatarFallback } from '$lib/components/ui/avatar';
 	import {
@@ -23,6 +14,7 @@
 	import Separator from '../ui/separator/separator.svelte';
 	import Dashboard from '@tabler/icons-svelte/icons/dashboard';
 	import { smoothscroll } from '$lib/hooks/smooth-scrolling';
+	import { cn } from '$lib/utils';
 
 	const navItems = [
 		{ id: 'servicii', label: 'Servicii', icon: Scissors },
@@ -63,34 +55,31 @@
 					<a
 						href="#{item.id}"
 						use:smoothscroll={{ offset: 50 }}
-						class="text-muted-foreground hover:text-foreground group relative text-base font-medium transition-colors duration-200"
+						class="text-muted-foreground hover:text-foreground group relative text-base font-medium transition-colors duration-200 "
 					>
 						{item.label}
 						<span
 							class="bg-primary absolute -bottom-1 left-0 h-0.5 w-0 transition-all duration-200 group-hover:w-full"
-						/>
-					</a>
+						></span>
+				</a>
 				{/each}
 			</div>
 
 			{#if user}
 				<div class="hidden md:block">
 					<DropdownMenu>
-						<DropdownMenuTrigger>
-							{#snippet child({ props })}
-								<Button
-									variant="ghost"
-									{...props}
-									class="flex items-center space-x-3 px-4 py-2 transition-all duration-300 hover:scale-105 hover:bg-stone-100"
-								>
-									<Avatar class="h-10 w-10 border-2 border-amber-600 shadow-lg">
-										<AvatarFallback class="bg-amber-600 text-white">
-											{userInitials}
-										</AvatarFallback>
-									</Avatar>
-									<span class="text-sm font-semibold text-stone-700">Salut, {userName}!</span>
-								</Button>
-							{/snippet}
+						<DropdownMenuTrigger
+							class={cn(
+								buttonVariants({ variant: 'ghost' }),
+								'hover:bg-stone-100" flex items-center space-x-3 px-4 py-2 transition-all duration-300 hover:scale-105'
+							)}
+						>
+							<Avatar class="h-10 w-10 border-2 border-amber-600 shadow-lg">
+								<AvatarFallback class="bg-amber-600 text-white">
+									{userInitials}
+								</AvatarFallback>
+							</Avatar>
+							<span class="text-sm font-semibold text-stone-700">Salut, {userName}!</span>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent
 							align="center"
@@ -167,7 +156,7 @@
 									href="#{item.id}"
 									use:smoothscroll={{ offset: 50 }}
 									onclick={() => (isOpen = false)}
-									class="text-muted-foreground flex items-center rounded-md px-3 py-3 text-base text-sm font-medium transition-colors duration-200 hover:bg-amber-50 hover:text-amber-600"
+									class="text-muted-foreground flex items-center rounded-md px-3 py-3 text-sm font-medium transition-colors duration-200 hover:bg-amber-50 hover:text-amber-600"
 								>
 									<item.icon class="mr-4 h-5 w-5 text-amber-600 " />
 									{item.label}
@@ -190,7 +179,7 @@
 							<a
 								href="/cont/programari"
 								onclick={() => (isOpen = false)}
-								class="text-muted-foreground flex items-center rounded-md px-3 py-3 text-base text-sm font-medium transition-colors duration-200 hover:bg-amber-50 hover:text-amber-600"
+								class="text-muted-foreground flex items-center rounded-md px-3 py-3 text-sm font-medium transition-colors duration-200 hover:bg-amber-50 hover:text-amber-600"
 							>
 								<CalendarDays class="mr-4 h-5 w-5 text-amber-600 " />
 								Programările mele
@@ -198,7 +187,7 @@
 							<a
 								href="/cont/"
 								onclick={() => (isOpen = false)}
-								class="text-muted-foreground flex items-center rounded-md px-3 py-3 text-base text-sm font-medium transition-colors duration-200 hover:bg-amber-50 hover:text-amber-600"
+								class="text-muted-foreground flex items-center rounded-md px-3 py-3 text-sm font-medium transition-colors duration-200 hover:bg-amber-50 hover:text-amber-600"
 							>
 								<User class="mr-4 h-5 w-5 text-amber-600 " />
 								Contul meu
@@ -207,7 +196,7 @@
 								<a
 									href="/admin/dashboard"
 									onclick={() => (isOpen = false)}
-									class="text-muted-foreground flex items-center rounded-md px-3 py-3 text-base text-sm font-medium transition-colors duration-200 hover:bg-amber-50 hover:text-amber-600"
+									class="text-muted-foreground flex items-center rounded-md px-3 py-3 text-sm font-medium transition-colors duration-200 hover:bg-amber-50 hover:text-amber-600"
 								>
 									<Dashboard class="mr-4 h-5 w-5 text-amber-600 " />
 									Panou Administrator
@@ -216,7 +205,7 @@
 							<form method="POST" action="/logout">
 								<button
 									type="submit"
-									class="text-muted-foreground flex w-full cursor-pointer items-center rounded-md px-3 py-3 text-base text-sm font-medium transition-colors duration-200 hover:bg-amber-50 hover:text-amber-600"
+									class="text-muted-foreground flex w-full cursor-pointer items-center rounded-md px-3 py-3 text-sm font-medium transition-colors duration-200 hover:bg-amber-50 hover:text-amber-600"
 								>
 									<LogOut class="mr-4 h-5 w-5 text-amber-600" />
 									Deconectare

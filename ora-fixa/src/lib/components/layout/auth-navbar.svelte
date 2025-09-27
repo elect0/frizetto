@@ -1,15 +1,5 @@
 <script lang="ts">
-	import {
-		Scissors,
-		User,
-		Star,
-		MapPin,
-		X,
-		Menu,
-		CalendarDays,
-		Award,
-		LogOut
-	} from 'lucide-svelte';
+	import { User, Menu, CalendarDays, Award, LogOut } from 'lucide-svelte';
 	import { page } from '$app/state';
 	import { Button } from '../ui/button';
 	import * as Sheet from '../ui/sheet';
@@ -23,26 +13,26 @@
 	} from '$lib/components/ui/dropdown-menu';
 	import Separator from '../ui/separator/separator.svelte';
 	import Dashboard from '@tabler/icons-svelte/icons/dashboard';
+	import { buttonVariants } from '../ui/button';
+	import { cn } from '$lib/utils';
 
 	let user = $derived(page.data.user);
-	let userInitials = $derived.by(() => {
-		return user.user_metadata.full_name
-			? user.user_metadata.full_name.charAt(0).toUpperCase()
-			: '?';
-	});
-	let userName = $derived.by(() => {
-		return user.user_metadata.full_name ? user.user_metadata.full_name.split(' ')[0] : 'Oaspete';
-	});
-	
-	let isAdmin = $derived(page.data.isAdmin)
+	let userInitials = $derived(
+		user && user.user_metadata.full_name
+			? user?.user_metadata.full_name.charAt(0).toUpperCase()
+			: '?'
+	);
+	let userName = $derived(
+		user && user.user_metadata.full_name ? user?.user_metadata.full_name.split(' ')[0] : 'Oaspete'
+	);
 
+	let isAdmin = $derived(page.data.isAdmin);
 	let isOpen = $state<boolean>(false);
 </script>
 
-<nav class="fixed left-0 right-0 top-0 z-50 w-full border-b bg-white py-1 md:py-3">
+<nav class="fixed top-0 right-0 left-0 z-50 w-full border-b bg-white py-1 md:py-3">
 	<div class="container mx-auto px-4 sm:px-6 lg:px-8">
 		<div class="flex h-16 items-center justify-between">
-			<!-- Logo -->
 			<div class="flex-shrink-0">
 				<a href="/" class="flex items-center space-x-3">
 					<div class="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
@@ -54,25 +44,22 @@
 			{#if user}
 				<div class="hidden md:block">
 					<DropdownMenu>
-						<DropdownMenuTrigger>
-							{#snippet child({ props })}
-								<Button
-									variant="ghost"
-									{...props}
-									class="flex items-center space-x-3 px-4 py-2 transition-all duration-300 hover:scale-105 hover:bg-stone-100"
-								>
-									<Avatar class="h-10 w-10 border-2 border-amber-600 shadow-lg">
-										<AvatarFallback class="bg-amber-600 text-white">
-											{userInitials}
-										</AvatarFallback>
-									</Avatar>
-									<span class="text-sm font-semibold text-stone-700">Salut, {userName}!</span>
-								</Button>
-							{/snippet}
+						<DropdownMenuTrigger
+							class={cn(
+								buttonVariants({ variant: 'ghost' }),
+								'flex items-center space-x-3 px-4 py-2 transition-all duration-300 hover:scale-105 hover:bg-stone-100'
+							)}
+						>
+							<Avatar class="h-10 w-10 border-2 border-amber-600 shadow-lg">
+								<AvatarFallback class="bg-amber-600 text-white">
+									{userInitials}
+								</AvatarFallback>
+							</Avatar>
+							<span class="text-sm font-semibold text-stone-700">Salut, {userName}!</span>
 						</DropdownMenuTrigger>
 						<DropdownMenuContent
 							align="center"
-							class="ml-5 mt-2 w-56 border-2 border-stone-100 shadow-xl"
+							class="mt-2 ml-5 w-56 border-2 border-stone-100 shadow-xl"
 						>
 							<a href="/cont/programari">
 								<DropdownMenuItem class="cursor-pointer py-3 hover:bg-amber-50">
@@ -87,12 +74,12 @@
 								</DropdownMenuItem>
 							</a>
 							{#if isAdmin}
-							<a href="/admin/dashboard">
-							<DropdownMenuItem class='cursor-pointer py-3 hover:bg-amber-50'>
-								<Dashboard class="mr-3 h-5 w-5 text-amber-600" />
-								<span class="font-medium">Panou Administrator</span>
-							</DropdownMenuItem>
-							</a>
+								<a href="/admin/dashboard">
+									<DropdownMenuItem class="cursor-pointer py-3 hover:bg-amber-50">
+										<Dashboard class="mr-3 h-5 w-5 text-amber-600" />
+										<span class="font-medium">Panou Administrator</span>
+									</DropdownMenuItem>
+								</a>
 							{/if}
 							<DropdownMenuSeparator />
 							<DropdownMenuItem class="cursor-pointer py-3 text-red-600 hover:bg-red-50">
@@ -135,9 +122,9 @@
 								<span class="text-lg font-semibold tracking-tight"> Frizetto </span>
 							</a>
 						</div>
-						
+
 						{#if user}
-						<Separator />
+							<Separator />
 							<div
 								class="mx-2 flex items-center rounded-xl border border-amber-200 bg-gradient-to-r from-amber-50 to-stone-50 px-4 py-3"
 							>
@@ -151,7 +138,7 @@
 							<a
 								href="/cont/programari"
 								onclick={() => (isOpen = false)}
-								class="text-muted-foreground flex items-center rounded-md px-3 py-3 text-base text-sm font-medium transition-colors duration-200 hover:bg-amber-50 hover:text-amber-600"
+								class="text-muted-foreground flex items-center rounded-md px-3 py-3 text-sm font-medium transition-colors duration-200 hover:bg-amber-50 hover:text-amber-600"
 							>
 								<CalendarDays class="mr-4 h-5 w-5 text-amber-600 " />
 								Programările mele
@@ -159,25 +146,25 @@
 							<a
 								href="/cont/"
 								onclick={() => (isOpen = false)}
-								class="text-muted-foreground flex items-center rounded-md px-3 py-3 text-base text-sm font-medium transition-colors duration-200 hover:bg-amber-50 hover:text-amber-600"
+								class="text-muted-foreground flex items-center rounded-md px-3 py-3 text-sm font-medium transition-colors duration-200 hover:bg-amber-50 hover:text-amber-600"
 							>
 								<User class="mr-4 h-5 w-5 text-amber-600 " />
 								Contul meu
 							</a>
 							{#if isAdmin}
-														<a
-								href="/admin/dashboard"
-								onclick={() => (isOpen = false)}
-								class="text-muted-foreground flex items-center rounded-md px-3 py-3 text-base text-sm font-medium transition-colors duration-200 hover:bg-amber-50 hover:text-amber-600"
-							>
-								<Dashboard class="mr-4 h-5 w-5 text-amber-600 " />
-								Panou Administrator
-							</a>
+								<a
+									href="/admin/dashboard"
+									onclick={() => (isOpen = false)}
+									class="text-muted-foreground flex items-center rounded-md px-3 py-3 text-sm font-medium transition-colors duration-200 hover:bg-amber-50 hover:text-amber-600"
+								>
+									<Dashboard class="mr-4 h-5 w-5 text-amber-600 " />
+									Panou Administrator
+								</a>
 							{/if}
 							<form method="POST" action="/logout">
 								<button
 									type="submit"
-									class="text-muted-foreground flex w-full cursor-pointer items-center rounded-md px-3 py-3 text-base text-sm font-medium transition-colors duration-200 hover:bg-amber-50 hover:text-amber-600"
+									class="text-muted-foreground flex w-full cursor-pointer items-center rounded-md px-3 py-3 text-sm font-medium transition-colors duration-200 hover:bg-amber-50 hover:text-amber-600"
 								>
 									<LogOut class="mr-4 h-5 w-5 text-amber-600" />
 									Deconectare

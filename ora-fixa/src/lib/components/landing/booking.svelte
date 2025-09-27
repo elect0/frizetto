@@ -233,6 +233,10 @@
 													<p class="animate-pulse text-center text-stone-500">
 														Se încarcă orele...
 													</p>
+												{:else if !selectedDate}
+													<p class="text-center font-medium text-red-600">
+														Te rugam sa alegi o zi.
+													</p>
 												{:else if availableSlots.length > 0}
 													<RadioGroup.Root
 														bind:value={$form.time}

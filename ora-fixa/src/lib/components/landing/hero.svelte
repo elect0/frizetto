@@ -4,8 +4,9 @@
 	import { onMount } from 'svelte';
 	import { gsap } from 'gsap';
 	import { smoothscroll } from '$lib/hooks/smooth-scrolling';
+	import hero from '$lib/assets/about.webp';
 
-	onMount(() => {
+  onMount(() => {
 		const tl = gsap.timeline({ delay: 0.5 });
 
 		tl.from('.hero-element', {
@@ -20,6 +21,7 @@
 			tl.kill();
 		};
 	});
+
 </script>
 
 <section id="hero" class="relative flex min-h-screen items-center justify-center overflow-hidden">
@@ -86,12 +88,10 @@
 				<div
 					class="relative overflow-hidden rounded-3xl border-8 border-white shadow-2xl shadow-stone-900/20"
 				>
-					<img
-						src="/images/hero.webp"
+					<enhanced:img
+						src={hero ? hero : ''}
 						alt="Frizer profesionist la lucru"
 						class="h-[500px] w-full object-cover"
-						width="450"
-						height="500"
 						fetchpriority="high"
 					/>
 				</div>

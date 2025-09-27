@@ -1,9 +1,5 @@
-const site = 'https://www.frizetto.ro'; 
-const pages: string[] = [
-    '',
-    '/cont',
-    '/cont/programari'
-]; 
+const site = 'https://www.frizetto.com';
+const pages: string[] = ['', 'cont', 'cont/programari', 'inregistare'];
 
 /** @type {import('./$types').RequestHandler} */
 export async function GET({ url }) {
@@ -24,14 +20,15 @@ const sitemap = (pages: string[]) => `<?xml version="1.0" encoding="UTF-8" ?>
   xmlns:video="https://www.google.com/schemas/sitemap-video/1.1"
 >
   ${pages
-	.map(
-		(page) => `
+		.map(
+			(page) => `
   <url>
     <loc>${site}/${page}</loc>
     <changefreq>daily</changefreq>
     <priority>0.5</priority>
   </url>
   `
-	)
-	.join('')}
+		)
+		.join('')}
 </urlset>`;
+
