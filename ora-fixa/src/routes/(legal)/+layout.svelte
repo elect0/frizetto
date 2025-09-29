@@ -4,7 +4,7 @@
 </script>
 
 <svelte:head>
-	<title>Contul Meu - Frizetto</title>
+	<title>Legal - Frizetto</title>
 </svelte:head>
 
 <AuthNavbar />

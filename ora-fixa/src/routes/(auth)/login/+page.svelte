@@ -1,5 +1,4 @@
 <script lang="ts">
-	import type { PageData } from './$types';
 	import { superForm } from 'sveltekit-superforms/client';
 	import { zod } from 'sveltekit-superforms/adapters';
 	import { LoginSchema } from '$lib/schemas';
@@ -15,7 +14,7 @@
 
 	let { data } = $props();
 
-	const { form, errors, submitting, enhance, message } = superForm(data.form, {
+	const { form, errors, submitting, enhance } = superForm(data.form, {
 		validators: zod(LoginSchema),
 		onResult: ({ result }) => {
 			if (result.type === 'success' && result.data?.form.message) {
@@ -40,7 +39,7 @@
 					<Card.Description>Intră în contul tău și continuă aventura.</Card.Description>
 				</Card.Header>
 
-				<Card.Content class="grid gap-6">
+				<Card.Content class="grid gap-4">
 					<div class="grid gap-2">
 						<Label for="email">Email</Label>
 						<Input
@@ -93,7 +92,7 @@
 						Nu ai inca un cont?
 						<a
 							href="/inregistrare"
-							class="font-medium text-amber-700 underline hover:text-amber-800"
+							class="font-medium text-amber-700 hover:text-amber-800"
 						>
 							Inregistreaza-te aici
 						</a>
