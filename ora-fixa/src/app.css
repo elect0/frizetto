@@ -122,6 +122,12 @@
 	body {
 		@apply bg-background text-foreground;
 	}
+  ul, ol {
+    list-style: revert;
+  }
+  ol {
+    list-style: revert;
+  }
 }
 
 .all-unset {

@@ -43,7 +43,7 @@
 		<div class="flex h-16 items-center justify-between">
 			<!-- Logo -->
 			<div class="flex-shrink-0">
-				<a href="/#hero" class="flex items-center space-x-3" use:smoothscroll={{ offset: 50 }}>
+				<a href="/" class="flex items-center space-x-3" >
 					<div class="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
 						<span class="text-primary-foreground text-sm font-bold"> F </span>
 					</div>
@@ -53,7 +53,7 @@
 			<div class="hidden space-x-4 md:block">
 				{#each navItems as item (item.id)}
 					<a
-						href="#{item.id}"
+						href="/#{item.id}"
 						use:smoothscroll={{ offset: 50 }}
 						class="text-muted-foreground hover:text-foreground group relative text-base font-medium transition-colors duration-200 "
 					>
@@ -136,10 +136,10 @@
 							<span class="sr-only">Deschide meniul principal.</span>
 						</Button>
 					</Sheet.Trigger>
-					<Sheet.Content side="right" class="w-[300px] p-4 sm:w-[400px]">
+          <Sheet.Content side="right" class="w-[300px] p-4 sm:w-[400px]">
 						<div class="flex items-center space-x-2 px-1">
 							<a
-								href="/#hero"
+								href="/"
 								class="flex items-center space-x-3"
 								use:smoothscroll={{ offset: 50 }}
 							>
