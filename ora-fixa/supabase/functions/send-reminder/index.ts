@@ -45,7 +45,7 @@ Deno.serve(async (req) => {
           'Authorization': `Bearer ${Deno.env.get('RESEND_API_KEY')}`
         },
         body: JSON.stringify({
-          from: "Reminder Programare <reminders@frizetto.ro>",
+          from: "Reminder Programare <programari@frizetto.com>",
           to: [appointment.profiles.email],
           subject: 'Mai puțin de 24h până la programarea ta!',
           html: reminderMessage
