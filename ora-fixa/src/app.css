@@ -125,9 +125,6 @@
   ul, ol {
     list-style: revert;
   }
-  ol {
-    list-style: revert;
-  }
 }
 
 .all-unset {
