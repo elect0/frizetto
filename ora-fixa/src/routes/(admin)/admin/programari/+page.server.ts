@@ -24,7 +24,7 @@ export const load: PageServerLoad = async ({ locals: { supabase, session }, url 
 				end_time,
 				status,
 				client_notes,
-				profiles ( id, full_name, phone, notes ),
+				profiles ( * ),
 				services ( id, name, duration_minutes, price )`
 		)
 		.gte('start_time', startTime.toISOString())

@@ -16,8 +16,11 @@ export const GET: RequestHandler = async ({ url, locals: { supabase }, setHeader
 
 	const { data, error: dbError } = await supabase.rpc('get_available_slots', {
 		p_date: date,
-		p_duration_minutes: duration
+		p_duration_minutes: duration,
+		p_timezone: 'Europe/Bucharest'
 	});
+
+	console.log(data);
 
 	if (dbError) {
 		throw SvelteKitError(500, 'A apărut o eroare la server.');

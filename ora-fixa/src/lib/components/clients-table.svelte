@@ -1,5 +1,5 @@
 <script lang="ts" module>
-	const ClientSchema = z.object({
+	export const ClientSchema = z.object({
 		id: z.string().uuid(),
 		full_name: z.string(),
 		phone: z.string(),

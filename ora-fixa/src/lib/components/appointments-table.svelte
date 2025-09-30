@@ -1,17 +1,13 @@
 <script lang="ts" module>
 	import { createRawSnippet } from 'svelte';
 	import { renderSnippet } from '$lib/components/ui/data-table/index.js';
-
 	import { z } from 'zod';
 
 	export const AppointmentSchema = z.object({
 		id: z.number(),
 		start_time: z.string(),
 		client_notes: z.string(),
-		profiles: z.object({
-			id: z.string().uuid(),
-			full_name: z.string()
-		}),
+		profiles: ClientSchema,
 		status: z.enum(['confirmata', 'anulata', 'finalizata', 'neprezentat']),
 		services: z.object({
 			id: z.number(),
@@ -27,25 +23,17 @@
 			accessorKey: 'start_time',
 			header: 'Ora',
 			cell: ({ row }) => {
-				const formatter = new Intl.DateTimeFormat('ro-RO', {
-					weekday: 'long',
-					year: 'numeric',
-					month: 'long',
-					day: 'numeric',
-					hour: '2-digit',
-					minute: '2-digit',
-					timeZone: 'Europe/Bucharest'
-				});
 				const timeCellSnippet = createRawSnippet<[string]>((getStartTime) => {
 					const startTime = getStartTime();
 					return {
 						render: () => `${startTime}`
 					};
 				});
-
 				return renderSnippet(
 					timeCellSnippet,
-					formatter.format(new Date(row.getValue('start_time')))
+					format(parseISO(row.getValue('start_time')), "EEEE, d MMMM yyyy 'la' HH:mm", {
+						locale: ro
+					})
 				);
 			}
 		},
@@ -94,8 +82,6 @@
 			}
 		}
 	];
-
-	let isDialogOpen = $state(false);
 </script>
 
 <script lang="ts">
@@ -113,17 +99,17 @@
 	import * as Table from '$lib/components/ui/table/index.js';
 	import * as Select from '$lib/components/ui/select/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
-	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import { CircleCheck, CalendarCheck, XCircle, UserX, EllipsisVertical } from '@lucide/svelte';
 	import { Button } from '$lib/components/ui/button/index.js';
 	import { goto } from '$app/navigation';
 	import { Input } from '$lib/components/ui/input/index.js';
-	import { enhance } from '$app/forms';
-	import { invalidateAll } from '$app/navigation';
-	import { toast } from 'svelte-sonner';
 	import { page } from '$app/state';
 	import UpdateAppointmentModal from './update-appointment-modal.svelte';
 	import UpdateStatusModal from './update-status-modal.svelte';
+	import { format, parseISO } from 'date-fns';
+	import { ro } from 'date-fns/locale';
+	import { ClientSchema } from './clients-table.svelte';
+	import CustomerProfileModal from './customer-profile-modal.svelte';
 
 	let {
 		appointments,
@@ -206,8 +192,6 @@
 		});
 	}
 
-	const id = $derived(page.params.id);
-
 	function navigateToPage(pageNumber: number) {
 		const params = new URLSearchParams(page.url.searchParams);
 		params.set('page', pageNumber.toString());
@@ -219,7 +203,6 @@
 			keepFocus: true
 		});
 	}
-
 </script>
 
 <div>
@@ -307,14 +290,14 @@
 		</Table.Root>
 	</div>
 	<div class="flex w-full items-center justify-between p-3">
-		<div class='flex-col flex'>
+		<div class="flex flex-col">
 			<span class="mt-4 text-end text-sm text-stone-500"
-			>{table.getFilteredRowModel().rows.length} din {table.getState().pagination.pageSize} programări.
-		</span>
-		<span class='text-sm text-stone-500'>
-			Pagina {currentPage}.
-		</span>
-	</div>
+				>{table.getFilteredRowModel().rows.length} din {table.getState().pagination.pageSize} programări.
+			</span>
+			<span class="text-sm text-stone-500">
+				Pagina {currentPage}.
+			</span>
+		</div>
 		<div class="space-x-1">
 			<Button
 				variant="outline"
@@ -371,9 +354,6 @@
 					status={row.original.status}
 				/>
 			</div>
-			<DropdownMenu.Item>
-						<a href={`/client/${row.original.profiles.id}`}> Vezi Profilul Clientului </a>
-			</DropdownMenu.Item>
 		</DropdownMenu.Content>
 	</DropdownMenu.Root>
 {/snippet}

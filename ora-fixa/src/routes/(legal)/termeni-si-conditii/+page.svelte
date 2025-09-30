@@ -74,7 +74,7 @@
 			Frizetto și personalul său nu pot fi ținuți responsabili pentru reacții alergice la produse,
 			dacă clientul nu a informat în prealabil frizerul despre sensibilitățile cunoscute.
 		</p>
-		<h3>IX. Legea Aplicabilă</h3>
+		<h3 class='font-semibold'>IX. Legea Aplicabilă</h3>
 		<p>
 			Acești termeni sunt guvernați de legislația din România. Orice neînțelegere va fi soluționată
 			pe cale amiabilă.

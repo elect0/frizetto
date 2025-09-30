@@ -54,7 +54,7 @@ export const actions: Actions = {
 			});
 		}
 
-		const startTime = new Date(`${form.data.date.split('T')[0]}T${form.data.time}:00.000Z`);
+		const startTime = new Date(`${form.data.date.split('T')[0]}T${form.data.time}:00+03:00`);
 		const endTime = new Date(startTime.getTime() + form.data.duration * 60 * 1000);
 
 		const newAppointment = {

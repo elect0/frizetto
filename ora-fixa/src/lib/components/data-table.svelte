@@ -10,7 +10,7 @@
 		client_notes: z.string(),
 		profiles: z.object({
 			id: z.string().uuid(),
-			full_name: z.string(),
+			full_name: z.string()
 		}),
 		status: z.enum(['confirmata', 'anulata', 'finalizata', 'neprezentat']),
 		services: z.object({
@@ -356,7 +356,7 @@
 							} else {
 								toast.error('Eroare:', {
 									description: 'programarea nu a putut fi marcată ca neprezentată.'
-								}); 
+								});
 							}
 						};
 					}}
@@ -365,7 +365,6 @@
 					<button type="submit" class="all-unset">Marchează ca Neprezentat</button>
 				</form></DropdownMenu.Item
 			>
-			<DropdownMenu.Item>		<a href={`/client/${row.original.profiles.id}`}> Vezi Profilul Clientului </a> </DropdownMenu.Item>
 			<DropdownMenu.Separator />
 			<Dialog.Root bind:open={isDialogOpen}>
 				<Dialog.Trigger class="hover:bg-accent rounded-md p-2 text-start text-sm text-red-500"
@@ -381,7 +380,7 @@
 					</Dialog.Header>
 					<Dialog.Footer>
 						<form
-              class='flex justify-center'
+							class="flex justify-center"
 							action="?/cancelAppointment"
 							method="POST"
 							use:enhance={() => {
