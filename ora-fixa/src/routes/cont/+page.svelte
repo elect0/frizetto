@@ -23,6 +23,7 @@
 	import { invalidateAll } from '$app/navigation';
 	import { accountSchema, passwordSchema, preferencesSchema } from '$lib/schemas';
 	import { zod } from 'sveltekit-superforms/adapters';
+	import Switch from '$lib/components/ui/switch/switch.svelte';
 
 	let { data } = $props();
 
@@ -294,10 +295,10 @@
 						class="cursor-pointer border-stone-200 bg-white p-4 shadow-lg ring-0 transition-shadow hover:shadow-xl data-[state=active]:border-amber-600 data-[state=active]:bg-amber-50 data-[state=active]:shadow-xl"
 						value="security">Securitate</Tabs.Trigger
 					>
-					<!-- <Tabs.Trigger
+					<Tabs.Trigger
 						class="cursor-pointer border-stone-200 bg-white p-4 shadow-lg ring-0 transition-shadow hover:shadow-xl data-[state=active]:border-amber-600 data-[state=active]:bg-amber-50 data-[state=active]:shadow-xl"
 						value="notifications">Notificari</Tabs.Trigger
-					> -->
+					>
 				</Tabs.List>
 				<Tabs.Content value="profile" class="mt-4">
 					<Card.Root
@@ -450,7 +451,7 @@
 						</Card.Content>
 					</Card.Root>
 				</Tabs.Content>
-				<!-- <Tabs.Content value="notifications" class="mt-4">
+				<Tabs.Content value="notifications" class="mt-4">
 					<Card.Root
 						class="border border-stone-200 bg-white shadow-lg transition-shadow hover:shadow-xl"
 					>
@@ -472,16 +473,16 @@
 										<div class="5 space-y-0">
 											<Label>Oferte Promotionale</Label>
 											<p class="text-muted-foreground text-sm">
-												Recieve special deals and disscounts
+												Primește oferte speciale și reduceri exclusive direct pe email.
 											</p>
 										</div>
 										<Switch name="marketing_opt_in" bind:checked={$preferences.marketing_opt_in} />
 									</div>
 									<div class="flex items-center justify-between">
 										<div class="5 space-y-0">
-											<Label>Reminder SMS</Label>
+											<Label>Reminder</Label>
 											<p class="text-muted-foreground text-sm">
-												Recieve special deals and disscounts
+												Primește un email pentru a-ți reaminti programările viitoare.
 											</p>
 										</div>
 										<Switch
@@ -493,7 +494,7 @@
 										<div class="5 space-y-0">
 											<Label>Notificari Email</Label>
 											<p class="text-muted-foreground text-sm">
-												Recieve special deals and disscounts
+												Fii la curent cu actualizările și noutățile frizeriei noastre.
 											</p>
 										</div>
 										<Switch
@@ -510,7 +511,7 @@
 							</form>
 						</Card.Content>
 					</Card.Root>
-				</Tabs.Content> -->
+				</Tabs.Content>
 			</Tabs.Root>
 		</div>
 	</div>
