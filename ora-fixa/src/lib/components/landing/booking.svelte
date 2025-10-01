@@ -119,10 +119,10 @@
 			<div class="mb-12 text-center">
 				<Badge class="mb-6 border-0 bg-amber-600 px-4 py-2 text-white">Programare Online</Badge>
 				<h2 class="mb-4 text-4xl font-bold text-stone-900 md:mb-6 md:text-5xl">
-					Alege o data si o ora.
+					Alege o dată și o oră.
 				</h2>
 				<p class="text-md text-stone-600 md:text-xl">
-					Procesul de rezervare este simplu si rapid. In doar 2 pasi esti programat.
+					Procesul de rezervare este simplu și rapid. În doar 2 pași ești programat.
 				</p>
 			</div>
 			<Accordion
@@ -143,7 +143,7 @@
 										1
 									</div>
 									<h3 class="text-lg font-semibold text-stone-900 md:text-xl">
-										Selecteaza Serviciul
+										Selectează Serviciul
 									</h3>
 								</AccordionTrigger>
 								<AccordionContent>
@@ -198,7 +198,7 @@
 										class:text-stone-900={selectedService}
 										class:text-stone-600={!selectedService}
 									>
-										{selectedService ? 'Alege data' : 'Alege data (dupa selectarea serviciului).'}
+										{selectedService ? 'Alege data' : 'Alege data (după  selectarea serviciului).'}
 									</h3>
 								</AccordionTrigger>
 								{#if selectedService}
@@ -297,7 +297,7 @@
 												<CalendarDays class="h-5 w-5" />
 											</div>
 											<div>
-												<p class="text-sm text-stone-500">Dată</p>
+												<p class="text-sm text-stone-500">Data</p>
 												<p class="font-semibold text-stone-800">
 													{df.format(selectedDate.toDate(getLocalTimeZone()))}
 												</p>
@@ -343,8 +343,14 @@
 										bind:checked={$form.hasAgreedToPolicy}
 									/>
 									<div class="grid gap-1.5 leading-none">
-										<Label for="terms" class="cursor-pointer text-sm font-medium text-stone-700">
-											Confirm angajamentul de a mă prezența.
+										<Label
+											for="terms"
+											class="cursor-pointer gap-[3px] text-sm font-medium text-stone-700"
+										>
+											Am citit și sunt de acord cu <a
+												href="/termeni-si-conditii"
+												class="text-amber-700 hover:text-amber-800">Termenii și Condițiile</a
+											>
 										</Label>
 										<p class="text-xs text-stone-500">Înțeleg că pot anula programarea.</p>
 									</div>

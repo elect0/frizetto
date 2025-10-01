@@ -4,7 +4,6 @@
 	import { onMount } from 'svelte';
 	import { gsap } from 'gsap';
 	import { smoothscroll } from '$lib/hooks/smooth-scrolling';
-	import hero from '$lib/assets/about.webp';
 
 	onMount(() => {
 		const tl = gsap.timeline({ delay: 0.5 });
@@ -35,7 +34,7 @@
 					class="border-amber-200 bg-amber-600/10 px-4 py-2 text-sm font-medium text-amber-700"
 				>
 					<Award class="mr-2 h-4 w-4" />
-					Maiestrie in arta frizeriei
+					Măiestrie în artă frizeriei
 				</Badge>
 				<div class="hero-element mb-2 space-y-4 md:mb-3 md:space-y-6">
 					<h1 class="text-6xl leading-[0.9] font-black tracking-tight text-stone-900 md:text-7xl">
@@ -49,8 +48,8 @@
 							>Mai mult decât o tunsoare.</span
 						>
 					</h1>
-					<p class="max-w-xl text-lg leading-relaxed text-stone-600 md:text-2xl">
-						Momentul tău de răsfăț începe cu o programare online la noi.
+					<p class="text-lg leading-relaxed text-stone-600 md:text-2xl">
+						Momentul tău de răsfăț începe cu o programare <br /> online la noi.
 					</p>
 				</div>
 				<div class="hero-element pt-4">
@@ -71,7 +70,7 @@
 				>
 					<div class="flex items-center gap-2">
 						<Users class="h-5 w-5 text-amber-600" />
-						<span class="text-sm">500+ Clienti multumiti</span>
+						<span class="text-sm">500+ Clienți mulțumiți </span>
 					</div>
 					<div class="h-1 w-1 rounded-full bg-stone-400"></div>
 					<div class="flex items-center gap-2">
@@ -80,7 +79,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="hero-element relative">
+			<div class="hero-element relative mb-20 md:mb-0">
 				<div
 					class="transform-rotate-3 absolute inset-0 rounded-3xl bg-gradient-to-r from-amber-600/10 to-stone-600/10 blur-sm"
 				></div>
@@ -88,7 +87,7 @@
 					class="relative overflow-hidden rounded-3xl border-8 border-white shadow-2xl shadow-stone-900/20"
 				>
 					<img
-						src={hero ? hero : ''}
+						src={"/images/hero.webp"}
 						alt="Frizer profesionist la lucru"
 						class="h-[500px] w-full object-cover"
 						fetchpriority="high"
@@ -96,7 +95,7 @@
 					/>
 				</div>
 				<div
-					class="absolute -bottom-6 -left-6 rounded-2xl border border-stone-100 bg-white p-6 shadow-xl"
+					class="absolute -bottom-6 -left-6 mx-4 rounded-2xl border border-stone-100 bg-white p-6 shadow-xl md:mx-0"
 				>
 					<div class="flex items-center gap-4">
 						<div
@@ -104,7 +103,7 @@
 						></div>
 						<div>
 							<div class="text-base font-bold text-stone-900 md:text-lg">Est. 2018</div>
-							<div class="text-sm text-stone-600">Traditie & Eleganta</div>
+							<div class="text-sm text-stone-600">Tradiție & Eleganță</div>
 						</div>
 					</div>
 				</div>

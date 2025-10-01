@@ -64,7 +64,7 @@
 							<a href="/cont/programari">
 								<DropdownMenuItem class="cursor-pointer py-3 hover:bg-amber-50">
 									<CalendarDays class="mr-3 h-5 w-5 text-amber-600" />
-									<span class="font-medium">Programarile Mele</span>
+									<span class="font-medium">Programările mele</span>
 								</DropdownMenuItem>
 							</a>
 							<a href="/cont">

@@ -140,7 +140,7 @@
 								)}
 							>
 								<CalendarIcon />
-								{dateValue ? df.format(dateValue.toDate(getLocalTimeZone())) : 'Alege o data'}
+								{dateValue ? df.format(dateValue.toDate(getLocalTimeZone())) : 'Alege o dată'}
 							</Popover.Trigger>
 							<Popover.Content bind:ref={contentRef} class="w-auto p-0">
 								<Calendar

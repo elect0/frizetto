@@ -5,15 +5,15 @@
 
 	const contactInfo = {
 		address: {
-			street: 'Strada Principală nr. 45',
+			street: 'Strada Victoriei nr. 155',
 			city: 'Băilești, Dolj'
 		},
 		schedule: {
-			weekdays: 'Luni - Vineri: 09:00 - 19:00',
+			weekdays: 'Luni - Vineri: 09:00 - 18:00',
 			saturday: 'Sâmbătă: 09:00 - 17:00',
 			sunday: 'Duminică: Închis'
 		},
-		phone: '0723.456.789',
+		phone: '+40 765 484 036',
 		whatsapp: true,
 		instagram: 'https://www.instagram.com/ciprian_frizeru/',
 		facebook: 'https://www.facebook.com/duma.alex.58/'
@@ -24,11 +24,11 @@
 	<div class="container mx-auto px-4 lg:px-6">
 		<div class="grid grid-cols-1 gap-1 lg:grid-cols-2">
 			<div class="space-y-8">
-				<Badge class="border-0 bg-amber-600 px-4 py-2 text-white">Locatie & Contact</Badge>
+				<Badge class="border-0 bg-amber-600 px-4 py-2 text-white">Locație & Contact</Badge>
 				<div class="space-y-6">
 					<h2 class="text-3xl font-bold md:text-4xl">Vino sa ne cunoastem</h2>
 					<p class="text-base text-stone-300 md:text-lg">
-						Te asteptam in salonul nostru din centrul Bailestiului pentru o experienta de grooming
+						Te așteptăm în salonul nostru din centrul Bailestiului pentru o experiență de grooming
 						de neuitat
 					</p>
 				</div>
@@ -76,7 +76,7 @@
 					</div>
 				</div>
 				<div class="pt-6">
-					<div class="mb-4 text-lg font-semibold">Urmareste-ne</div>
+					<div class="mb-4 text-lg font-semibold">Urmărește-ne</div>
 					<div class="flex gap-4">
 						<a
 							href={contactInfo.instagram || '#'}

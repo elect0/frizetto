@@ -153,8 +153,8 @@
 							class="mt-1 cursor-pointer bg-red-600 text-white hover:bg-red-700"
 						>
 							<X className="h-4 w-4 mr-2" />
-							Anuleaza Programarea
-						</Button>
+						Anulează Programarea
+            </Button>
 					</AlertDialog.Trigger>
 					<AlertDialog.Content>
 						<AlertDialog.Header>

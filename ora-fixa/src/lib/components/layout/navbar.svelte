@@ -43,7 +43,7 @@
 		<div class="flex h-16 items-center justify-between">
 			<!-- Logo -->
 			<div class="flex-shrink-0">
-				<a href="/" class="flex items-center space-x-3" >
+				<a href="/" class="flex items-center space-x-3">
 					<div class="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
 						<span class="text-primary-foreground text-sm font-bold"> F </span>
 					</div>
@@ -55,13 +55,13 @@
 					<a
 						href="/#{item.id}"
 						use:smoothscroll={{ offset: 50 }}
-						class="text-muted-foreground hover:text-foreground group relative text-base font-medium transition-colors duration-200 "
+						class="text-muted-foreground hover:text-foreground group relative text-base font-medium transition-colors duration-200"
 					>
 						{item.label}
 						<span
 							class="bg-primary absolute -bottom-1 left-0 h-0.5 w-0 transition-all duration-200 group-hover:w-full"
 						></span>
-				</a>
+					</a>
 				{/each}
 			</div>
 
@@ -88,7 +88,7 @@
 							<a href="/cont/programari">
 								<DropdownMenuItem class="cursor-pointer py-3 hover:bg-amber-50">
 									<CalendarDays class="mr-3 h-5 w-5 text-amber-600" />
-									<span class="font-medium">Programarile Mele</span>
+									<span class="font-medium"> Programările mele </span>
 								</DropdownMenuItem>
 							</a>
 							<a href="/cont">
@@ -136,13 +136,9 @@
 							<span class="sr-only">Deschide meniul principal.</span>
 						</Button>
 					</Sheet.Trigger>
-          <Sheet.Content side="right" class="w-[300px] p-4 sm:w-[400px]">
+					<Sheet.Content side="right" class="w-[300px] p-4 sm:w-[400px]">
 						<div class="flex items-center space-x-2 px-1">
-							<a
-								href="/"
-								class="flex items-center space-x-3"
-								use:smoothscroll={{ offset: 50 }}
-							>
+							<a href="/" class="flex items-center space-x-3" use:smoothscroll={{ offset: 50 }}>
 								<div class="bg-primary flex h-8 w-8 items-center justify-center rounded-lg">
 									<!-- logo -->
 									<span class="text-primary-foreground text-sm font-bold"> F </span>

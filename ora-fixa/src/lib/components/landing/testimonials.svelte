@@ -34,12 +34,12 @@
 	];
 
 	let pictures = [
-		{ url: '/images/taper.webp' },
-		{ url: '/images/taper.webp' },
-		{ url: '/images/taper.webp' },
-		{ url: '/images/taper.webp' },
-		{ url: '/images/taper.webp' },
-		{ url: '/images/taper.webp' }
+		{ url: '/images/tunsoare1.webp' },
+		{ url: '/images/tunsoare2.webp' },
+		{ url: '/images/tunsoare3.webp' },
+		{ url: '/images/tunsoare4.webp' },
+		{ url: '/images/tunsoare5.webp' },
+		{ url: '/images/tunsoare6.webp' }
 	];
 </script>
 
@@ -51,17 +51,17 @@
 			</Badge>
 			<h2 class="mb-4 text-4xl font-bold text-stone-900 md:mb-6 md:text-5xl">Rezultate & Pareri</h2>
 			<p class="mx-auto max-w-2xl text-lg text-stone-600 md:text-xl">
-				Lucrarile noastre vorbesc de la sine, iar clientii confirma calitatea.
+				Lucrările noastre vorbesc de la sine, iar clienții confirmă calitatea.
 			</p>
 		</div>
-		<div class="mb-16 grid grid-cols-2 gap-6 md:grid-cols-3">
+		<div class="mb-16 grid grid-cols-2 grid-rows-2 gap-6 md:grid-cols-3">
 			{#each pictures as picture, i}
 				<div class="group relative overflow-hidden rounded-2xl shadow-lg">
 					<img
 						loading="lazy"
 						src={picture.url}
 						alt={`Tuns Realizat ${i + 1}`}
-						class="h-[250px] w-full object-cover transition-transform duration-500 group-hover:scale-110"
+						class="h-[250px] w-full overflow-auto object-cover object-[45%_55%] transition-transform duration-500 group-hover:scale-110"
 					/>
 					<div
 						class="absolute inset-0 bg-gradient-to-t from-stone-900/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100"

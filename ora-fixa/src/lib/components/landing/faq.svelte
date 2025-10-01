@@ -10,8 +10,7 @@
 	const faqItems = [
 		{
 			question: 'Cum pot plăti? Se poate cu cardul?',
-			answer:
-				'Acceptăm plata cash și cu cardul (Visa, Mastercard). De asemenea, poți plăti și prin transfer bancar sau aplicații mobile (Revolut, ING Pay).'
+			answer: 'Plata se face doar cash. Momentan nu acceptăm plăți cu cardul.'
 		},
 		{
 			question: 'Unde pot parca în zonă?',
@@ -21,17 +20,12 @@
 		{
 			question: 'Cum pot anula sau modifica o programare?',
 			answer:
-				'Poți anula sau modifica programarea prin telefon la 0723.456.789 sau prin mesaj WhatsApp. Te rugăm să anunți cu cel puțin 2 ore înainte.'
+				'Pentru a anula o programare, accesează secțiunea «Programările mele» de pe site, selectează programarea dorită și apasă «Anulează Programarea». Asigură-te că faci acest lucru cu cel puțin 4 de ore înainte pentru a elibera locul altor clienți.'
 		},
 		{
-			question: 'Acceptați și walk-in-uri (fără programare)?',
+			question: 'Este necesară programarea în prealabil?',
 			answer:
-				'Da, acceptăm și clienți fără programare, însă recomandăm programarea în avans pentru a evita timpul de așteptare, mai ales în weekend.'
-		},
-		{
-			question: 'Ce produse folosiți pentru îngrijire?',
-			answer:
-				'Folosim exclusiv produse premium: American Crew, Reuzel, și Proraso. Toate produsele sunt profesionale și adaptate tipului de păr și piele.'
+				'Recomandăm programarea pentru a evita timpul de așteptare. Acceptăm și clienți fără programare, în funcție de disponibilitate.'
 		}
 	];
 </script>
@@ -40,11 +34,11 @@
 	<div class="container mx-auto px-4 lg:px-6">
 		<div class="mx-auto max-w-3xl">
 			<div class="mb-12 text-center">
-				<Badge class="mb-6 border-stone-200 bg-stone-100 px-4 py-2 text-stone-700"
-					>Intrebari Frecvente</Badge
-				>
-				<h2 class="mb-4 md:mb-6 text-4xl font-bold text-stone-900 md:text-5xl">
-					Raspunsuri la intrebarile tale.
+				<Badge class="mb-6 border-stone-200 bg-stone-100 px-4 py-2 text-stone-700">
+					Întrebări frecvente
+				</Badge>
+				<h2 class="mb-4 text-4xl font-bold text-stone-900 md:mb-6 md:text-5xl">
+					Răspunsuri la întrebările tale.
 				</h2>
 			</div>
 			<Accordion type="single" class="space-y-4">

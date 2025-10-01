@@ -148,14 +148,14 @@
 								<div>
 									<h3 class="font-semibold text-amber-900">Rezervare Rapida</h3>
 									<p class="text-amber-700">
-										Serviciul tau favorite este {data.favoriteService.name}
+										Serviciul tău favorit este {data.favoriteService.name}
 									</p>
 								</div>
 							</div>
 							<a href={`/?serviceId=${data.favoriteService.id}#booking`}>
 								<Button class="mt-4 cursor-pointer md:mt-0">
 									<CalendarDays class="h-5 w-5" />
-									Programeaza-l Acum</Button
+									Programează-l Acum</Button
 								>
 							</a>
 						</div>
@@ -203,7 +203,7 @@
 							<a href="/cont/programari">
 								<Button variant="default" class="cursor-pointer">
 									<Edit class="h-5 w-5" />
-									Modifica Programarea</Button
+									Programează-l Programarea</Button
 								>
 							</a>
 						</Card.Content>
@@ -306,10 +306,10 @@
 					>
 						<Card.Header>
 							<Card.Title class="text-2xl font-semibold text-stone-900 md:text-3xl">
-								Informatiile Contului
+								Informațiile Contului
 							</Card.Title>
 							<Card.Description class="text-md text-stone-600">
-								Detaliile tale si informatiile de contact
+								Detaliile tale si informațiile de contact
 							</Card.Description>
 						</Card.Header>
 						<Card.Content>
@@ -350,7 +350,7 @@
 										{/if}
 									</div>
 									<div class="grid gap-2">
-										<Label class="mb-1" for="phone">Numar de telefon</Label>
+										<Label class="mb-1" for="phone">Număr de telefon</Label>
 										<Input
 											type="text"
 											id="phone"
@@ -367,7 +367,7 @@
 										{/if}
 									</div>
 									<div class="grid gap-2">
-										<Label class="mb-1" for="notes">Notita Utilizator</Label>
+										<Label class="mb-1" for="notes">Notiță Personală</Label>
 										<Input
 											type="text"
 											class="text-sm md:text-base"
@@ -385,8 +385,8 @@
 									</div>
 								</div>
 								<Button type="submit" class="w-full cursor-pointer"
-									><Save /> Salveaza Modificarile</Button
-								>
+									><Save />Salvează Modificările
+								</Button>
 							</form>
 						</Card.Content>
 					</Card.Root>
@@ -400,7 +400,7 @@
 								Securitatea Contului
 							</Card.Title>
 							<Card.Description class="text-md text-stone-600">
-								Detaliile tale de securitate si actiuni
+								Detaliile tale de securitate si acțiuni
 							</Card.Description>
 						</Card.Header>
 						<div class="px-6">
@@ -457,10 +457,10 @@
 					>
 						<Card.Header>
 							<Card.Title class="text-2xl font-semibold text-stone-900 md:text-3xl">
-								Preferinte Notificari
+								Preferințe Notificări
 							</Card.Title>
 							<Card.Description class="text-md text-stone-600">
-								Configureaza mijloacele prin care primesti reminders si notificari.
+								Configurează mijloacele prin care primești reminders și notificări.
 							</Card.Description>
 						</Card.Header>
 						<div class="px-6">
@@ -471,7 +471,7 @@
 								<div class="space-y-6">
 									<div class="flex items-center justify-between">
 										<div class="5 space-y-0">
-											<Label>Oferte Promotionale</Label>
+											<Label>Oferte Promoționale</Label>
 											<p class="text-muted-foreground text-sm">
 												Primește oferte speciale și reduceri exclusive direct pe email.
 											</p>
@@ -492,7 +492,7 @@
 									</div>
 									<div class="flex items-center justify-between">
 										<div class="5 space-y-0">
-											<Label>Notificari Email</Label>
+											<Label>Notificări Email</Label>
 											<p class="text-muted-foreground text-sm">
 												Fii la curent cu actualizările și noutățile frizeriei noastre.
 											</p>
@@ -504,7 +504,7 @@
 									</div>
 									<div class="mt-1 flex w-full justify-end">
 										<Button type="submit" class="text max-w-xl cursor-pointer"
-											>Salveaza Modificarile</Button
+											><Save /> Salvează Modificările</Button
 										>
 									</div>
 								</div>

@@ -91,7 +91,7 @@
 					<div class="space-y-2">
 						<div class="flex items-center gap-2">
 							<Checkbox id="terms" required name="terms" />
-							<Label for="terms" class="text-sm font-normal">
+							<Label for="terms" class="text-sm font-normal gap-[4px]">
 								Sunt de acord cu
 								<a
 									href="/termeni-si-conditii"
@@ -104,7 +104,7 @@
 
 						<div class="flex items-center gap-2">
 							<Checkbox id="gdpr" required name="gdpr" />
-							<Label for="gdpr" class="text-sm font-normal ">
+							<Label for="gdpr" class="text-sm font-normal gap-[4px] ">
 								Am citit
 								<a
 									href="/politica-confidentialitate"

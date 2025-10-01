@@ -62,10 +62,10 @@
 			<div class="flex flex-col items-center justify-center md:flex-row">
 				<div class="mb-4 text-center md:mb-0">
 					<div class="mb-4 text-center md:mb-0">
-						<p>© {new Date().getFullYear()} OraFixa. Toate drepturile rezervate.</p>
+						<p>© {new Date().getFullYear()} Frizetto. Toate drepturile rezervate.</p>
 					</div>
 					<div class="text-center text-sm">
-						<p>Băilești, Dolj • Tel: 0723.456.789</p>
+						<p>Băilești, Dolj</p>
 					</div>
 				</div>
 			</div>
