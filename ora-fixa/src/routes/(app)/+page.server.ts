@@ -72,7 +72,9 @@ export const actions: Actions = {
 			.select('*, services (*)');
 
 		if (error) {
-			return message(form, 'Programarea ta nu a fost confirmată! Trebuie sa fii inregistrat.');
+			return message(form, 'Ai ajuns la limita programărilor active. Te rugăm să finalizezi sau să anulezi una înainte de a adăuga alta.', {
+				status: 403
+			});
 		}
 
 		const appointment = data[0];

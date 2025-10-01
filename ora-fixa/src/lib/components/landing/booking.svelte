@@ -50,9 +50,11 @@
 		},
 		onResult: ({ result }) => {
 			if (result.type === 'success') {
+        console.log(result)
 				toast.success('Programarea a fost adăugată cu succes!');
 				selectedDate = undefined;
 			} else if (result.type === 'failure') {
+        console.log(result)
 				toast.error(result.data?.form.message);
 			} else {
 				toast.error('A apărut o eroare la adăugarea programării. Te rugăm să încerci din nou!');
