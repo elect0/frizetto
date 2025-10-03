@@ -35,10 +35,14 @@
 	<div class="container mx-auto px-4 lg:px-6">
 		<div class="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
 			<div class="about-element relative order-2 lg:order-1">
-				<div class="relative overflow-hidden rounded-3xl shadow-2xl">
-					{#await import(`$lib/assets/about.webp?h=500&w=712`) then { default: src }}
-						<enhanced:img src={src ? src : ''} alt="salut" />
-					{/await}
+				<div class="relative overflow-hidden rounded-3xl shadow-2xl md:max-h-[500px]">
+					
+	<enhanced:img
+						src="../../assets/about.webp?fit=cover"
+						sizes="(min-width: 768px) 712px, 100vw"
+						alt="sveltekit ilustration"
+					/>
+
 				</div>
 
 				<div

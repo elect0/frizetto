@@ -91,7 +91,7 @@
 						</p>
 						<div class="flex items-center gap-4">
 							<Avatar.Root class="h-12 w-12" delayMs={1000}>
-								<Avatar.Image src={testimonial.picture} alt={testimonial.initial} />
+								<Avatar.Image src={testimonial.picture} loading="lazy" alt={testimonial.initial} />
 								<Avatar.Fallback>{testimonial.initial}</Avatar.Fallback>
 							</Avatar.Root>
 							<div>

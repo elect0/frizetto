@@ -99,10 +99,13 @@
 			</div>
 			<div class="relative">
 				<div class="overflow-hidden rounded-3xl shadow-2xl">	
-					{#await import(`$lib/assets/services.webp?h=500`) then { default: src }}
-						<enhanced:img src={src ? src : ''} loading="lazy" alt="Unelte profesionale de frizerie" />
-					{/await}
-	
+	<enhanced:img
+						src="../../assets/services.webp?fit=cover"
+						sizes="(min-width: 768px) 712px, 100vw"
+						alt="sveltekit ilustration"
+					/>
+
+
 				</div>
 				<div
 					class="absolute -bottom-4 -right-4 rounded-2xl border border-stone-100 bg-white p-6 shadow-xl"

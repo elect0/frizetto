@@ -86,9 +86,11 @@
 				<div
 					class="relative overflow-hidden rounded-3xl border-8 border-white shadow-2xl shadow-stone-900/20"
 				>
-					{#await import(`$lib/assets/hero.webp`) then { default: src }}
-						<enhanced:img src={src ? src : ''} loading="eager" alt="salut" />
-					{/await}
+					<enhanced:img
+						src="../../assets/hero.webp"
+						sizes="(min-width: 768px) 690px, 100vw"
+						alt="sveltekit ilustration"
+					/>
 				</div>
 				<div
 					class="absolute -bottom-6 -left-6 mx-4 rounded-2xl border border-stone-100 bg-white p-6 shadow-xl md:mx-0"
