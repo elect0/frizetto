@@ -98,13 +98,11 @@
 				</Card>
 			</div>
 			<div class="relative">
-				<div class="overflow-hidden rounded-3xl shadow-2xl">
-					<img
-						loading="lazy"
-						src="/images/services.webp"
-						alt="Unelte profesionale de frizerie"
-						class="h-[500px] w-full object-cover"
-					/>
+				<div class="overflow-hidden rounded-3xl shadow-2xl">	
+					{#await import(`$lib/assets/services.webp?h=500`) then { default: src }}
+						<enhanced:img src={src ? src : ''} loading="lazy" alt="Unelte profesionale de frizerie" />
+					{/await}
+	
 				</div>
 				<div
 					class="absolute -bottom-4 -right-4 rounded-2xl border border-stone-100 bg-white p-6 shadow-xl"

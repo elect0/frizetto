@@ -86,24 +86,20 @@
 				<div
 					class="relative overflow-hidden rounded-3xl border-8 border-white shadow-2xl shadow-stone-900/20"
 				>
-					<img
-						src={"/images/hero.webp"}
-						alt="Frizer profesionist la lucru"
-						class="h-[500px] w-full object-cover"
-						fetchpriority="high"
-						height="500"
-					/>
+					{#await import(`$lib/assets/hero.webp`) then { default: src }}
+						<enhanced:img src={src ? src : ''} loading="eager" alt="salut" />
+					{/await}
 				</div>
 				<div
 					class="absolute -bottom-6 -left-6 mx-4 rounded-2xl border border-stone-100 bg-white p-6 shadow-xl md:mx-0"
 				>
 					<div class="flex items-center gap-4">
 						<div
-							class="h-16 w-4 rounded-full bg-gradient-to-b from-amber-600 via-white to-stone-600 shadow-lg"
+							class="h-8 w-2 rounded-full bg-gradient-to-b from-amber-600 via-white to-stone-600 shadow-lg md:h-16 md:w-4"
 						></div>
 						<div>
 							<div class="text-base font-bold text-stone-900 md:text-lg">Est. 2018</div>
-							<div class="text-sm text-stone-600">Tradiție & Eleganță</div>
+							<div class="text-xs text-stone-600 md:text-sm">Tradiție & Eleganță</div>
 						</div>
 					</div>
 				</div>

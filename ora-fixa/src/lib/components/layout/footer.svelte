@@ -46,6 +46,7 @@
 							style="width:250px;margin:5px;"
 							src="https://wpfitness.eu/wp-content/uploads/2022/10/anpc-sal.png"
 							alt="Solutionarea Alternativa a Litigiilor"
+              loading="lazy"
 						/>
 					</a><br />
 					<a href="https://ec.europa.eu/consumers/odr" target="_blank" rel="nofollow">
@@ -53,6 +54,7 @@
 							style="width:250px;margin:5px;"
 							src="https://wpfitness.eu/wp-content/uploads/2022/10/anpc-sol.png"
 							alt="Solutionarea Online a Litigiilor"
+              loading="lazy"
 						/>
 					</a>
 				</div>

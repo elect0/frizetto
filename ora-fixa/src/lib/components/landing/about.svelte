@@ -36,13 +36,9 @@
 		<div class="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
 			<div class="about-element relative order-2 lg:order-1">
 				<div class="relative overflow-hidden rounded-3xl shadow-2xl">
-					<img
-						src="/images/about.webp"
-						alt="Portret frizer profesionist"
-						class="h-[500px] w-full object-cover"
-						height="500"
-						width="712"
-					/>
+					{#await import(`$lib/assets/about.webp?h=500&w=712`) then { default: src }}
+						<enhanced:img src={src ? src : ''} alt="salut" />
+					{/await}
 				</div>
 
 				<div
