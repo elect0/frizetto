@@ -33,14 +33,14 @@
 		}
 	];
 
-	let pictures = [
-		{ url: '/src/lib/assets/tunsori/tunsoare1.webp' },
-		{ url: '/src/lib/assets/tunsori/tunsoare2.webp' },
-		{ url: '/src/lib/assets/tunsori/tunsoare3.webp' },
-		{ url: '/src/lib/assets/tunsori/tunsoare4.webp' },
-		{ url: '/src/lib/assets/tunsori/tunsoare5.webp' },
-		{ url: '/src/lib/assets/tunsori/tunsoare6.webp' }
-	];
+	// let pictures = [
+	// 	{ url: '/../../assets/tunsori/tunsoare1.webp' },
+	// 	{ url: '/../../assets/tunsori/tunsoare2.webp' },
+	// 	{ url: '/../../assets/tunsori/tunsoare3.webp' },
+	// 	{ url: '/../../assets/tunsori/tunsoare4.webp' },
+	// 	{ url: '/../../assets/tunsori/tunsoare5.webp' },
+	// 	{ url: '/../../assets/tunsori/tunsoare6.webp' }
+	// ];
 </script>
 
 <section id="recenzii" class="bg-white py-24">
@@ -55,24 +55,54 @@
 			</p>
 		</div>
 		<div class="mb-16 grid grid-cols-2 grid-rows-2 gap-6 md:grid-cols-3">
-			{#each pictures as picture, i}
-				<div class="group relative overflow-hidden rounded-2xl shadow-lg">
-					<img
-						loading="lazy"
-						src={picture.url}
-						alt={`Tuns Realizat ${i + 1}`}
-						class="h-[250px] w-full overflow-auto object-cover object-[45%_55%] transition-transform duration-500 group-hover:scale-110"
-					/>
-					<!-- <div -->
-					<!-- 	class="absolute inset-0 bg-gradient-to-t from-stone-900/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" -->
-					<!-- ></div> -->
-					<!-- <div -->
-					<!-- 	class="absolute bottom-4 left-4 flex opacity-0 transition-opacity duration-300 group-hover:opacity-100" -->
-					<!-- > -->
-					<!-- 	<div class="text-lg font-semibold text-white md:text-xl">Taper</div> -->
-					<!-- </div> -->
-				</div>
-			{/each}
+			<div class="group relative overflow-hidden rounded-2xl shadow-lg">
+				<enhanced:img
+					loading="lazy"
+					src="../../assets/tunsori/tunsoare1.webp"
+					alt={`Tuns Realizat 1`}
+					class="h-[250px] w-full overflow-auto object-cover object-[45%_55%] transition-transform duration-500 group-hover:scale-110"
+				/>
+			</div>
+			<div class="group relative overflow-hidden rounded-2xl shadow-lg">
+				<enhanced:img
+					loading="lazy"
+					src="../../assets/tunsori/tunsoare2.webp"
+					alt={`Tuns Realizat 2`}
+					class="h-[250px] w-full overflow-auto object-cover object-[45%_55%] transition-transform duration-500 group-hover:scale-110"
+				/>
+			</div>
+			<div class="group relative overflow-hidden rounded-2xl shadow-lg">
+				<enhanced:img
+					loading="lazy"
+					src="../../assets/tunsori/tunsoare3.webp"
+					alt={`Tuns Realizat 3`}
+					class="h-[250px] w-full overflow-auto object-cover object-[45%_55%] transition-transform duration-500 group-hover:scale-110"
+				/>
+			</div>
+			<div class="group relative overflow-hidden rounded-2xl shadow-lg">
+				<enhanced:img
+					loading="lazy"
+					src="../../assets/tunsori/tunsoare4.webp"
+					alt={`Tuns Realizat 4`}
+					class="h-[250px] w-full overflow-auto object-cover object-[45%_55%] transition-transform duration-500 group-hover:scale-110"
+				/>
+			</div>
+			<div class="group relative overflow-hidden rounded-2xl shadow-lg">
+				<enhanced:img
+					loading="lazy"
+					src="../../assets/tunsori/tunsoare5.webp"
+					alt={`Tuns Realizat 5`}
+					class="h-[250px] w-full overflow-auto object-cover object-[45%_55%] transition-transform duration-500 group-hover:scale-110"
+				/>
+			</div>
+			<div class="group relative overflow-hidden rounded-2xl shadow-lg">
+				<enhanced:img
+					loading="lazy"
+					src="../../assets/tunsori/tunsoare6.webp"
+					alt={`Tuns Realizat 6`}
+					class="h-[250px] w-full overflow-auto object-cover object-[45%_55%] transition-transform duration-500 group-hover:scale-110"
+				/>
+			</div>
 		</div>
 
 		<div class="grid grid-cols-1 gap-8 md:grid-cols-3">

@@ -89,8 +89,10 @@
 					<enhanced:img
 						src="../../assets/hero.webp"
 						sizes="(min-width: 768px) 690px, 100vw"
-						alt="sveltekit ilustration"
-					/>
+						alt="Frizer profesionist la lucru"
+            fetchpriority="high"
+            loading="eager"
+          />
 				</div>
 				<div
 					class="absolute -bottom-6 -left-6 mx-4 rounded-2xl border border-stone-100 bg-white p-6 shadow-xl md:mx-0"

@@ -102,7 +102,8 @@
 	<enhanced:img
 						src="../../assets/services.webp?fit=cover"
 						sizes="(min-width: 768px) 712px, 100vw"
-						alt="sveltekit ilustration"
+						alt="Servicii tuns"
+            loading="lazy"
 					/>
 
 
