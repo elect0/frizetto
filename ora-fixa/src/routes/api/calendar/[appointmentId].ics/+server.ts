@@ -1,6 +1,6 @@
 import * as ics from 'ics';
 import type { RequestHandler } from './$types';
-import { json, error as SvelteKitError } from '@sveltejs/kit';
+import { error as SvelteKitError } from '@sveltejs/kit';
 import { differenceInMinutes, parseISO } from 'date-fns';
 
 export const GET: RequestHandler = async ({ params, locals: { supabase } }) => {
@@ -11,7 +11,8 @@ export const GET: RequestHandler = async ({ params, locals: { supabase } }) => {
 		.select('*')
 		.eq('id', id)
 		.single();
-	if (error) {
+
+  if (error) {
 		throw SvelteKitError(500, 'A apărut o eroare la server.');
 	}
 

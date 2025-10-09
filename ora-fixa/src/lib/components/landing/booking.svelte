@@ -347,11 +347,11 @@
 									<div class="grid gap-1.5 leading-none">
 										<Label
 											for="terms"
-											class="cursor-pointer gap-[3px] text-sm font-medium text-stone-700"
+											class="text-nowrap cursor-pointer gap-0 md:gap-[4px] w-full text-sm font-medium text-stone-700 flex-col md:flex-row"
 										>
 											Am citit și sunt de acord cu <a
 												href="/termeni-si-conditii"
-												class="text-amber-700 hover:text-amber-800">Termenii și Condițiile</a
+												class="text-nowrap text-amber-700 text-start pl-1 md:pl-0 w-full hover:text-amber-800">Termenii și Condițiile</a
 											>
 										</Label>
 										<p class="text-xs text-stone-500">Înțeleg că pot anula programarea.</p>

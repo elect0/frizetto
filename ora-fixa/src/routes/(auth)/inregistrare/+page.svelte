@@ -91,7 +91,7 @@
 					<div class="space-y-2">
 						<div class="flex items-center gap-2">
 							<Checkbox id="terms" required name="terms" />
-							<Label for="terms" class="text-sm font-normal gap-[4px]">
+							<Label for="terms" class="text-sm font-normal">
 								Sunt de acord cu
 								<a
 									href="/termeni-si-conditii"
