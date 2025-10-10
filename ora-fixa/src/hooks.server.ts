@@ -4,9 +4,10 @@ import type { Handle } from '@sveltejs/kit';
 import { sequence } from '@sveltejs/kit/hooks';
 import { redirect } from '@sveltejs/kit';
 import { SERVICE_ROLE_KEY } from '$env/static/private';
+import { type Database } from './lib/database.types';
 
 const supabase: Handle = async ({ event, resolve }) => {
-	event.locals.supabase = createServerClient(PUBLIC_SUPABASE_URL, SERVICE_ROLE_KEY, {
+	event.locals.supabase = createServerClient<Database>(PUBLIC_SUPABASE_URL, SERVICE_ROLE_KEY, {
 		cookies: {
 			getAll: () => event.cookies.getAll(),
 			setAll: (cookiesToSet) => {
@@ -69,6 +70,10 @@ const authGuard: Handle = async ({ event, resolve }) => {
 		(event.url.pathname.startsWith('/login') || event.url.pathname.startsWith('/inregistrare'))
 	) {
 		redirect(303, '/cont');
+	}
+
+	if (!event.locals.session && event.url.pathname.startsWith('/review')) {
+		redirect(303, '/login');
 	}
 
 	return resolve(event);

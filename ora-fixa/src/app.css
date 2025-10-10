@@ -131,3 +131,7 @@
 /* * {
 	border: 1px solid red !important;
 } */
+
+#bits-c98 {
+  width: fit-content!important;
+}

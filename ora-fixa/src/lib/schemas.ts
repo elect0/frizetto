@@ -121,3 +121,10 @@ export const addServiceSchema = z.object({
 	price: z.coerce.number().positive('Pretul trebuie să fie un număr pozitiv.'),
 	duration: z.coerce.number().positive('Durata serviciului trebuie să fie un număr pozitiv.')
 });
+
+export const reviewSchema = z.object({
+  appointmentId: z.number(),
+  userId: z.string(),
+  mood: z.enum(["angry", "frown", "meh", "smile", "laugh"]),
+  reviewContent: z.string()
+})
