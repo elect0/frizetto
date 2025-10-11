@@ -103,23 +103,23 @@ export const actions: Actions = {
 		const formData = await request.formData();
 		const serviceId = formData.get('serviceId') as string;
 
-
 		if (!serviceId) {
 			return fail(400, { message: 'ID-ul serviciului lipsește.' });
 		}
 
-    console.log(session.user?.id)
+		console.log(session.user?.id);
 
 		const { error } = await supabase
 			.from('profiles')
 			.update({ favorite_service_id: serviceId })
 			.eq('id', session.user?.id);
 
-    console.log(error)
+		console.log(error);
 
 		if (error) {
 			return fail(500, { message: 'A apărut o eroare. Te rugăm să încerci din nou.' });
 		}
-		return { success: true };
+
+		redirect(303, '/cont/programari');
 	}
 };

@@ -4,15 +4,30 @@
 	import { Angry, Frown, Meh, Smile, Laugh, Send } from '@lucide/svelte';
 	import Textarea from '$lib/components/ui/textarea/textarea.svelte';
 	import Button from '$lib/components/ui/button/button.svelte';
+	import { superForm } from 'sveltekit-superforms';
+	import { zod } from 'sveltekit-superforms/adapters';
+	import { reviewSchema } from '$lib/schemas';
+	import { toast } from 'svelte-sonner';
+	import { goto } from '$app/navigation';
 
-  let test = $state("")
-	let data = $props();
+	let { data } = $props();
+
+	const { form, enhance } = superForm(data.form, {
+		validators: zod(reviewSchema),
+		onResult: ({ result }) => {
+			if (result.type === 'success') {
+				toast.success(result.data?.form.message);
+				goto('/cont');
+			} else if (result.type === 'failure') {
+				toast.error(result.data?.form.message);
+			}
+		}
+	});
 </script>
 
 <div class="flex min-h-screen items-center bg-white py-32">
 	<div class="container mx-auto px-4 lg:px-6">
 		<div class="mb-12 text-center">
-			<!-- <Badge class="mb-6 bg-amber-600 px-4 py-2 text-white">Programări & Istoric</Badge> -->
 			<h2 class="mb-4 text-3xl font-bold text-stone-900 md:mb-6 md:text-5xl">
 				Cum ți s-a părut <br /> experiența?
 			</h2>
@@ -20,8 +35,17 @@
 				Ne-ar plăcea să știm cum te-ai simțit. Lasă-ne o recenzie sinceră și ajută-i și pe ceilalți
 				să afle ce merită cu adevărat.
 			</p>
-			<form action="?/review" method="POST" class="mt-10 flex flex-col items-center space-y-6">
-				<RadioGroup.Root bind:value={test} name="mood" class="grid max-w-sm grid-cols-5 gap-5">
+			<form
+				action="?/review"
+				method="POST"
+				class="mt-10 flex flex-col items-center space-y-6"
+				use:enhance
+			>
+				<RadioGroup.Root
+					bind:value={$form.mood}
+					name="mood"
+					class="grid max-w-sm grid-cols-5 gap-5"
+				>
 					<div class="w-fit">
 						<RadioGroup.Item value="angry" id="angry" class="peer sr-only" />
 						<Label
@@ -69,10 +93,14 @@
 					</div>
 				</RadioGroup.Root>
 				<Textarea
+					bind:value={$form.reviewContent}
+					name="reviewContent"
 					placeholder="Împărtășește-ne cum te-ai simțit și ce ți-a plăcut cel mai mult."
 					class="h-[150px] max-w-lg border-stone-200 bg-stone-50 text-sm md:text-base"
 				/>
-				<Button class='max-w-lg w-full py-5'><Send /> Trimite</Button>
+				<input type="hidden" value={data.session?.user.id} name="userId" />
+				<input type="hidden" value={data.appointment.id} name="appointmentId" />
+				<Button type="submit" class="w-full max-w-lg py-5"><Send /> Trimite</Button>
 			</form>
 		</div>
 	</div>
