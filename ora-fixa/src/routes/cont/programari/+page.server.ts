@@ -10,7 +10,7 @@ export const load: PageServerLoad = async ({ locals: { supabase, safeGetSession 
 
 	const appointmentsPromise = supabase
 		.from('appointments')
-		.select('*, services(*)')
+		.select('*, services(*), reviews(id)')
 		.eq('user_id', session.user?.id)
 		.order('start_time', { ascending: false });
 
@@ -28,6 +28,8 @@ export const load: PageServerLoad = async ({ locals: { supabase, safeGetSession 
 	if (!allAppointments) {
 		throw error(500, 'Nu am putut încărca programările tale.');
 	}
+
+  console.log(allAppointments[1].reviews)
 
 	const now = new Date();
 

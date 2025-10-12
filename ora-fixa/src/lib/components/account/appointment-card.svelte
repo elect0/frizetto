@@ -1,7 +1,7 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
-	import { Clock } from '@lucide/svelte';
+	import { Clock, Pencil } from '@lucide/svelte';
 	import { Scissors, Calendar, X, DollarSign, Sparkles, Star } from 'lucide-svelte';
 	import Badge from '../ui/badge/badge.svelte';
 	import Separator from '../ui/separator/separator.svelte';
@@ -18,6 +18,9 @@
 			name: string;
 			duration_minutes: string;
 			price: number;
+		};
+		reviews: {
+			id: number;
 		};
 	};
 
@@ -153,8 +156,8 @@
 							class="mt-1 cursor-pointer bg-red-600 text-white hover:bg-red-700"
 						>
 							<X className="h-4 w-4 mr-2" />
-						Anulează Programarea
-            </Button>
+							Anulează Programarea
+						</Button>
 					</AlertDialog.Trigger>
 					<AlertDialog.Content>
 						<AlertDialog.Header>
@@ -174,7 +177,7 @@
 					</AlertDialog.Content>
 				</AlertDialog.Root>
 			{:else}
-				<div class="ml-auto">
+				<div class="ml-auto flex space-x-2">
 					<form method="POST" action="?/rebook">
 						<input type="hidden" name="serviceId" value={appointment.services?.id} />
 						<Button type="submit" class="cursor-pointer" size="lg">
@@ -182,6 +185,11 @@
 							Programează din nou
 						</Button>
 					</form>
+					{#if !appointment.reviews}
+						<a href={`/review/${appointment.id}`}>
+							<Button variant="outline" size="lg"><Pencil /> Lasa un review</Button>
+						</a>
+					{/if}
 				</div>
 			{/if}
 		</div>
