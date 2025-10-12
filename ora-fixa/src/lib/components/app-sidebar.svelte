@@ -3,7 +3,7 @@
 	import InnerShadowTopIcon from '@tabler/icons-svelte/icons/inner-shadow-top';
 	import UsersIcon from '@tabler/icons-svelte/icons/users';
 	import IconCalendarCheck from '@tabler/icons-svelte/icons/calendar-check';
-	import { IconClock, IconMessage, IconScissors } from '@tabler/icons-svelte';
+	import { IconClock, IconMessage, IconStar, IconScissors } from '@tabler/icons-svelte';
 	import NavDocuments from './nav-documents.svelte';
 	import NavMain from './nav-main.svelte';
 	import NavUser from './nav-user.svelte';
@@ -11,8 +11,7 @@
 	import type { ComponentProps } from 'svelte';
 	import { page } from '$app/state';
 
-
-	let user = $derived(page.data.user)
+	let user = $derived(page.data.user);
 
 	const data = {
 		navMain: [
@@ -35,6 +34,11 @@
 				title: 'Servicii',
 				url: '/admin/servicii',
 				icon: IconScissors
+			},
+			{
+				title: 'Review-uri',
+				url: '/admin/reviews',
+				icon: IconStar
 			}
 		],
 		documents: [
@@ -42,7 +46,7 @@
 				name: 'Program de lucru',
 				url: '/admin/program',
 				icon: IconClock
-			},
+			}
 			// {
 			// 	name: 'Notificari',
 			// 	url: '/admin/notificari',
@@ -74,6 +78,6 @@
 		<NavDocuments items={data.documents} />
 	</Sidebar.Content>
 	<Sidebar.Footer>
-		<NavUser user={user} />
+		<NavUser {user} />
 	</Sidebar.Footer>
 </Sidebar.Root>

@@ -29,8 +29,6 @@ export const load: PageServerLoad = async ({ locals: { supabase, safeGetSession 
 		throw error(500, 'Nu am putut încărca programările tale.');
 	}
 
-  console.log(allAppointments[1].reviews)
-
 	const now = new Date();
 
 	const upcomingAppointments = allAppointments?.filter(

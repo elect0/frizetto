@@ -19,9 +19,7 @@
 			duration_minutes: string;
 			price: number;
 		};
-		reviews: {
-			id: number;
-		};
+		reviews: { id: string }[];
 	};
 
 	export let favoriteServiceId: number | null;
@@ -143,7 +141,7 @@
 			</div>
 		</div>
 		<Separator class="bg-stone-200" />
-		<div class="grid grid-cols-1 items-center gap-4 pt-2 md:grid-cols-2">
+		<div class="flex flex-col items-center gap-4 pt-2 md:flex-row">
 			<div class="text-sm text-stone-500">
 				<p>ID Programare: {appointment.id}</p>
 				<p>Programat pe: {format(new Date(appointment.created_at))}</p>
@@ -185,7 +183,7 @@
 							Programează din nou
 						</Button>
 					</form>
-					{#if !appointment.reviews}
+					{#if !appointment.reviews[0]}
 						<a href={`/review/${appointment.id}`}>
 							<Button variant="outline" size="lg"><Pencil /> Lasa un review</Button>
 						</a>

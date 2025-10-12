@@ -24,7 +24,7 @@
 	export const columns: ColumnDef<Appointment>[] = [
 		{
 			accessorKey: 'start_time',
-			header: 'Ora',
+			header: 'Data si ora',
 			cell: ({ row }) => {
 				const formatter = new Intl.DateTimeFormat('ro-RO', {
 					weekday: 'long',
@@ -113,6 +113,7 @@
 	import * as Table from '$lib/components/ui/table/index.js';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
+
 	import {
 		CircleCheck,
 		CalendarCheck,
