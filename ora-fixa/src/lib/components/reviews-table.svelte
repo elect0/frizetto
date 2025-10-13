@@ -27,8 +27,7 @@
 		{
 			header: 'Nume complet',
 			accessorKey: 'full_name',
-			accessorFn: (row) => row.profiles.full_name,
-
+			accessorFn: (row) => row.profiles.full_name
 		},
 		{
 			accessorKey: 'created_at',
@@ -92,11 +91,21 @@
 	import {
 		type Row,
 		type ColumnDef,
+		type PaginationState,
 		getPaginationRowModel,
 		getFilteredRowModel,
 		getCoreRowModel
 	} from '@tanstack/table-core';
-	import { Angry, Frown, Meh, Smile, Laugh, EllipsisVertical } from '@lucide/svelte';
+	import {
+		Angry,
+		Frown,
+		Meh,
+		Smile,
+		Laugh,
+		EllipsisVertical,
+		MoveRight,
+		MoveLeft
+	} from '@lucide/svelte';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 
 	import * as Table from '$lib/components/ui/table/index.js';
@@ -106,26 +115,25 @@
 
 	let { reviews }: { reviews: Review[] } = $props();
 
+	let pagination = $state<PaginationState>({ pageIndex: 0, pageSize: 15 });
+
 	const table = createSvelteTable({
 		get data() {
 			return reviews;
 		},
 		columns,
-		// onColumnFiltersChange: (updater) => {
-		// 	if (typeof updater === 'function') {
-		// 		columnFilters = updater(columnFilters);
-		// 	} else {
-		// 		columnFilters = updater;
-		// 	}
-		// },
-		// state: {
-		// 	get pagination() {
-		// 		return pagination;
-		// 	},
-		// 	get columnFilters() {
-		// 		return columnFilters;
-		// 	}
-		// },
+		state: {
+			get pagination() {
+				return pagination;
+			}
+		},
+		onPaginationChange: (updater) => {
+			if (typeof updater === 'function') {
+				pagination = updater(pagination);
+			} else {
+				pagination = updater;
+			}
+		},
 		getPaginationRowModel: getPaginationRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 		getCoreRowModel: getCoreRowModel()
@@ -134,7 +142,7 @@
 
 <div>
 	<div class="flex flex-col py-4 sm:flex-row sm:items-center sm:justify-between">
-		<div class="rounded-md border w-full">
+		<div class="w-full rounded-md border">
 			<Table.Root>
 				<Table.Header>
 					{#each table.getHeaderGroups() as headerGroup (headerGroup.id)}
@@ -170,6 +178,31 @@
 					{/each}
 				</Table.Body>
 			</Table.Root>
+		</div>
+	</div>
+	<div class="flex items-center justify-between space-x-2 py-4">
+		<p class="text-muted-foreground text-sm">
+			Pagina {pagination.pageIndex + 1} din {table.getPageCount()}
+		</p>
+		<div class="flex items-center space-x-2">
+			<Button
+				variant="outline"
+				size="sm"
+				onclick={() => table.previousPage()}
+				disabled={!table.getCanPreviousPage()}
+			>
+				<MoveLeft />
+				Înapoi
+			</Button>
+			<Button
+				variant="outline"
+				size="sm"
+				onclick={() => table.nextPage()}
+				disabled={!table.getCanNextPage()}
+			>
+				Înainte
+				<MoveRight />
+			</Button>
 		</div>
 	</div>
 </div>

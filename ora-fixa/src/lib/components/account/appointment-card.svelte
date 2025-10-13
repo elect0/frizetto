@@ -146,34 +146,37 @@
 				<p>ID Programare: {appointment.id}</p>
 				<p>Programat pe: {format(new Date(appointment.created_at))}</p>
 			</div>
+
 			{#if isUpcoming && appointment.status === 'confirmata'}
-				<AlertDialog.Root>
-					<AlertDialog.Trigger class="flex justify-end">
-						<Button
-							variant="destructive"
-							class="mt-1 cursor-pointer bg-red-600 text-white hover:bg-red-700"
-						>
-							<X className="h-4 w-4 mr-2" />
-							Anulează Programarea
-						</Button>
-					</AlertDialog.Trigger>
-					<AlertDialog.Content>
-						<AlertDialog.Header>
-							<AlertDialog.Title>Ești absolut sigur?</AlertDialog.Title>
-							<AlertDialog.Description>
-								Această acțiune nu poate fi anulată. Vei elibera acest interval orar și va trebui să
-								faci o nouă programare dacă te răzgândești.
-							</AlertDialog.Description>
-						</AlertDialog.Header>
-						<AlertDialog.Footer class="mt-1 md:mt-0">
-							<AlertDialog.Cancel>Înapoi</AlertDialog.Cancel>
-							<form action="?/cancel" method="POST">
-								<input type="hidden" name="appointmentId" value={appointment.id} />
-								<Button type="submit" variant="destructive" class="w-full">Da, anulează</Button>
-							</form>
-						</AlertDialog.Footer>
-					</AlertDialog.Content>
-				</AlertDialog.Root>
+				<div class='flex justify-end w-full'>
+					<AlertDialog.Root>
+						<AlertDialog.Trigger class="flex justify-end">
+							<Button
+								variant="destructive"
+								class="mt-1 cursor-pointer bg-red-600 text-white hover:bg-red-700"
+							>
+								<X className="h-4 w-4 mr-2" />
+								Anulează Programarea
+							</Button>
+						</AlertDialog.Trigger>
+						<AlertDialog.Content>
+							<AlertDialog.Header>
+								<AlertDialog.Title>Ești absolut sigur?</AlertDialog.Title>
+								<AlertDialog.Description>
+									Această acțiune nu poate fi anulată. Vei elibera acest interval orar și va trebui
+									să faci o nouă programare dacă te răzgândești.
+								</AlertDialog.Description>
+							</AlertDialog.Header>
+							<AlertDialog.Footer class="mt-1 md:mt-0">
+								<AlertDialog.Cancel>Înapoi</AlertDialog.Cancel>
+								<form action="?/cancel" method="POST">
+									<input type="hidden" name="appointmentId" value={appointment.id} />
+									<Button type="submit" variant="destructive" class="w-full">Da, anulează</Button>
+								</form>
+							</AlertDialog.Footer>
+						</AlertDialog.Content>
+					</AlertDialog.Root>
+				</div>
 			{:else}
 				<div class="ml-auto flex space-x-2">
 					<form method="POST" action="?/rebook">
@@ -183,7 +186,7 @@
 							Programează din nou
 						</Button>
 					</form>
-					{#if !appointment.reviews[0]}
+					{#if !appointment.reviews[0] && appointment.status === "finalizata"}
 						<a href={`/review/${appointment.id}`}>
 							<Button variant="outline" size="lg"><Pencil /> Lasa un review</Button>
 						</a>
