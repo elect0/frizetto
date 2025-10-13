@@ -137,7 +137,7 @@ export const actions: Actions = {
 
 		return { success: true };
 	},
-	addWalkInAppointment: async ({ request, locals: { supabase, session, isAdmin } }) => {
+	addWalkInAppointment: async ({ request, locals: { supabase, isAdmin } }) => {
 		const form = await superValidate(request, zod(walkInSchema));
 		if (!form.valid) {
 			return fail(400, { form });

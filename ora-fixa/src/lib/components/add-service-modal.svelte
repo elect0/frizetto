@@ -11,7 +11,7 @@
 	import { toast } from 'svelte-sonner';
 	import { invalidateAll } from '$app/navigation';
 	import { Save } from 'lucide-svelte';
-    import {SquarePlus} from 'lucide-svelte'
+	import { SquarePlus } from 'lucide-svelte';
 
 	let { addServiceForm }: { addServiceForm: SuperValidated<z.infer<typeof addServiceSchema>> } =
 		$props();
@@ -40,21 +40,29 @@
 	</Dialog.Trigger>
 	<Dialog.Content>
 		<Dialog.Header>
-			<Dialog.Title>Adaugă serviciu nou</Dialog.Title>
-			<Dialog.Description>Adaugă un serviciu nou în lista ta de servicii.</Dialog.Description>
+			<Dialog.Title class="text-2xl md:text-4xl">Adaugă serviciu nou</Dialog.Title>
+			<Dialog.Description class="md:text-base"
+				>Adaugă un serviciu nou în lista ta de servicii.</Dialog.Description
+			>
 		</Dialog.Header>
 		<form action="?/addService" method="post" use:enhance>
 			<div class="grid gap-3">
 				<div class="space-y-2">
 					<Label for="name">Nume</Label>
-					<Input id="name" name="name" bind:value={$form.name} placeholder='Nume serviciu.' />
+					<Input
+						id="name"
+						name="name"
+						class="text-sm md:text-base"
+						bind:value={$form.name}
+						placeholder="Nume serviciu."
+					/>
 				</div>
 				<div class="space-y-2">
 					<Label for="description">Descriere</Label>
 					<Textarea
-						class="h-30 md:h-20"
+						class="h-30 text-sm md:h-20 md:text-base"
 						id="description"
-                        placeholder='Descriere serviciu.'
+						placeholder="Descriere serviciu."
 						name="description"
 						bind:value={$form.description}
 					/>
@@ -62,11 +70,23 @@
 				<div class="grid grid-cols-2 gap-2">
 					<div class="space-y-2">
 						<Label for="duration">Durata (Minute)</Label>
-						<Input id="duration" name="duration" type="number" bind:value={$form.duration} />
+						<Input
+							id="duration"
+							name="duration"
+							type="number"
+							class="text-sm md:text-base"
+							bind:value={$form.duration}
+						/>
 					</div>
 					<div class="space-y-2">
 						<Label for="price">Pret (Lei)</Label>
-						<Input id="price" name="price" type="number" bind:value={$form.price} />
+						<Input
+							id="price"
+							name="price"
+							type="number"
+							class="text-sm md:text-base"
+							bind:value={$form.price}
+						/>
 					</div>
 				</div>
 			</div>

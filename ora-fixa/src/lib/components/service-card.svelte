@@ -13,7 +13,7 @@
 	import { toast } from 'svelte-sonner';
 	import { invalidateAll } from '$app/navigation';
 	import { enhance } from '$app/forms';
-	import { Edit , Trash2 } from 'lucide-svelte';
+	import { Edit, Trash2 } from 'lucide-svelte';
 	import { cn } from '$lib/utils';
 
 	type Service = {
@@ -99,12 +99,12 @@
 		<div class="w-full">
 			<Dialog.Root bind:open={isEditDialogOpen}>
 				<Dialog.Trigger class={cn(buttonVariants({ variant: 'outline' }), 'w-full')}>
-					 					<Edit class="w-4 h-4" /> Editeaza serviciul
+					<Edit class="h-4 w-4" /> Editeaza serviciul
 				</Dialog.Trigger>
 				<Dialog.Content class="w-full">
 					<Dialog.Header>
-						<Dialog.Title>Editeaza serviciul</Dialog.Title>
-						<Dialog.Description>
+						<Dialog.Title class='md:text-4xl text-2xl'>Editeaza serviciul</Dialog.Title>
+						<Dialog.Description class='md:text-lg text-base'>
 							Editează detaliile serviciului. Apasă salvează când ai terminat.
 						</Dialog.Description>
 					</Dialog.Header>
@@ -112,12 +112,17 @@
 						<div class="grid gap-3">
 							<div class="space-y-2">
 								<Label for="name">Nume</Label>
-								<Input id="name" name="name" bind:value={$editForm.name} />
+								<Input
+									id="name"
+									name="name"
+									class="text-sm md:text-base"
+									bind:value={$editForm.name}
+								/>
 							</div>
 							<div class="space-y-2">
 								<Label for="description">Descriere</Label>
 								<Textarea
-									class="h-30 md:h-20"
+									class="h-30 text-sm md:h-20 md:text-base"
 									id="description"
 									name="description"
 									bind:value={$editForm.description}
@@ -129,13 +134,20 @@
 									<Input
 										id="duration"
 										name="duration"
+										class="text-sm md:text-base"
 										type="number"
 										bind:value={$editForm.duration}
 									/>
 								</div>
 								<div class="space-y-2">
 									<Label for="price">Pret (Lei)</Label>
-									<Input id="price" name="price" type="number" bind:value={$editForm.price} />
+									<Input
+										id="price"
+										name="price"
+										class="text-sm md:text-base"
+										type="number"
+										bind:value={$editForm.price}
+									/>
 								</div>
 							</div>
 							<input type="hidden" name="serviceId" value={$editForm.serviceId} />

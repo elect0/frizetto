@@ -19,6 +19,8 @@
 
 	export type Review = z.infer<typeof ReviewSchema>;
 
+  let isEditDialogOpen = $state(false)
+
 	export const columns: ColumnDef<Review>[] = [
 		{
 			header: 'Id',
@@ -31,7 +33,7 @@
 		},
 		{
 			accessorKey: 'created_at',
-			header: 'Data si ora',
+			header: 'Data și ora',
 			cell: ({ row }) => {
 				const formatter = new Intl.DateTimeFormat('ro-RO', {
 					weekday: 'long',
@@ -92,9 +94,8 @@
 		type Row,
 		type ColumnDef,
 		type PaginationState,
-		type SortingState,
 		type ColumnFiltersState,
-		getSortedRowModel,
+		type VisibilityState,
 		getPaginationRowModel,
 		getFilteredRowModel,
 		getCoreRowModel
@@ -107,19 +108,25 @@
 		Laugh,
 		EllipsisVertical,
 		MoveRight,
-		MoveLeft
+		MoveLeft,
+    Trash
 	} from '@lucide/svelte';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 	import * as Table from '$lib/components/ui/table/index.js';
 	import Input from './ui/input/input.svelte';
+	import * as Dialog from '$lib/components/ui/dialog/index.js';
 
 	import { FlexRender } from '$lib/components/ui/data-table/index.js';
-	import Button from './ui/button/button.svelte';
+	import Button, { buttonVariants } from './ui/button/button.svelte';
+	import { enhance } from '$app/forms';
+	import { toast } from 'svelte-sonner';
+	import { invalidateAll } from '$app/navigation';
 
 	let { reviews }: { reviews: Review[] } = $props();
 
 	let pagination = $state<PaginationState>({ pageIndex: 0, pageSize: 15 });
 	let columnFilters = $state<ColumnFiltersState>([]);
+	let columnVisibility = $state<VisibilityState>({});
 
 	const table = createSvelteTable({
 		get data() {
@@ -132,6 +139,9 @@
 			},
 			get columnFilters() {
 				return columnFilters;
+			},
+			get columnVisibility() {
+				return columnVisibility;
 			}
 		},
 		onPaginationChange: (updater) => {
@@ -148,6 +158,13 @@
 				columnFilters = updater;
 			}
 		},
+		onColumnVisibilityChange: (updater) => {
+			if (typeof updater === 'function') {
+				columnVisibility = updater(columnVisibility);
+			} else {
+				columnVisibility = updater;
+			}
+		},
 		getPaginationRowModel: getPaginationRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 		getCoreRowModel: getCoreRowModel()
@@ -155,18 +172,40 @@
 </script>
 
 <div>
-	<div class="flex items-center py-4">
-		<Input
-			placeholder="Filtrează review-urile..."
-			value={(table.getColumn('full_name')?.getFilterValue() as string) ?? ''}
-			onchange={(e) => {
-				table.getColumn('full_name')?.setFilterValue(e.currentTarget.value);
-			}}
-			oninput={(e) => {
-				table.getColumn('full_name')?.setFilterValue(e.currentTarget.value);
-			}}
-			class="max-w-sm"
-		/>
+	<div class="flex flex-col justify-between space-y-3 py-4 md:flex-row">
+		<h1 class="text-2xl">Tabel Review-uri</h1>
+		<div class="flex space-x-2">
+			<Input
+				placeholder="Filtrează review-urile..."
+				value={(table.getColumn('full_name')?.getFilterValue() as string) ?? ''}
+				onchange={(e) => {
+					table.getColumn('full_name')?.setFilterValue(e.currentTarget.value);
+				}}
+				oninput={(e) => {
+					table.getColumn('full_name')?.setFilterValue(e.currentTarget.value);
+				}}
+				class="max-w-sm"
+			/>
+			<DropdownMenu.Root>
+				<DropdownMenu.Trigger class={buttonVariants({ variant: 'outline' })}>
+					Coloane
+				</DropdownMenu.Trigger>
+				<DropdownMenu.Content align="end">
+					{#each table.getAllColumns().filter((col) => col.getCanHide()) as column (column.id)}
+						<DropdownMenu.CheckboxItem
+							class="capitalize"
+							bind:checked={() => column.getIsVisible(), (v) => column.toggleVisibility(!!v)}
+						>
+							{#if column.id === 'actions'}
+								Actiuni
+							{:else}
+								{column.columnDef.header}
+							{/if}
+						</DropdownMenu.CheckboxItem>
+					{/each}
+				</DropdownMenu.Content>
+			</DropdownMenu.Root>
+		</div>
 	</div>
 	<div class="flex flex-col py-4 sm:flex-row sm:items-center sm:justify-between">
 		<div class="w-full rounded-md border">
@@ -244,6 +283,48 @@
 				</Button>
 			{/snippet}
 		</DropdownMenu.Trigger>
-		<DropdownMenu.Content align="end" class="w-32"></DropdownMenu.Content>
+		<DropdownMenu.Content align="end" class="w-32">
+			<Dialog.Root bind:open={isEditDialogOpen}>
+				<Dialog.Trigger class="hover:bg-accent rounded-md p-2 text-start text-sm text-red-500"
+					>Șterge Review</Dialog.Trigger
+				>
+				<Dialog.Content>
+					<Dialog.Header>
+						<Dialog.Title class='text-2xl md:text-3xl'>Anulează programarea</Dialog.Title>
+						<Dialog.Description class="text-sm md:text-base">
+							Ești sigur că vrei să anulezi această programare? Această acțiune este permanentă și
+							nu poate fi reversată.
+						</Dialog.Description>
+					</Dialog.Header>
+					<Dialog.Footer>
+						<form
+							class="flex justify-center"
+							action="?/deleteReview"
+							method="POST"
+							use:enhance={() => {
+								return async ({ result }) => {
+									if (result.type === 'success') {
+										toast.success('Review-ul a fost șters cu succes!');
+										await invalidateAll();
+										setTimeout(() => {
+											isEditDialogOpen = false;
+										}, 500);
+									} else {
+										toast.error('Eroare:', {
+											description: 'Review-ul nu a putut fi șters!'
+										});
+									}
+								};
+							}}
+						>
+							<input type="hidden" name="reviewId" value={row.original.id} />
+							<Button type="submit" variant="destructive" class="mt-3 cursor-pointer"
+								><Trash /> Confirmă ștergerea</Button
+							>
+						</form>
+					</Dialog.Footer>
+				</Dialog.Content>
+			</Dialog.Root>
+		</DropdownMenu.Content>
 	</DropdownMenu.Root>
 {/snippet}

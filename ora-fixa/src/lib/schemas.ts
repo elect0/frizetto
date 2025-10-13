@@ -104,8 +104,8 @@ export const scheduleOverrideSchema = z.object({
 });
 
 export const deleteScheduleOverrideSchema = z.object({
-  id: z.number(),
-})
+	id: z.number()
+});
 
 export const updateServiceSchema = z.object({
 	serviceId: z.string(),
@@ -123,8 +123,9 @@ export const addServiceSchema = z.object({
 });
 
 export const reviewSchema = z.object({
-  appointmentId: z.number(),
-  userId: z.string(),
-  mood: z.enum(["angry", "frown", "meh", "smile", "laugh"]),
-  reviewContent: z.string()
-})
+	appointmentId: z.number(),
+	userId: z.string(),
+	mood: z.enum(['angry', 'frown', 'meh', 'smile', 'laugh']),
+	reviewContent: z.string()
+});
+

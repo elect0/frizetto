@@ -8,8 +8,8 @@
 	<div class="@container/main flex flex-1 flex-col gap-2">
 		<div class="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
 			<div class="px-4 lg:px-6">
-				<div class="flex justify-between">
-					<h1 class="mb-6 text-3xl font-medium">Management</h1>
+				<div class="flex md:flex-row flex-col justify-between mb-6 md:mb-0">
+					<h1 class="mb-3 md:mb-6 text-3xl font-medium">Management</h1>
 					<AddServiceModal addServiceForm={data.addServiceForm} />
 				</div>
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-4">
