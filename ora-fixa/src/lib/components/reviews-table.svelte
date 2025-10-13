@@ -92,6 +92,9 @@
 		type Row,
 		type ColumnDef,
 		type PaginationState,
+		type SortingState,
+		type ColumnFiltersState,
+		getSortedRowModel,
 		getPaginationRowModel,
 		getFilteredRowModel,
 		getCoreRowModel
@@ -107,8 +110,8 @@
 		MoveLeft
 	} from '@lucide/svelte';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
-
 	import * as Table from '$lib/components/ui/table/index.js';
+	import Input from './ui/input/input.svelte';
 
 	import { FlexRender } from '$lib/components/ui/data-table/index.js';
 	import Button from './ui/button/button.svelte';
@@ -116,6 +119,7 @@
 	let { reviews }: { reviews: Review[] } = $props();
 
 	let pagination = $state<PaginationState>({ pageIndex: 0, pageSize: 15 });
+	let columnFilters = $state<ColumnFiltersState>([]);
 
 	const table = createSvelteTable({
 		get data() {
@@ -125,6 +129,9 @@
 		state: {
 			get pagination() {
 				return pagination;
+			},
+			get columnFilters() {
+				return columnFilters;
 			}
 		},
 		onPaginationChange: (updater) => {
@@ -134,6 +141,13 @@
 				pagination = updater;
 			}
 		},
+		onColumnFiltersChange: (updater) => {
+			if (typeof updater === 'function') {
+				columnFilters = updater(columnFilters);
+			} else {
+				columnFilters = updater;
+			}
+		},
 		getPaginationRowModel: getPaginationRowModel(),
 		getFilteredRowModel: getFilteredRowModel(),
 		getCoreRowModel: getCoreRowModel()
@@ -141,6 +155,19 @@
 </script>
 
 <div>
+	<div class="flex items-center py-4">
+		<Input
+			placeholder="Filtrează review-urile..."
+			value={(table.getColumn('full_name')?.getFilterValue() as string) ?? ''}
+			onchange={(e) => {
+				table.getColumn('full_name')?.setFilterValue(e.currentTarget.value);
+			}}
+			oninput={(e) => {
+				table.getColumn('full_name')?.setFilterValue(e.currentTarget.value);
+			}}
+			class="max-w-sm"
+		/>
+	</div>
 	<div class="flex flex-col py-4 sm:flex-row sm:items-center sm:justify-between">
 		<div class="w-full rounded-md border">
 			<Table.Root>
