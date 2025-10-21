@@ -13,7 +13,7 @@ export const load: PageServerLoad = async ({ locals: { supabase } }) => {
 		throw error(500, 'Internal server error');
 	}
 
-	return { reviews };
+	return { reviews, pageTitle: "Reviews" };
 };
 
 export const actions = {

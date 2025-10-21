@@ -141,8 +141,8 @@
 			</div>
 		</div>
 		<Separator class="bg-stone-200" />
-		<div class="flex flex-col items-center gap-4 pt-2 md:flex-row">
-			<div class="text-sm text-stone-500">
+		<div class="flex flex-col justify-start items-center gap-4 pt-2 md:flex-row">
+			<div class="text-sm text-stone-500 w-full">
 				<p>ID Programare: {appointment.id}</p>
 				<p>Programat pe: {format(new Date(appointment.created_at))}</p>
 			</div>
@@ -178,17 +178,17 @@
 					</AlertDialog.Root>
 				</div>
 			{:else}
-				<div class="ml-auto flex space-x-2">
+				<div class="ml-auto flex gap-3 justify-end md:flex-row flex-col text-end">
 					<form method="POST" action="?/rebook">
 						<input type="hidden" name="serviceId" value={appointment.services?.id} />
-						<Button type="submit" class="cursor-pointer" size="lg">
+						<Button type="submit" class="cursor-pointer" size="default">
 							<Sparkles />
 							Programează din nou
 						</Button>
 					</form>
 					{#if !appointment.reviews[0] && appointment.status === "finalizata"}
 						<a href={`/review/${appointment.id}`}>
-							<Button variant="outline" size="lg"><Pencil /> Lasa un review</Button>
+							<Button variant="outline" size="default"><Pencil /> Lasa un review</Button>
 						</a>
 					{/if}
 				</div>
