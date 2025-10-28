@@ -160,7 +160,7 @@ export const actions: Actions = {
 		};
 
 		const { error } = await supabase.from('appointments').insert(walkInAppointment);
-		if (error) {
+    if (error) {
 			return message(form, 'Programarea nu a fost confirmată!');
 		}
 
