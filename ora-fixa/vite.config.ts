@@ -7,15 +7,6 @@ import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 
 export default defineConfig({
 	plugins: [
-		enhancedImages(),
-		imagetools({
-			defaultDirectives: () =>
-				new URLSearchParams({
-					format: 'webp'
-				})
-		}),
-		tailwindcss(),
-		sveltekit(),
 		SvelteKitPWA({
 			registerType: 'autoUpdate',
 			devOptions: {
@@ -33,29 +24,35 @@ export default defineConfig({
 				start_url: '/',
 				icons: [
 					{
-						src: '/192.png',
+						src: 'static/192.png',
 						sizes: '192x192',
 						type: 'image/png'
 					},
 					{
-						src: '/256.png',
+						src: 'static/256.png',
 						sizes: '256x256',
 						type: 'image/png'
 					},
 					{
-						src: '/512.png',
+						src: 'static/512.png',
 						sizes: '512x512',
 						type: 'image/png'
 					}
 				]
 			},
 			workbox: {
-				globPatterns: ['**/*.{js,css,html,svg,webp,avif}'],
-				
-        	globIgnores: ['**/*.png'],
-        maximumFileSizeToCacheInBytes: 2097152
+				globPatterns: [
+					'client/**/*.{js,css,ico,png,svg,webp,webmanifest}',
+					'prerendered/**/*.{html,json}'
+				],
+				maximumFileSizeToCacheInBytes: 5 * 1024 ** 2
 			}
-		})
+		}),
+
+		enhancedImages(),
+		imagetools(),
+		tailwindcss(),
+		sveltekit()
 	],
 	build: {
 		assetsInlineLimit: 4096

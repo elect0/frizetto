@@ -12,7 +12,7 @@
 		"moduleResolution": "bundler",
     "lib": ["deno.window"],
     "compilerOptions": {
-      "types": ["vite/client"]
+      "types": ["vite/client", "vite-plugin-pwa/client"]
     }
   }
 	// Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias
