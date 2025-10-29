@@ -12,7 +12,9 @@ export default defineConfig({
 			devOptions: {
 				enabled: true
 			},
-			strategies: 'generateSW',
+      srcDir: "src",
+      filename: "service-worker.ts",
+      strategies: 'generateSW',
 			manifest: {
 				name: 'Frizetto',
 				short_name: 'Frizetto',
