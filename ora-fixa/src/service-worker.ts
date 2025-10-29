@@ -1,3 +1,10 @@
+
+import { precacheAndRoute } from 'workbox-precaching';
+
+// Inject manifest here
+// eslint-disable-next-line no-undef
+precacheAndRoute(self.__WB_MANIFEST);
+
 import {build, files, version} from '$service-worker'
 
 self.addEventListener('push', (event: PushEvent) => {

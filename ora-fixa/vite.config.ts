@@ -12,9 +12,9 @@ export default defineConfig({
 			devOptions: {
 				enabled: true
 			},
-      srcDir: "src",
-      filename: "service-worker.ts",
-      strategies: 'generateSW',
+			srcDir: 'src',
+			filename: 'service-worker.ts',
+			strategies: 'injectManifest',
 			manifest: {
 				name: 'Frizetto',
 				short_name: 'Frizetto',
@@ -47,7 +47,7 @@ export default defineConfig({
 					'client/**/*.{js,css,ico,svg,webp,webmanifest}',
 					'prerendered/**/*.{html,json}'
 				],
-        globIgnores: ["**/*.png"],
+				globIgnores: ['**/*.png'],
 				maximumFileSizeToCacheInBytes: 5 * 1024 ** 2
 			}
 		}),
