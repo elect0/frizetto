@@ -13,7 +13,7 @@ export default defineConfig({
 				enabled: true
 			},
 			srcDir: 'src',
-			filename: 'service-worker.ts',
+			filename: 'src/service-worker.ts',
 			strategies: 'injectManifest',
 			manifest: {
 				name: 'Frizetto',
