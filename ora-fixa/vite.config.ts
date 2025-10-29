@@ -24,17 +24,17 @@ export default defineConfig({
 				start_url: '/',
 				icons: [
 					{
-						src: 'static/192.png',
+						src: '/192.png',
 						sizes: '192x192',
 						type: 'image/png'
 					},
 					{
-						src: 'static/256.png',
+						src: '/256.png',
 						sizes: '256x256',
 						type: 'image/png'
 					},
 					{
-						src: 'static/512.png',
+						src: '/512.png',
 						sizes: '512x512',
 						type: 'image/png'
 					}
@@ -42,9 +42,10 @@ export default defineConfig({
 			},
 			workbox: {
 				globPatterns: [
-					'client/**/*.{js,css,ico,png,svg,webp,webmanifest}',
+					'client/**/*.{js,css,ico,svg,webp,webmanifest}',
 					'prerendered/**/*.{html,json}'
 				],
+        globIgnores: ["**/*.png"],
 				maximumFileSizeToCacheInBytes: 5 * 1024 ** 2
 			}
 		}),
