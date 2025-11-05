@@ -28,6 +28,7 @@ export async function subscribeToPushNotifications(userId: string) {
 	}
 
 	const VAPID_PUBLIC_KEY = env.PUBLIC_VAPID_PUBLIC_KEY; // Paste your public key here
+  console.log(VAPID_PUBLIC_KEY)
 
 	try {
 		const subscription = await registration.pushManager.subscribe({

@@ -8,4 +8,5 @@
   })
 
 </script>
+<button onclick={() => subscribeToPushNotifications(page.data.session?.user.id || '')}>activeaza notifciarile</button>
 <Button onclick={() => subscribeToPushNotifications(page.data.session?.user.id || '')}>Activeaza Notificarile</Button>
