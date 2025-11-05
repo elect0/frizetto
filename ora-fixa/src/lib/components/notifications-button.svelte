@@ -1,7 +1,5 @@
 <script lang='ts'>
 	import Button from "./ui/button/button.svelte";
-
-
 	import { subscribeToPushNotifications } from "$lib/web-push";
 	import { page } from "$app/state";
 

@@ -6,6 +6,7 @@
 	import { format } from 'date-fns';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
+	import NotificationsButton from '$lib/components/notifications-button.svelte';
 
 	let { data } = $props();
 	let kpis = $derived(data.kpis);
@@ -50,8 +51,9 @@
 <div class="flex flex-1 flex-col">
 	<div class="@container/main flex flex-1 flex-col gap-2">
 		<div class="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
-			<SectionCards {kpis} />
+      <SectionCards {kpis} />
 			<div class="px-4 lg:px-6">
+        <NotificationsButton />
 				<ChartAreaInteractive {weeklyRevenue} />
 			</div>
 			<div class="my-8"></div>
