@@ -20,7 +20,8 @@ export default defineConfig({
 				enabled: true
 			},
 			injectManifest: {
-				injectionPoint: undefined
+				injectionPoint: undefined,
+        rollupFormat: "iife",
 			},
 			manifest: {
 				name: 'Frizetto',
