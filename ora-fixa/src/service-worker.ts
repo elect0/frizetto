@@ -1,28 +1,32 @@
-/// <reference types="@sveltejs/kit" />
+// Disables access to DOM typings like `HTMLElement` which are not available
+// inside a service worker and instantiates the correct globals
 /// <reference no-default-lib="true"/>
 /// <reference lib="esnext" />
 /// <reference lib="webworker" />
 
-// https://kit.svelte.dev/docs/service-workers#type-safety
+// Ensures that the `$service-worker` import has proper type definitions
+/// <reference types="@sveltejs/kit" />
+
+// Only necessary if you have an import from `$env/static/public`
+/// <reference types="../.svelte-kit/ambient.d.ts" />
 
 import { clientsClaim } from 'workbox-core'
 import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching';
 
-const sw = self as unknown as ServiceWorkerGlobalScope;
+const self = globalThis.self as unknown as ServiceWorkerGlobalScope;
 
 cleanupOutdatedCaches();
 
-
-sw.skipWaiting()
+self.skipWaiting()
 clientsClaim()
 
 // self.__WB_MANIFEST is default injection point
-const entries = sw.__WB_MANIFEST
+const entries = self.__WB_MANIFEST
 
 // we should pre-cache first
 precacheAndRoute(entries)
 
-console.log(sw.__WB_MANIFEST)
+console.log(self.__WB_MANIFEST)
 
 import { build, files, version } from '$service-worker';
 
@@ -30,31 +34,31 @@ const CACHE = `aj-cache-${version}`;
 
 const ASSETS = [...build, ...files];
 
-sw.addEventListener('install', (event) => {
+self.addEventListener('install', (event) => {
   console.log("MERGE COAIEE")
 
 	async function addFilesToCacheAndSkipWaiting() {
 		const cache = await caches.open(CACHE);
 		await cache.addAll(ASSETS);
-		await sw.skipWaiting();
+		await self.skipWaiting();
 	}
 
 	event.waitUntil(addFilesToCacheAndSkipWaiting());
 });
 
-sw.addEventListener('activate', (event) => {
+self.addEventListener('activate', (event) => {
 	async function deleteOldCachesAndClaimClients() {
 		for (const key of await caches.keys()) {
 			if (key !== CACHE) await caches.delete(key);
 		}
 
-		await sw.clients.claim();
+		await self.clients.claim();
 	}
 
 	event.waitUntil(deleteOldCachesAndClaimClients());
 });
 
-sw.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', (event) => {
 	const matchUrl = new URL(event.request.url);
 	if (event.request.method !== 'GET') return;
 	if (matchUrl.pathname.startsWith('/api')) return;
@@ -96,7 +100,7 @@ sw.addEventListener('fetch', (event) => {
 	event.respondWith(respond());
 });
 
-sw.addEventListener('push', (event) => {
+self.addEventListener('push', (event) => {
 	console.log('📬 Service Worker: PUSH EVENT RECEIVED!');
 
 	if (!event.data) {
@@ -122,19 +126,19 @@ sw.addEventListener('push', (event) => {
 	console.log('🔔 Service Worker: Attempting to show notification with title:', data.title);
 
 	event.waitUntil(
-		sw.registration
+		self.registration
 			.showNotification(data.title, options)
 			.then(() => console.log('✅ Service Worker: showNotification() successful.'))
 			.catch((err) => console.error('❌ Service Worker: showNotification() failed:', err))
 	);
 });
 
-sw.addEventListener('notificationclick', (event) => {
+self.addEventListener('notificationclick', (event) => {
   console.log('👉 Service Worker: Notification clicked!');
   event.notification.close();
 
   // ***** THIS IS THE CORRECTED LINE *****
   event.waitUntil(
-    sw.clients.openWindow(event.notification.data.url)
+    self.clients.openWindow(event.notification.data.url)
   );
 });
