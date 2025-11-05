@@ -19,6 +19,9 @@ export default defineConfig({
 			devOptions: {
 				enabled: true
 			},
+			injectManifest: {
+				injectionPoint: undefined
+			},
 			manifest: {
 				name: 'Frizetto',
 				short_name: 'Frizetto',

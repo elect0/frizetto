@@ -22,7 +22,7 @@ const entries = sw.__WB_MANIFEST
 // we should pre-cache first
 precacheAndRoute(entries)
 
-console.log(self.__WB_MANIFEST)
+console.log(sw.__WB_MANIFEST)
 
 import { build, files, version } from '$service-worker';
 
@@ -31,7 +31,6 @@ const CACHE = `aj-cache-${version}`;
 const ASSETS = [...build, ...files];
 
 sw.addEventListener('install', (event) => {
-
   console.log("MERGE COAIEE")
 
 	async function addFilesToCacheAndSkipWaiting() {
