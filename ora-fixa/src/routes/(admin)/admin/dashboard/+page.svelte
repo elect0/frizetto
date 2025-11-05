@@ -3,11 +3,9 @@
 	import ChartAreaInteractive from '$lib/components/chart-area-interactive.svelte';
 	import DataTable from '$lib/components/data-table.svelte';
 	import { Calendar, Interaction, TimeGrid } from '@event-calendar/core';
-	import { format, parse } from 'date-fns';
+	import { format } from 'date-fns';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
-  import { PUBLIC_VAPID_PUBLIC_KEY } from '$env/static/public';
-	import { supabase } from '$lib/supabaseClient.js';
 
 	let { data } = $props();
 	let kpis = $derived(data.kpis);
@@ -47,55 +45,6 @@
 			return { ...next, today: 'Astazi' };
 		}
 	});
-	function urlBase64ToUint8Array(base64String: string) {
-		const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-		const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
-		const rawData = atob(base64);
-		const outputArray = new Uint8Array(rawData.length);
-		for (let i = 0; i < rawData.length; ++i) {
-			outputArray[i] = rawData.charCodeAt(i);
-		}
-		return outputArray;
-	}
-
-  async function subsribeToPush(){
-    if(!('serviceWorker' in navigator) || !('PushManager' in window)) {
-      alert('Notificarile push nu sunt suportate de acest browser')
-      return;
-    }
-
-    try {
-      const registration = await navigator.serviceWorker.ready
-
-      const permission = await Notification.requestPermission()
-      if(permission !== 'granted') {
-        alert('Permisiunea pentru notificari a fost refuzata');
-        return
-      }
-
-      console.log('Permisiune acordata')
-
-      const subscription = await registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(PUBLIC_VAPID_PUBLIC_KEY)
-      })
-
-      const {error} = await supabase.from('push_subscriptions').upsert({
-        user_id: page.data.session?.user.id,
-        subscription_details: subscription,
-      }, {
-          onConflict: "user_id, subscription_details"
-        })
-
-      if (error) throw error
-
-    alert("Te-ai abonat la notificari cu success")
-
-    } catch (error) {
-      console.error("Eroare:", error)
-      alert("A aparut o eroare")
-    }
-  }
 </script>
 
 <div class="flex flex-1 flex-col">
@@ -105,9 +54,7 @@
 			<div class="px-4 lg:px-6">
 				<ChartAreaInteractive {weeklyRevenue} />
 			</div>
-      <div class="my-8">
-      <button onclick={subsribeToPush}>Activeaza notificari</button>
-      </div>
+			<div class="my-8"></div>
 			<div class="px-4 lg:px-6">
 				<DataTable
 					form={data.form}

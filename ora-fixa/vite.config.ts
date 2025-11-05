@@ -7,14 +7,18 @@ import { SvelteKitPWA } from '@vite-pwa/sveltekit';
 
 export default defineConfig({
 	plugins: [
+		sveltekit(),
+		imagetools(),
+		enhancedImages(),
+		tailwindcss(),
 		SvelteKitPWA({
 			registerType: 'autoUpdate',
+			strategies: 'injectManifest',
+			srcDir: 'src',
+			filename: 'service-worker.ts',
 			devOptions: {
 				enabled: true
 			},
-			srcDir: 'src',
-			filename: 'src/service-worker.ts',
-			strategies: 'injectManifest',
 			manifest: {
 				name: 'Frizetto',
 				short_name: 'Frizetto',
@@ -43,19 +47,9 @@ export default defineConfig({
 				]
 			},
 			workbox: {
-				globPatterns: [
-					'client/**/*.{js,css,ico,svg,webp,webmanifest}',
-					'prerendered/**/*.{html,json}'
-				],
-				globIgnores: ['**/*.png'],
 				maximumFileSizeToCacheInBytes: 5 * 1024 ** 2
 			}
-		}),
-
-		enhancedImages(),
-		imagetools(),
-		tailwindcss(),
-		sveltekit()
+		})
 	],
 	build: {
 		assetsInlineLimit: 4096
