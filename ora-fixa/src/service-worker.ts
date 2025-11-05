@@ -5,7 +5,24 @@
 
 // https://kit.svelte.dev/docs/service-workers#type-safety
 
+import { clientsClaim } from 'workbox-core'
+import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching';
+
 const sw = self as unknown as ServiceWorkerGlobalScope;
+
+cleanupOutdatedCaches();
+
+
+sw.skipWaiting()
+clientsClaim()
+
+// self.__WB_MANIFEST is default injection point
+const entries = sw.__WB_MANIFEST
+
+// we should pre-cache first
+precacheAndRoute(entries)
+
+console.log(self.__WB_MANIFEST)
 
 import { build, files, version } from '$service-worker';
 
