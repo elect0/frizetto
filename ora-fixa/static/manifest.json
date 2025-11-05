@@ -1,0 +1,36 @@
+{
+	"name": "Frizetto",
+	"short_name": "Frizetto",
+	"description": "Cea mai smechera frizerie",
+	"start_url": "/",
+	"display": "standalone",
+	"background_color": "#ffffff",
+	"theme_color": "#4a90e2",
+	"icons": [
+		{
+			"src": "/192.png",
+			"sizes": "192x192",
+			"type": "image/png"
+		},
+		{
+			"src": "/512.png",
+			"sizes": "512x512",
+			"type": "image/png"
+		}
+	],
+	"screenshots": [
+		{
+			"src": "/512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"form_factor": "wide",
+			"label": "Wonder Widgets"
+		},
+		{
+			"src": "/512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"label": "Wonder Widgets"
+		}
+	]
+}
