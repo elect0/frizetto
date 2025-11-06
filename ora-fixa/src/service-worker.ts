@@ -25,7 +25,7 @@ const ASSETS = [
 
 self.addEventListener('install', (event) => {
 	// Create a new cache and add all files to it
-  console.log('E OK')
+	console.log('E OK');
 	async function addFilesToCache() {
 		const cache = await caches.open(CACHE);
 		await cache.addAll(ASSETS);
@@ -48,6 +48,10 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
 	// ignore POST requests etc
 	if (event.request.method !== 'GET') return;
+	const matchUrl = new URL(event.request.url);
+	if (matchUrl.pathname === '/') return;
+	if (matchUrl.pathname.startsWith('/admin')) return;
+	if (matchUrl.pathname.startsWith('/api')) return;
 
 	async function respond() {
 		const url = new URL(event.request.url);
@@ -96,16 +100,16 @@ self.addEventListener('fetch', (event) => {
 
 self.addEventListener('push', (event) => {
 	console.log('📬 Service Worker: PUSH EVENT RECEIVED!');
- 
+
 	if (!event.data) {
 		console.error('❌ Service Worker: Push event had no data.');
 		return;
 	}
- 
+
 	console.log('📦 Service Worker: Raw push data:', event.data);
- 
+
 	console.log(event.data);
- 
+
 	const data = event.data?.json();
 	const options = {
 		body: data.body || 'No content',
@@ -115,27 +119,26 @@ self.addEventListener('push', (event) => {
 			url: data.data?.url || '/' // URL to open on click
 		}
 	};
- 
+
 	console.log('🔔 Service Worker: Attempting to show notification with title:', data.title);
- 
+
 	event.waitUntil(
 		self.registration
 			.showNotification(data.title, options)
 			.then(() => console.log('✅ Service Worker: showNotification() successful.'))
 			.catch((err) => console.error('❌ Service Worker: showNotification() failed:', err))
 	);
-})
+});
 
 self.addEventListener('notificationclick', (event) => {
 	console.log('👉 Service Worker: Notification clicked!');
 	event?.notification.close();
- 
+
 	// ***** THIS IS THE CORRECTED LINE *****
-  event.waitUntil(
+	event.waitUntil(
 		self.clients
 			.matchAll({ type: 'window' })
 			.then((clientsArr) => {
-
 				// https://web-push-book.gauntface.com/common-notification-patterns/
 
 				// If we have a client, pick the first one and open it
@@ -157,5 +160,4 @@ self.addEventListener('notificationclick', (event) => {
 				console.error(e);
 			})
 	);
-
-})
+});
