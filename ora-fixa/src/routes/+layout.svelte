@@ -7,8 +7,8 @@
 </script>
 
 <svelte:head>
-  <link rel="manifest" href='/manifest.json'>
-  <meta name="theme-color" content="#4a90e2">
+	<link rel="manifest" href="/manifest.json" />
+	<meta name="theme-color" content="#4a90e2" />
 </svelte:head>
 
 {@render children()}

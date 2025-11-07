@@ -2,11 +2,12 @@
 	import { invalidate } from '$app/navigation';
 	import Navbar from '$lib/components/layout/navbar.svelte';
 	import { page } from '$app/state';
+	import { onMount } from 'svelte';
 
 	let { data, children } = $props();
 	let { session, supabase } = $derived(data);
 
-	$effect(() => {
+	onMount(() => {
 		const { data } = supabase.auth.onAuthStateChange((_, newSession) => {
 			if (newSession?.expires_at !== session?.expires_at) {
 				invalidate('supabase:auth');
