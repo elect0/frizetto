@@ -41,7 +41,6 @@
 	const isUpcoming = startTime > new Date();
 
 	$: isFavorite = parseInt(appointment.services?.id, 10) === favoriteServiceId;
-
 	const statusStyles = {
 		confirmata: 'border-blue-200 bg-blue-100 text-blue-900',
 		finalizata: 'border-green-200 bg-green-100 text-green-900',

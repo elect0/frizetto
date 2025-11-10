@@ -8,6 +8,7 @@
 		start_time: z.string(),
 		client_notes: z.string(),
 		profiles: ClientSchema,
+    end_time: z.string(),
 		status: z.enum(['confirmata', 'anulata', 'finalizata', 'neprezentat']),
 		services: z.object({
 			id: z.number(),

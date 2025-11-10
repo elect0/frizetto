@@ -3,14 +3,21 @@
 	import ChartAreaInteractive from '$lib/components/chart-area-interactive.svelte';
 	import DataTable from '$lib/components/data-table.svelte';
 	import { Calendar, Interaction, TimeGrid } from '@event-calendar/core';
-	import { format } from 'date-fns';
+	import { format, parseISO } from 'date-fns';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
 	import NotificationsButton from '$lib/components/notifications-button.svelte';
+  import * as Dialog from "$lib/components/ui/dialog/index.js"
+  import { type Appointment } from '$lib/components/appointments-table.svelte';
+  import { ro } from 'date-fns/locale';
+  import Badge from '$lib/components/ui/badge/badge.svelte';
+	import AppointmentInfo from '$lib/components/appointment-info.svelte';
 
 	let { data } = $props();
 	let kpis = $derived(data.kpis);
 	let weeklyRevenue = $derived(data.weeklyRevenue);
+  let showModal = $state<boolean>(false)
+  let currentAppointment = $state<Appointment | null>(null)
 
 	let events = $derived(
 		data.appointments
@@ -41,11 +48,19 @@
 		},
 		locale: 'ro',
 		allDayContent: 'Ora',
+    dateClick: function (info: any) {
+      console.log(info)
+      console.log('salut')
+    },
+    eventClick: function (info: any) {
+      currentAppointment = data.appointments.find(appointment => appointment.id === parseInt(info.event.id)) ?? null;
+      showModal = !!currentAppointment
+    },
 		eventLongPressDelay: 10,
 		buttonText: function (next: any) {
 			return { ...next, today: 'Astazi' };
 		}
-	});
+	})
 </script>
 
 <div class="flex flex-1 flex-col">
@@ -58,15 +73,24 @@
 			</div>
 			<div class="my-8"></div>
 			<div class="px-4 lg:px-6">
-				<DataTable
-					form={data.form}
-					services={data.services}
-					clients={data.clients}
-					appointments={data.appointments}
-					date={data.currentDate}
-				/>
+        {#if showModal} 
+          {@render actions(currentAppointment)}
+        {/if}
+        <!-- <DataTable -->
+				<!-- 	form={data.form} -->
+				<!-- 	services={data.services} -->
+				<!-- 	clients={data.clients} -->
+				<!-- 	appointments={data.appointments} -->
+				<!-- 	date={data.currentDate} -->
+				<!-- /> -->
 				<Calendar plugins={[TimeGrid, Interaction]} {options} />
 			</div>
 		</div>
 	</div>
 </div>
+
+{#snippet actions(appointment: Appointment | null)}
+  <Dialog.Root open={showModal} onOpenChangeComplete={() => showModal = !showModal}>
+    <AppointmentInfo {appointment} />
+  </Dialog.Root>
+{/snippet}
