@@ -24,7 +24,7 @@ export const load: PageServerLoad = async ({ locals: { supabase, session }, url 
         end_time,
         status,
 		client_notes,
-        profiles ( id, full_name, phone, notes ),
+        profiles ( id, full_name, phone, notes, email ),
         services ( name, duration_minutes, price )`
 		)
 		.gte('start_time', startOfDay.toISOString())
@@ -96,7 +96,7 @@ export const actions: Actions = {
 			.eq('id', form.data.appointmentId);
 
 		if (error) {
-			return fail(400, { message: 'Statusul programării nu a putut fi modificat.' });
+			return fail(400, { message: 'Status-ul programării nu a putut fi modificat.' });
 		}
 
 		return { success: true };
