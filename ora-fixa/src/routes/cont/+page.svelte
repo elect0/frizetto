@@ -203,7 +203,7 @@
 							<a href="/cont/programari">
 								<Button variant="default" class="cursor-pointer">
 									<Edit class="h-5 w-5" />
-									Programează-l Programarea</Button
+									Programează-l acum</Button
 								>
 							</a>
 						</Card.Content>

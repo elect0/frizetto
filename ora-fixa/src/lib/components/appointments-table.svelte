@@ -8,12 +8,13 @@
 		start_time: z.string(),
 		client_notes: z.string(),
 		profiles: ClientSchema,
-    end_time: z.string(),
+		end_time: z.string(),
 		status: z.enum(['confirmata', 'anulata', 'finalizata', 'neprezentat']),
 		services: z.object({
 			id: z.number(),
 			name: z.string(),
-			price: z.number()
+			price: z.number(),
+			duration_minutes: z.number()
 		})
 	});
 
