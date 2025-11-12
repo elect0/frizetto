@@ -20,7 +20,6 @@ export const GET: RequestHandler = async ({ url, locals: { supabase }, setHeader
 		p_timezone: 'Europe/Bucharest'
 	});
 
-	console.log(data);
 
 	if (dbError) {
 		throw SvelteKitError(500, 'A apărut o eroare la server.');

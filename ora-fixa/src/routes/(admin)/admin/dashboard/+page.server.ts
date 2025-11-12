@@ -78,6 +78,7 @@ export const load: PageServerLoad = async ({ locals: { supabase, session }, url 
 		clients: profilesResult.data || [],
 		services: servicesResult.data || [],
 		form,
+    pageTitle: "Dashboard",
 		session
 	};
 };

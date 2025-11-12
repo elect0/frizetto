@@ -50,11 +50,9 @@
 		},
 		onResult: ({ result }) => {
 			if (result.type === 'success') {
-        console.log(result)
 				toast.success('Programarea a fost adăugată cu succes!');
 				selectedDate = undefined;
 			} else if (result.type === 'failure') {
-        console.log(result)
 				toast.error(result.data?.form.message);
 			} else {
 				toast.error('A apărut o eroare la adăugarea programării. Te rugăm să încerci din nou!');
@@ -347,11 +345,12 @@
 									<div class="grid gap-1.5 leading-none">
 										<Label
 											for="terms"
-											class="text-nowrap cursor-pointer gap-0 md:gap-[4px] w-full text-sm font-medium text-stone-700 flex-col md:flex-row"
+											class="w-full cursor-pointer flex-col gap-0 text-sm font-medium text-nowrap text-stone-700 md:flex-row md:gap-[4px]"
 										>
 											Am citit și sunt de acord cu <a
 												href="/termeni-si-conditii"
-												class="text-nowrap text-amber-700 text-start pl-1 md:pl-0 w-full hover:text-amber-800">Termenii și Condițiile</a
+												class="w-full pl-1 text-start text-nowrap text-amber-700 hover:text-amber-800 md:pl-0"
+												>Termenii și Condițiile</a
 											>
 										</Label>
 										<p class="text-xs text-stone-500">Înțeleg că pot anula programarea.</p>

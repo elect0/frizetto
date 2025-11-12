@@ -15,7 +15,6 @@ Deno.serve(async (req)=>{
     const now = new Date();
     const twentyFourHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
     const twoHoursAgo = new Date(now.getTime() - 2 * 60 * 60 * 1000);
-    console.log(`Searching for appointments that ended between ${twentyFourHoursAgo.toLocaleString('ro-RO')} and ${twoHoursAgo.toLocaleString('ro-RO')}`);
     const { data: appointments, error: queryError } = await supabase.from("appointments").select("id, start_time, profiles ( full_name, email, notify_sms_reminder ), services( name )").is("review_sent_at", null).gte("end_time", twentyFourHoursAgo.toISOString()).lte("end_time", twoHoursAgo.toISOString()).eq("status", "finalizata");
     if (!appointments.profiles.notify_sms_reminder) {
       return new Response(JSON.stringify({
@@ -31,7 +30,6 @@ Deno.serve(async (req)=>{
       throw new Error(`database query failed: ${queryError.message}`);
     }
     if (!appointments || appointments.length === 0) {
-      console.log('no upcoming emails to send');
       return new Response(JSON.stringify({
         message: "No reminders to send"
       }), {

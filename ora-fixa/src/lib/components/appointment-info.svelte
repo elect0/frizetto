@@ -106,6 +106,10 @@
 							if (result.type === 'success') {
 								toast.success('Programarea a fost marcată ca finalizată cu succes.');
 								await invalidateAll();
+                setTimeout(() => {
+                  showModal = false
+                }, 500);
+                
 							} else {
 								toast.error('Eroare:', {
 									description: 'programarea nu a putut fi marcată ca finalizată.'
@@ -150,6 +154,9 @@
 			use:enhance={() => {
 				return async ({ result }) => {
 					if (result.type === 'success') {
+setTimeout(() => {
+                  showModal = false
+                }, 500);
 						toast.success('Programarea a fost marcată ca neprezentată.');
 						await invalidateAll();
 					} else {

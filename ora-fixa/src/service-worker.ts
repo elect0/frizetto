@@ -17,16 +17,12 @@ const self = globalThis.self as unknown as ServiceWorkerGlobalScope;
 
 // Create a unique cache name for this deployment
 self.addEventListener('push', (event) => {
-	console.log('📬 Service Worker: PUSH EVENT RECEIVED!');
 
 	if (!event.data) {
-		console.error('❌ Service Worker: Push event had no data.');
 		return;
 	}
 
-	console.log('📦 Service Worker: Raw push data:', event.data);
 
-	console.log(event.data);
 
 	const data = event.data?.json();
 	const options = {
@@ -38,7 +34,6 @@ self.addEventListener('push', (event) => {
 		}
 	};
 
-	console.log('🔔 Service Worker: Attempting to show notification with title:', data.title);
 
 	event.waitUntil(
 		self.registration

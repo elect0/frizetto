@@ -8,7 +8,6 @@ export const load: PageServerLoad = async ({ locals: { supabase } }) => {
 		.select('*, profiles( full_name, phone )')
 		.order('created_at', { ascending: true });
 
-	console.log(reviewsError);
 	if (reviewsError) {
 		throw error(500, 'Internal server error');
 	}

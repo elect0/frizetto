@@ -1,7 +1,6 @@
 <script lang="ts">
 	import SectionCards from '$lib/components/section-cards.svelte';
 	import ChartAreaInteractive from '$lib/components/chart-area-interactive.svelte';
-	import DataTable from '$lib/components/data-table.svelte';
 	import { Calendar, Interaction, TimeGrid } from '@event-calendar/core';
 	import { format, parseISO } from 'date-fns';
 	import { goto } from '$app/navigation';
@@ -9,8 +8,6 @@
 	import NotificationsButton from '$lib/components/notifications-button.svelte';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import { type Appointment } from '$lib/components/appointments-table.svelte';
-	import { ro } from 'date-fns/locale';
-	import Badge from '$lib/components/ui/badge/badge.svelte';
 	import AppointmentInfo from '$lib/components/appointment-info.svelte';
 
 	let { data } = $props();
@@ -28,7 +25,16 @@
 					start: new Date(appointment.start_time),
 					end: new Date(appointment.end_time),
 					title: `${appointment.services.name} - ${appointment.profiles.full_name}`,
-					backgroundColor: ''
+					backgroundColor:
+						appointment.status === 'confirmata'
+							? '#3b82f6'
+							: appointment.status === 'finalizata'
+								? '#22c55e'
+								: appointment.status === 'neprezentat'
+									? '#ef4444'
+									: appointment.status === 'anulata'
+										? '#6b7280'
+										: '#6b7280'
 				};
 			})
 	);
@@ -40,18 +46,17 @@
 		slotMaxTime: '18:00:00',
 		slotDuration: '00:15:00',
 		datesSet: function (info: any) {
-			console.log(format(info.start, 'yyyy-MM-dd'));
 			goto(`/admin/dashboard?date=${format(info.start, 'yyyy-MM-dd')}`, {
 				noScroll: true,
 				keepFocus: true
 			});
 		},
-		locale: 'ro',
-		allDayContent: 'Ora',
 		dateClick: function (info: any) {
 			console.log(info);
-			console.log('salut');
+			// TODO: Implement dateClick functionality to add event
 		},
+		locale: 'ro',
+		allDayContent: 'Ora',
 		eventClick: function (info: any) {
 			currentAppointment =
 				data.appointments.find((appointment) => appointment.id === parseInt(info.event.id)) ?? null;
@@ -90,8 +95,8 @@
 	</div>
 </div>
 
-{#snippet actions(appointment: Appointment | null)}
+{#snippet actions(appointment: Appointment)}
 	<Dialog.Root open={showModal} onOpenChangeComplete={() => (showModal = !showModal)}>
-		<AppointmentInfo {appointment} bind:showModal={showModal} />
+		<AppointmentInfo {appointment} bind:showModal />
 	</Dialog.Root>
 {/snippet}

@@ -55,8 +55,6 @@
 			}
 		);
     
-    console.log(pictures)
-
 		for (const [path, srcPromise] of Object.entries(pictures)) {
 			if (path.includes(imagePath)) {
 				return (await srcPromise()) as EnhancedImage;
