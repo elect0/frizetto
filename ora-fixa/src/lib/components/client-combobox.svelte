@@ -21,21 +21,22 @@
 
 	type Props = {
 		clients: Profile[];
-		clientValue: string | undefined;
 		services: Service[];
-		serviceValue: string | undefined;
-		dateValue: DateValue | undefined;
 		walkInForm: SuperValidated<z.infer<typeof walkInSchema>>;
 	};
 
 	let {
-		clientValue = $bindable(),
 		clients,
-		serviceValue = $bindable(),
 		services,
-		dateValue = $bindable(),
 		walkInForm
 	}: Props = $props();
+
+
+	let clientValue = $state('');
+  let serviceValue = $state('');
+	let dateValue = $state<DateValue | undefined>();
+
+
 
 	const { form, errors, enhance } = superForm(walkInForm, {
 		validators: zod(walkInSchema),
@@ -58,6 +59,7 @@
 			}
 		}
 	});
+
 
 	let open = $state(false);
 	let triggerRef = $state<HTMLButtonElement>(null!);

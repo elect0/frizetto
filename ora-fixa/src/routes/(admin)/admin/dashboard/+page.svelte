@@ -7,6 +7,9 @@
 	import { page } from '$app/state';
 	import NotificationsButton from '$lib/components/notifications-button.svelte';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
+	import { buttonVariants } from '$lib/components/ui/button/button.svelte';
+	import { UserPlus } from '@lucide/svelte';
+	import ClientCombobox from '$lib/components/client-combobox.svelte';
 	import { type Appointment } from '$lib/components/appointments-table.svelte';
 	import AppointmentInfo from '$lib/components/appointment-info.svelte';
 
@@ -15,6 +18,7 @@
 	let weeklyRevenue = $derived(data.weeklyRevenue);
 	let showModal = $state(false);
 	let currentAppointment = $state<Appointment | null>(null);
+  let showWalkInModal = $state(false);
 
 	let events = $derived(
 		data.appointments
@@ -52,9 +56,8 @@
 			});
 		},
 		dateClick: function (info: any) {
-			console.log(info);
-			// TODO: Implement dateClick functionality to add event
-		},
+      // TODO: add future walk in appointment creation
+    },
 		locale: 'ro',
 		allDayContent: 'Ora',
 		eventClick: function (info: any) {
@@ -79,6 +82,31 @@
 			</div>
 			<div class="my-8"></div>
 			<div class="px-4 lg:px-6">
+				<div class="mb-2">
+					<Dialog.Root bind:open={showWalkInModal}>
+						<Dialog.Trigger
+							class={`${buttonVariants({ variant: 'outline' })} mt-2 w-full sm:mt-0 sm:w-auto`}
+						>
+							<div class="flex items-center justify-center sm:justify-start">
+								<UserPlus class="mr-2 h-5 w-5" /> Adaugă programare walk-in.
+							</div>
+						</Dialog.Trigger>
+						<Dialog.Content>
+							<Dialog.Header>
+								<Dialog.Title>Adaugă Programare Nouă</Dialog.Title>
+								<Dialog.Description>
+									Completează detaliile pentru a adăuga o nouă programare în calendar. Asigură-te că
+									toate informațiile sunt corecte înainte de a salva.
+								</Dialog.Description>
+							</Dialog.Header>
+							<ClientCombobox
+								walkInForm={data.form}
+								clients={data.clients}
+								services={data.services}
+							/>
+						</Dialog.Content>
+					</Dialog.Root>
+				</div>
 				{#if showModal}
 					{@render actions(currentAppointment)}
 				{/if}
@@ -95,7 +123,7 @@
 	</div>
 </div>
 
-{#snippet actions(appointment: Appointment)}
+{#snippet actions(appointment: Appointment | null)}
 	<Dialog.Root open={showModal} onOpenChangeComplete={() => (showModal = !showModal)}>
 		<AppointmentInfo {appointment} bind:showModal />
 	</Dialog.Root>

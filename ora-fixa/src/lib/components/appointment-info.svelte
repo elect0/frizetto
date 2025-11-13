@@ -12,8 +12,12 @@
 	import Separator from './ui/separator/separator.svelte';
 	import { invalidateAll } from '$app/navigation';
 
-	let { appointment, showModal = $bindable() }: { appointment: Appointment; showModal: boolean } =
+	let { appointment, showModal = $bindable() }: { appointment: Appointment | null; showModal: boolean } =
 		$props();
+
+  if(!appointment) {
+    throw new Error("Appointment is required");
+  }
 
 	const fullAppointmentDate = $derived(
 		new Date(appointment.start_time).toLocaleDateString('ro-RO', {
