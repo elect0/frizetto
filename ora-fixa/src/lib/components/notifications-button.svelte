@@ -2,6 +2,6 @@
 	import Button from "./ui/button/button.svelte";
 	import { subscribeToPushNotifications } from "$lib/web-push";
 	import { page } from "$app/state";
+	import { Bell } from "@lucide/svelte";
 </script>
-<button onclick={() => subscribeToPushNotifications(page.data.session?.user.id || '')}>activeaza notifciarile</button>
-<Button onclick={() => subscribeToPushNotifications(page.data.session?.user.id || '')}>Activeaza Notificarile</Button>
+<Button variant="outline" onclick={() => subscribeToPushNotifications(page.data.session?.user.id || '')}><Bell /> Activează Notificări</Button>

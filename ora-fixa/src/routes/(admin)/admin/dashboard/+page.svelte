@@ -2,23 +2,23 @@
 	import SectionCards from '$lib/components/section-cards.svelte';
 	import ChartAreaInteractive from '$lib/components/chart-area-interactive.svelte';
 	import { Calendar, Interaction, TimeGrid } from '@event-calendar/core';
-	import { format, parseISO } from 'date-fns';
+	import { format} from 'date-fns';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/state';
-	import NotificationsButton from '$lib/components/notifications-button.svelte';
 	import * as Dialog from '$lib/components/ui/dialog/index.js';
 	import { buttonVariants } from '$lib/components/ui/button/button.svelte';
 	import { UserPlus } from '@lucide/svelte';
 	import ClientCombobox from '$lib/components/client-combobox.svelte';
 	import { type Appointment } from '$lib/components/appointments-table.svelte';
 	import AppointmentInfo from '$lib/components/appointment-info.svelte';
+	import NotificationsButton from '$lib/components/notifications-button.svelte';
 
 	let { data } = $props();
 	let kpis = $derived(data.kpis);
 	let weeklyRevenue = $derived(data.weeklyRevenue);
 	let showModal = $state(false);
 	let currentAppointment = $state<Appointment | null>(null);
-  let showWalkInModal = $state(false);
+	let showWalkInModal = $state(false);
 
 	let events = $derived(
 		data.appointments
@@ -55,9 +55,9 @@
 				keepFocus: true
 			});
 		},
-		dateClick: function (info: any) {
-      // TODO: add future walk in appointment creation
-    },
+		// dateClick: function (info: any) {
+		// 	// TODO: add future walk in appointment creation
+		// },
 		locale: 'ro',
 		allDayContent: 'Ora',
 		eventClick: function (info: any) {
@@ -77,12 +77,10 @@
 		<div class="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
 			<SectionCards {kpis} />
 			<div class="px-4 lg:px-6">
-				<NotificationsButton />
 				<ChartAreaInteractive {weeklyRevenue} />
 			</div>
-			<div class="my-8"></div>
 			<div class="px-4 lg:px-6">
-				<div class="mb-2">
+				<div class="mb-2 flex flex-col gap-2 md:flex-row md:justify-between w-full">
 					<Dialog.Root bind:open={showWalkInModal}>
 						<Dialog.Trigger
 							class={`${buttonVariants({ variant: 'outline' })} mt-2 w-full sm:mt-0 sm:w-auto`}
@@ -106,6 +104,7 @@
 							/>
 						</Dialog.Content>
 					</Dialog.Root>
+          <NotificationsButton />
 				</div>
 				{#if showModal}
 					{@render actions(currentAppointment)}
