@@ -144,7 +144,7 @@ export const actions: Actions = {
 			return fail(400, { form });
 		}
 
-		const startTime = new Date(`${form.data.date.split('T')[0]}T${form.data.time}:00+03:00`);
+		const startTime = new Date(`${form.data.date.split('T')[0]}T${form.data.time}:00+02:00`);
 		const endTime = new Date(startTime.getTime() + form.data.duration * 60 * 1000);
 
 		if (!isAdmin) {
