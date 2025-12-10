@@ -13,14 +13,14 @@
 <br>
 
 <p align="center">
-  <img src="https://i.imgur.com/SF70NDA.png" alt="OraFixa Demo" width="90%">
+  <img src="https://i.imgur.com/SF70NDA.png" alt="Frizetto Demo" width="90%">
 </p>
 
 ## About The Project
 
 In the world of personal services, from barbershops to private practices, no-shows and inefficient time management represent a significant loss of revenue and a source of frustration.
 
-**OraFixa** tackles this problem head-on by providing a clean, intuitive, and extremely fast interface that makes the booking process a pleasure, not a chore. The goal is to provide predictability for professionals and simplicity for their clients, completely eliminating calendar chaos.
+**Frizetto** tackles this problem head-on by providing a clean, intuitive, and extremely fast interface that makes the booking process a pleasure, not a chore. The goal is to provide predictability for professionals and simplicity for their clients, completely eliminating calendar chaos.
 
 ## Core Features
 
@@ -56,7 +56,7 @@ Currently, the project is in the initial development phase, focusing on implemen
 
 1.  **Clone the repository:**
     ```bash
-    git clone [https://github.com/your-username/orafixa.git](https://github.com/your-username/orafixa.git)
+    git clone [https://github.com/your-username/frizetto.git](https://github.com/your-username/frizetto.git)
     cd orafixa
     ```
 2.  **Install dependencies:**
